@@ -1,0 +1,37 @@
+New and improved features compared to the last version
+======================================================
+
+PRIVACY
+
+* Mail addresses are no longer shown to unauthorised users.
+
+* The visibility of a project is now one of these:
+  - private (owner only, formerly called 'unpublished'),
+  - platform (logged in users only, this was requested by some lecturers),
+  - public (formerly called 'published')
+
+NEW: MATTERS
+
+ACCOUNTS
+
+  * Support for avatars (upload or gavatar).
+  * Flexible permission system. This allows the administrator to deal with uncommon
+    requests, e.g. approving a student to supervise a project.
+  * Students are now required to identify their accounts with their UCC student ID.
+
+
+NEW: SMALL PROJECTS
+
+As before, there is no limit to the number of students which can be assigned to any
+project which the system supports.
+However, a given student can be assigned to only one "semester project" but to any number of
+"small projects".
+Thus, the relationship between the new small projects and students is many-to-many.
+The old version only supported semester projects.
+Lecturers are welcome to create small projects for any teaching purpose they wish.
+
+MISCELLANEOUS
+
+* The type of a project's degree program (its associated matter) can now be changed in
+  the edit view.
+* Plenty of layout improvements.
