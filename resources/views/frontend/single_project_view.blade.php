@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', 'View' . ' | ' . $project->title)
+@section('title', 'View | ' . $project->title)
 @section('breadcrumbs', Breadcrumbs::render('view_project', $project))
 @section('content')
                <div class="card {!! $project->colors()['bg-col'] !!} {!! $project->colors()['text-col'] !!}">
@@ -32,7 +32,7 @@
                                    Modify
                                  </button>
                                  <div class="dropdown-menu">
-                                   <a class="dropdown-item" href="#">Edit this project</a>
+                                   <a class="dropdown-item" href="{{route('frontend.project.edit', $project->id)}}">Edit this project</a>
                                    <form action="{{route('frontend.project.destroy', $project->id)}}" method="post">
                                      @csrf @method('delete')
                                      <button class="dropdown-item text-danger" type="submit">Delete this project</button>
@@ -111,7 +111,7 @@
 
                 </div> <!-- card-body -->
                 <div class="card-footer">
-                    <small><i class="fas fa-industry"></i> {{$project->updated_at}} <i class="fas fa-edit"></i>{{$project->updated_at}}</small>
+                    <small><i class="fas fa-industry"></i>{{$project->created_at->diffForHumans()}} <i class="fas fa-edit"></i>{{$project->updated_at->diffForHumans()}}</small>
                 </div>
             </div><!-- card -->
 @endsection

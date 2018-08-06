@@ -24,7 +24,7 @@ class ProjectController extends Controller
     }
 
     public function create()
-    {  // no need to guard this here against anauthorized project creation
+    {  // no real need to guard this here against anauthorized project creation
         return view('frontend.create_project');
     }
 
@@ -42,17 +42,33 @@ class ProjectController extends Controller
       // visibility not set in form, remains 0 (private)
       // semester_project always true for now
       $project->save();
-      // TODO subscribe author to matter of project  if necessary
+      $request->user()->subscribe_matter($request->type); // we QUIETLY autosubscribe the user!
       return redirect()->route('frontend.project.show', $project->id)->withFlashSuccess('New project created. Only you can see it.');
     }
 
+    public function update(StoreProject $request, $id) {
+        $project = Project::findOrFail($id);
+        if ($project->is_owner()) { // because we use the same type hint as in store() (inheriting from that class would be akward)
+          $project->title = $request->title;
+          $project->abstract = $request->abstract;
+          $project->description = $request->description;
+          $project->type = $request->type;
+          $project->save();
+          $request->user()->subscribe_matter($request->type); // autosubscribe as in store()
+          return redirect()->route('frontend.project.show', $project->id)->withFlashSuccess('Project updated');
+          }
+        else {
+          abort('403', 'Forbidden PUT method on project.');
+          }
+        }
+
    public function show ($id) {
       $project = Project::findOrFail($id);
-      if ($project->is_visible()) {
+      if ($project->is_visible()) { 
         return view('frontend.single_project_view', ['project' => $project]);
       }
       else {
-        abort(403,'Not allowed or not subscribed or not logged in.');
+        abort(403,'Not allowed or not logged in.');
       }
    }
 
@@ -93,12 +109,11 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
+       $project = Project::findOrFail($id);
+       if ($project->is_owner()) {
+         return view('frontend.edit_project', ['project' => $project]);
+       }
+       return back()->withFlashDanger('You don\'t have permission to edit this project.');
     }
 
     public function destroy($id)
@@ -118,6 +133,7 @@ class ProjectController extends Controller
       $project = Project::findOrFail($id);
       if ($project->is_owner() && ($vis >= 0) && ($vis <= 2)) { // takes care of Auth too
         // TODO refuse to set private if students are attached
+        $project->timestamps = false;
         $project->visibility = $vis;
         $project->save();
         return back()->withFlashSuccess('Visibility modified.');
