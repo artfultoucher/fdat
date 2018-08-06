@@ -1,40 +1,13 @@
 @extends('frontend.layouts.app')
 @section('title', 'View' . ' | ' . $project->title)
-
+@section('breadcrumbs', Breadcrumbs::render('view_project', $project))
 @section('content')
-          @switch($project->visibility)
-            @case(0)
-               <div class="card text-white bg-danger">
+               <div class="card {!! $project->colors()['bg-col'] !!} {!! $project->colors()['text-col'] !!}">
                  <div class="card-header">
                      <span class="h5">
-                         <i class="fas fa-lock"></i>
-                          @if ($project->is_orphan())
-                            <i class="fas fa-exclamation-circle"></i>
-                          @endif
-                         {{ $project->title }}
+                         {!! $project->icons() !!} {{ $project->title }}
                      </span><br><i class="fas fa-chalkboard"></i> {{$project->type}}
                  </div><!--card-header-->
-               @break
-            @case(1)
-               <div class="card text-white bg-info">
-                 <div class="card-header">
-                     <span class="h5">
-                         <i class="fas fa-user-friends"></i>
-                            <i class="fas fa-exclamation-circle"></i>
-                         {{ $project->title }}
-                     </span><br><i class="fas fa-chalkboard"></i> {{$project->type}}
-                 </div><!--card-header-->
-               @break
-            @default
-               <div class="card text-white bg-primary">
-                 <div class="card-header">
-                     <span class="h5">
-                         <i class="fas fa-lock-open"></i>
-                            <i class="fas fa-exclamation-circle"></i>
-                         {{ $project->title }}
-                     </span><br><i class="fas fa-chalkboard"></i> {{$project->type}}
-                 </div><!--card-header-->
-          @endswitch
                 <div class="card-body">
                     <div class="row mb-2">
                        <div class="col">
@@ -49,22 +22,20 @@
 
                        @if ($project->is_owner())
 
-                       <div class="col">
+                       <div class="col-3">
                          <div class="card text-white bg-dark">
-                           <div class="card-header"><strong>Actions</strong>
-                           </div>
+                           <div class="card-header"><strong>This project</strong></div>
                            <div class="card-body">
-
                              <div class="btn-group">
                                <div class="dropdown show">
-                                 <button  class="btn btn-warning dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 <button  class="btn btn-secondary dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                    Modify
                                  </button>
                                  <div class="dropdown-menu">
                                    <a class="dropdown-item" href="#">Edit this project</a>
                                    <form action="{{route('frontend.project.destroy', $project->id)}}" method="post">
                                      @csrf @method('delete')
-                                     <button class="dropdown-item" type="submit">Delete this project</button>
+                                     <button class="dropdown-item text-danger" type="submit">Delete this project</button>
                                    </form>
                                  </div>
                                </div>
@@ -79,11 +50,23 @@
                                    <a class="dropdown-item" href="{{route('frontend.change_visibility', ['id' => $project->id, 'vis' => 2]) }}">Public</a>
                                  </div>
                                </div>
-                        
-                          @can('supervise projects')
+                             </div>
+                           </div>
+                         </div><!-- card -->
+                       </div><!-- col -->
+
+                      @endif
+
+                      @can('supervise projects')
+
+                      <div class="col-3">
+                        <div class="card text-white bg-dark">
+                          <div class="card-header"><strong>Engage</strong></div>
+                            <div class="card-body">
+                              <div class="btn-group">
                                <div class="dropdown show">
-                                 <button type="button" class="btn btn-secondary dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                   Engage
+                                 <button type="button" style="width: 6.5em;" class="btn btn-secondary dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                   You
                                  </button>
                                  <div class="dropdown-menu">
                                    <a class="dropdown-item" href="#">Supervise</a>
@@ -94,7 +77,7 @@
                                </div>
 
                                <div class="dropdown show">
-                                 <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 <button type="button" style="width: 6.5em;" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                    Students
                                  </button>
                                  <div class="dropdown-menu">
@@ -102,13 +85,12 @@
                                    <a class="dropdown-item" href="#">Dismiss all students</a>
                                  </div>
                                </div>
-                         @endcan
                              </div><!-- btn-group -->
-                           </div>
+                           </div><!-- card-body -->
                         </div><!-- card -->
-                       </div>
+                       </div><!-- col -->
 
-                     @endif
+                     @endcan
 
                     </div><!-- row -->
                     <div class="row">
@@ -129,7 +111,7 @@
 
                 </div> <!-- card-body -->
                 <div class="card-footer">
-                    <small class="text-dark"><i class="fas fa-industry"></i> {{$project->updated_at}} <i class="fas fa-edit"></i>{{$project->updated_at}}</small>
+                    <small><i class="fas fa-industry"></i> {{$project->updated_at}} <i class="fas fa-edit"></i>{{$project->updated_at}}</small>
                 </div>
             </div><!-- card -->
 @endsection

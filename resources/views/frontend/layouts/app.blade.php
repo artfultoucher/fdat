@@ -27,32 +27,12 @@
     background-color: #224455;
 }
 
-/* change the brand and text color
-.navbar-custom .navbar-brand,
-.navbar-custom .navbar-text {
-    color: rgba(255,255,255,.5);
-}
-*/
-/* change the link color
-.navbar-custom .nav-link {
-    color: rgba(255,255,255,.5);
-}
-
-*/
-/* change the color of active or hovered links
-.navbar-custom .nav-link.active,
-.navbar-custom .nav-link:hover {
-    color: #ffffff;
-}
-
-*/
 </style>
     </head>
     <body>
         <div id="app">
             @include('includes.partials.logged-in-as')
             @include('frontend.includes.nav')
-
             <div class="container">
                 @include('includes.partials.messages')
                 @yield('content')

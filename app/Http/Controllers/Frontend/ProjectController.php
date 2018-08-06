@@ -14,11 +14,17 @@ class ProjectController extends Controller
 
     public function index()
     {
-        return 'List of all projects.';
+        $result = array();
+        foreach (Project::all() as $p) {
+          if ($p->is_visible()) {
+            $result[] = $p;
+          }
+        }
+        return view('frontend.project_list', ['projects' => $result]);
     }
 
     public function create()
-    {
+    {  // no need to guard this here against anauthorized project creation
         return view('frontend.create_project');
     }
 
@@ -37,8 +43,22 @@ class ProjectController extends Controller
       // semester_project always true for now
       $project->save();
       // TODO subscribe author to matter of project  if necessary
-      return redirect()->route('frontend.project.show', $project->id)->withFlashSuccess('New project created.');
+      return redirect()->route('frontend.project.show', $project->id)->withFlashSuccess('New project created. Only you can see it.');
     }
+
+   public function show ($id) {
+      $project = Project::findOrFail($id);
+      if ($project->is_visible()) {
+        return view('frontend.single_project_view', ['project' => $project]);
+      }
+      else {
+        abort(403,'Not allowed or not subscribed or not logged in.');
+      }
+   }
+
+/*
+// This version assumes permission is not checked in is_visible()
+// It reports detailed 403 messages.
 
     public function show ($id) {
       $project = Project::findOrFail($id);
@@ -66,7 +86,7 @@ class ProjectController extends Controller
         }
       }
     }
-
+*/
     /**
      * Show the form for editing the specified resource.
 
@@ -83,7 +103,15 @@ class ProjectController extends Controller
 
     public function destroy($id)
     {
-        return back()->withFlashWarning('Request to delete '. $id);
+        $project = Project::findOrFail($id);
+        if ($project->is_owner()) {
+          // TODO take care of engaged students and maybe the second reader
+          // make sure function returns from here
+          $project->delete();
+          return redirect()->route('frontend.user.dashboard')->withFlashDanger('Project deleted.');
+
+        }
+          return back()->withFlashDanger('You cannot delete someone else\'s project.');
     }
 
     public function set_visibility($id, $vis){ // I know this should be guarded by middleware and received by PUT request

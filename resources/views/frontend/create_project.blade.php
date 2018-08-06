@@ -2,6 +2,8 @@
 
 @section('title', 'Create New Project')
 
+@section('breadcrumbs', Breadcrumbs::render('new_project'))
+
 @section('content')
     <div class="row mb-4">
         <div class="col">
