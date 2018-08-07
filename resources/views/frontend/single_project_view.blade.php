@@ -45,9 +45,24 @@
                                    Visibility
                                  </button>
                                  <div class="dropdown-menu">
-                                   <a class="dropdown-item" href="{{route('frontend.change_visibility', ['id' => $project->id, 'vis' => 0]) }}">Only you</a>
+
+                                   @switch($project->visibility)
+                                   @case(0)
+                                   <a class="dropdown-item active" href="#">Only you</a>
                                    <a class="dropdown-item" href="{{route('frontend.change_visibility', ['id' => $project->id, 'vis' => 1]) }}">Permitted users</a>
                                    <a class="dropdown-item" href="{{route('frontend.change_visibility', ['id' => $project->id, 'vis' => 2]) }}">Public</a>
+                                   @break
+                                   @case(1)
+                                   <a class="dropdown-item" href="{{route('frontend.change_visibility', ['id' => $project->id, 'vis' => 0]) }}">Only you</a>
+                                   <a class="dropdown-item active" href="#">Permitted users</a>
+                                   <a class="dropdown-item" href="{{route('frontend.change_visibility', ['id' => $project->id, 'vis' => 2]) }}">Public</a>
+                                   @break
+                                   @default
+                                   <a class="dropdown-item" href="{{route('frontend.change_visibility', ['id' => $project->id, 'vis' => 0]) }}">Only you</a>
+                                   <a class="dropdown-item" href="{{route('frontend.change_visibility', ['id' => $project->id, 'vis' => 1]) }}">Permitted users</a>
+                                   <a class="dropdown-item active" href="#">Public</a>
+                                   @endswitch
+
                                  </div>
                                </div>
                              </div>

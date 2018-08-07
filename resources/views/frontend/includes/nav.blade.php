@@ -6,6 +6,23 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
         <ul class="navbar-nav">
+
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Projects</a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
+                    <a href="{{ route('frontend.project.index') }}" class="dropdown-item">Browse all</a>
+                    <a href="{{ route('frontend.project.index_free') }}" class="dropdown-item">Available only</a>
+                    @auth
+                      @if ($logged_in_user->hasPermissionTo('write projects'))
+                      <div class="dropdown-divider"></div>
+                      <a href="{{ route('frontend.project.create') }}" class="dropdown-item">New Project</a>
+                      @endif
+                   @endauth
+                </div>
+
+            </li>
             @if (config('locale.status') && count(config('locale.languages')) > 1)
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownLanguageLink" data-toggle="dropdown"

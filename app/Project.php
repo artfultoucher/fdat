@@ -27,8 +27,13 @@ class Project extends Model
   //    return $this->is_owner() && Auth::user()->hasPermissionTo('write projects');
   //  }
 
-    public function is_free() {
-      return true; // TODO
+
+    public function is_available(){
+      return !($this->is_assigned() || $this->is_orphan()); // ah De Morgan...
+    }
+
+    public function is_assigned() {
+      return false; // TODO
     }
 
     public function is_new(){
@@ -96,17 +101,13 @@ class Project extends Model
     public function icons () {
       switch ($this->visibility) {
         case 0:
-          $icons = '<i class="fas fa-lock"></i>';
+          return '<i class="fas fa-lock"></i>';
           break;
         case 1:
-          $icons = '<i class="fas fa-user-friends"></i>';
+          return '<i class="fas fa-user-friends"></i>';
           break;
-        default:
-          $icons = '<i class="fas fa-lock-open"></i>';
+        case 2:
+          return '<i class="fas fa-lock-open"></i>';
       }
-      if ($this->supervisor == 0) { // orphan
-        $icons .=  '<i class="fas fa-exclamation-circle"></i>';
-      }
-      return $icons;
     }
 }

@@ -20,7 +20,18 @@ class ProjectController extends Controller
             $result[] = $p;
           }
         }
-        return view('frontend.project_list', ['projects' => $result]);
+        return view('frontend.project_list', ['projects' => $result, 'page_title' => 'All Projects', 'breadcrumb_name' => 'projects']);
+    }
+
+    public function index_free()
+    {
+        $result = array();
+        foreach (Project::all() as $p) {
+          if ($p->is_available() && $p->is_visible()) {
+            $result[] = $p;
+          }
+        }
+        return view('frontend.project_list', ['projects' => $result, 'page_title' => 'Available Projects' , 'breadcrumb_name' => 'projects_free']);
     }
 
     public function create()
@@ -55,7 +66,7 @@ class ProjectController extends Controller
           $project->type = $request->type;
           $project->save();
           $request->user()->subscribe_matter($request->type); // autosubscribe as in store()
-          return redirect()->route('frontend.project.show', $project->id)->withFlashSuccess('Project updated');
+          return redirect()->route('frontend.project.show', $project->id)->withFlashSuccess('Project updated.');
           }
         else {
           abort('403', 'Forbidden PUT method on project.');
@@ -64,7 +75,7 @@ class ProjectController extends Controller
 
    public function show ($id) {
       $project = Project::findOrFail($id);
-      if ($project->is_visible()) { 
+      if ($project->is_visible()) {
         return view('frontend.single_project_view', ['project' => $project]);
       }
       else {

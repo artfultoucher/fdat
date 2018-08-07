@@ -15,6 +15,12 @@ Breadcrumbs::for('projects', function ($trail) {
     $trail->push('Projects', route('frontend.project.index'));
 });
 
+// Home > Projects > free
+Breadcrumbs::for('projects_free', function ($trail) {
+    $trail->parent('projects');
+    $trail->push('Available', route('frontend.project.index_free'));
+});
+
 // Home > New Project
 Breadcrumbs::for('new_project', function ($trail) {
     $trail->parent('projects');
