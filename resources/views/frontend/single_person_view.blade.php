@@ -15,7 +15,7 @@
     </div><!-- card-header-->
     <div class="card-body">
       <h2 class="card-title">{{$person->full_name}}</h2>
-      More infor
+        Lots of code missing here
     </div><!-- card-body-->
 </div><!-- card -->
 @endsection

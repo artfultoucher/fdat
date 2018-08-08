@@ -15,4 +15,9 @@ class PersonController extends Controller
       $person = User::findOrFail($id);
       return view('frontend.single_person_view', ['person' => $person]);
     }
+
+   public function show_with_role($role){
+        $persons = User::role($role)->get();
+        return view('frontend.persons_with_role', ['persons' => $persons, 'role' => $role]);
+   }
 }

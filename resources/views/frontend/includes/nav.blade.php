@@ -21,16 +21,10 @@
                       @endif
                    @endauth
                 </div>
-
             </li>
-            @if (config('locale.status') && count(config('locale.languages')) > 1)
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownLanguageLink" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">{{ __('menus.language-picker.language') }} ({{ strtoupper(app()->getLocale()) }})</a>
 
-                    @include('includes.partials.lang')
-                </li>
-            @endif
+            <li class="nav-item"><a href="{{route('frontend.person.show_with_role', 'lecturer')}}" class="nav-link">Lecturers</a></li>
+            <li class="nav-item"><a href="{{route('frontend.person.show_with_role', 'student')}}" class="nav-link">Students</a></li>
 
             @auth
                 <li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.dashboard')) }}">{{ __('navs.frontend.dashboard') }}</a></li>
