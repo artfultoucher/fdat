@@ -42,3 +42,8 @@ Breadcrumbs::for('profile', function ($trail) {
     $trail->parent('home');
     $trail->push('My account', route('frontend.user.profile.update'));
 });
+
+Breadcrumbs::for('view_person', function ($trail, $person) {
+    $trail->parent('home'); // change that later
+    $trail->push($person->full_name, route('frontend.person.show', $person->id));
+});

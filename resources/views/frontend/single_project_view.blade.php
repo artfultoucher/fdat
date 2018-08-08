@@ -2,7 +2,7 @@
 @section('title', 'View | ' . $project->title)
 @section('breadcrumbs', Breadcrumbs::render('view_project', $project))
 @section('content')
-               <div class="card {!! $project->colors()['bg-col'] !!} {!! $project->colors()['text-col'] !!}">
+               <div class="card {!! $project->colors()['bg-col'] !!} {!! $project->colors()['text-col'] !!}" style="box-shadow: 5px 10px 8px #777777;">
                  <div class="card-header">
                      <span class="h5">
                          {!! $project->icons() !!} {{ $project->title }}
@@ -49,17 +49,17 @@
                                    @switch($project->visibility)
                                    @case(0)
                                    <a class="dropdown-item active" href="#">Only you</a>
-                                   <a class="dropdown-item" href="{{route('frontend.change_visibility', ['id' => $project->id, 'vis' => 1]) }}">Permitted users</a>
-                                   <a class="dropdown-item" href="{{route('frontend.change_visibility', ['id' => $project->id, 'vis' => 2]) }}">Public</a>
+                                   <a class="dropdown-item" href="{{route('frontend.project.change_visibility', ['id' => $project->id, 'vis' => 1]) }}">Permitted users</a>
+                                   <a class="dropdown-item" href="{{route('frontend.project.change_visibility', ['id' => $project->id, 'vis' => 2]) }}">Public</a>
                                    @break
                                    @case(1)
-                                   <a class="dropdown-item" href="{{route('frontend.change_visibility', ['id' => $project->id, 'vis' => 0]) }}">Only you</a>
+                                   <a class="dropdown-item" href="{{route('frontend.project.change_visibility', ['id' => $project->id, 'vis' => 0]) }}">Only you</a>
                                    <a class="dropdown-item active" href="#">Permitted users</a>
-                                   <a class="dropdown-item" href="{{route('frontend.change_visibility', ['id' => $project->id, 'vis' => 2]) }}">Public</a>
+                                   <a class="dropdown-item" href="{{route('frontend.project.change_visibility', ['id' => $project->id, 'vis' => 2]) }}">Public</a>
                                    @break
                                    @default
-                                   <a class="dropdown-item" href="{{route('frontend.change_visibility', ['id' => $project->id, 'vis' => 0]) }}">Only you</a>
-                                   <a class="dropdown-item" href="{{route('frontend.change_visibility', ['id' => $project->id, 'vis' => 1]) }}">Permitted users</a>
+                                   <a class="dropdown-item" href="{{route('frontend.project.change_visibility', ['id' => $project->id, 'vis' => 0]) }}">Only you</a>
+                                   <a class="dropdown-item" href="{{route('frontend.project.change_visibility', ['id' => $project->id, 'vis' => 1]) }}">Permitted users</a>
                                    <a class="dropdown-item active" href="#">Public</a>
                                    @endswitch
 
@@ -84,8 +84,14 @@
                                    You
                                  </button>
                                  <div class="dropdown-menu">
-                                   <a class="dropdown-item" href="#">Supervise</a>
-                                   <a class="dropdown-item" href="#">UnSupervise</a>
+                                    <form action="{{route('frontend.project.supervise', $project->id)}}" method="post">
+                                      @csrf @method('patch')
+                                      <button class="dropdown-item" type="submit">Supervise</button>
+                                    </form>
+                                    <form action="{{route('frontend.project.unsupervise', $project->id)}}" method="post">
+                                      @csrf @method('patch')
+                                      <button class="dropdown-item" type="submit">UnSupervise</button>
+                                    </form>
                                    <a class="dropdown-item" href="#">Become Second Reader</a>
                                    <a class="dropdown-item" href="#">Dismiss Second Reader</a>
                                  </div>

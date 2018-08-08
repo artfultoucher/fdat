@@ -44,7 +44,18 @@ class Project extends Model
       return !$this->is_new() && $this->updated_at->diffInDays() < 3;
     }
 
-    public function is_visible () {
+    public function is_visible(){ // public projects are HIDDEN when logged in and not subscribed
+      if (Auth::guest()) {
+        return $this->visibility == 2;
+      }
+      if ($this->is_owner()){
+        return true;
+      }
+      return ($this->visibility > 0) && Auth::user()->hasPermissionTo('view projects') && Auth::user()->has_subscribed($this->type);
+    }
+
+/*
+    public function is_visible () { // public projects are SHOWN when logged in and not subscribed
       if ($this->visibility == 2 || $this->is_owner()) { // public or owned
         return true;
       }
@@ -54,6 +65,7 @@ class Project extends Model
       }
       return false;
     }
+*/
 
     public function author_name()
       {
@@ -80,6 +92,11 @@ class Project extends Model
         } else {
           return User::findOrFail($this->second_reader)->full_name;
         }
+      }
+
+    public function owner_name()
+      {
+        return User::findOrFail($this->owner())->full_name;
       }
 
     public static $possible_types = ['BSc', 'MScCS', 'MScDA', 'MScIM', 'BADHIT']; // each type must also be a matter in User.php

@@ -38,7 +38,7 @@
            <label class="radio-inline"><input type="radio" name="semester_project" value="no" disabled>Small Project (not yet available)</label>
          </div><!--form-group-->
           <div class="form-group mb-0 clearfix">
-           {{ form_submit('Upload') }}
+           {{ form_submit('Save new project') }}
           </div><!--form-group-->
           {{ html()->form()->close() }}
         </div><!--col-->

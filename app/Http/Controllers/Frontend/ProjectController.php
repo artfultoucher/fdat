@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 // use Illuminate\Http\Request;
 use App\Http\Requests\StoreProject;
+use App\Http\Requests\UpdateProject;
 use App\Project;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,20 +58,15 @@ class ProjectController extends Controller
       return redirect()->route('frontend.project.show', $project->id)->withFlashSuccess('New project created. Only you can see it.');
     }
 
-    public function update(StoreProject $request, $id) {
+    public function update(UpdateProject $request, $id) { // all checks already done in request
         $project = Project::findOrFail($id);
-        if ($project->is_owner()) { // because we use the same type hint as in store() (inheriting from that class would be akward)
-          $project->title = $request->title;
-          $project->abstract = $request->abstract;
-          $project->description = $request->description;
-          $project->type = $request->type;
-          $project->save();
-          $request->user()->subscribe_matter($request->type); // autosubscribe as in store()
-          return redirect()->route('frontend.project.show', $project->id)->withFlashSuccess('Project updated.');
-          }
-        else {
-          abort('403', 'Forbidden PUT method on project.');
-          }
+        $project->title = $request->title;
+        $project->abstract = $request->abstract;
+        $project->description = $request->description;
+        $project->type = $request->type;
+        $project->save();
+        $request->user()->subscribe_matter($request->type); // autosubscribe as in store()
+        return redirect()->route('frontend.project.show', $id)->withFlashSuccess('Project updated.');
         }
 
    public function show ($id) {
@@ -135,7 +131,6 @@ class ProjectController extends Controller
           // make sure function returns from here
           $project->delete();
           return redirect()->route('frontend.user.dashboard')->withFlashDanger('Project deleted.');
-
         }
           return back()->withFlashDanger('You cannot delete someone else\'s project.');
     }
@@ -143,8 +138,8 @@ class ProjectController extends Controller
     public function set_visibility($id, $vis){ // I know this should be guarded by middleware and received by PUT request
       $project = Project::findOrFail($id);
       if ($project->is_owner() && ($vis >= 0) && ($vis <= 2)) { // takes care of Auth too
-        // TODO refuse to set private if students are attached
-        $project->timestamps = false;
+        // TODO refuse to set private if anyone else is still engaged
+        $project->timestamps = false; // temporarily so
         $project->visibility = $vis;
         $project->save();
         return back()->withFlashSuccess('Visibility modified.');
@@ -153,4 +148,5 @@ class ProjectController extends Controller
         abort(403, 'I know you are messing with URLs!');
        }
     }
+
 }
