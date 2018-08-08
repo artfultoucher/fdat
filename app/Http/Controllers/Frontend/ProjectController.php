@@ -138,7 +138,10 @@ class ProjectController extends Controller
     public function set_visibility($id, $vis){ // I know this should be guarded by middleware and received by PUT request
       $project = Project::findOrFail($id);
       if ($project->is_owner() && ($vis >= 0) && ($vis <= 2)) { // takes care of Auth too
-        // TODO refuse to set private if anyone else is still engaged
+        if ( ($vis == 0) && ($project->secondreader != 0) ) {
+            return back()->withFlashWarning('A private project must not have a second reader engaged.');
+        }
+        // TODO test against engaged students
         $project->timestamps = false; // temporarily so
         $project->visibility = $vis;
         $project->save();

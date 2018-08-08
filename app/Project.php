@@ -85,12 +85,12 @@ class Project extends Model
         }
       }
 
-    public function second_reader_name()
+    public function secondreader_name()
       {
-        if ($this->second_reader == 0) {
+        if ($this->secondreader == 0) {
           return '';
         } else {
-          return User::findOrFail($this->second_reader)->full_name;
+          return User::findOrFail($this->secondreader)->full_name;
         }
       }
 

@@ -13,3 +13,6 @@ Route::get('user/{id}', 'PersonController@show')->name('person.show');
 
 Route::patch('project/supervise/{id}' , 'EngagementController@supervise')->name('project.supervise');
 Route::patch('project/unsupervise/{id}' , 'EngagementController@unsupervise')->name('project.unsupervise');
+
+Route::patch('project/second/{id}' , 'EngagementController@become_second_reader')->name('project.second');
+Route::patch('project/unsecond/{id}' , 'EngagementController@dismiss_second_reader')->name('project.unsecond');

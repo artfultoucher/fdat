@@ -92,8 +92,14 @@
                                       @csrf @method('patch')
                                       <button class="dropdown-item" type="submit">UnSupervise</button>
                                     </form>
-                                   <a class="dropdown-item" href="#">Become Second Reader</a>
-                                   <a class="dropdown-item" href="#">Dismiss Second Reader</a>
+                                    <form action="{{route('frontend.project.second', $project->id)}}" method="post">
+                                      @csrf @method('patch')
+                                      <button class="dropdown-item" type="submit">Become Second Reader</button>
+                                    </form>
+                                    <form action="{{route('frontend.project.unsecond', $project->id)}}" method="post">
+                                      @csrf @method('patch')
+                                      <button class="dropdown-item" type="submit">Dismiss Second Reader</button>
+                                    </form>
                                  </div>
                                </div>
 
@@ -115,12 +121,32 @@
 
                     </div><!-- row -->
                     <div class="row">
-                      <div class="col">Supervisor: <strong>{{$project->supervisor_name()}}</strong></div><div class="col">Second Reader: <strong>{{$project->second_reader_name()}}</strong></div>
-                      <div class="col">Author: <strong>{{$project->author_name()}}</strong></div><div class="col">Assigned to: </div>
+                      <div class="col">Supervisor:
+                        @if($project->supervisor != 0)
+                          <a class="btn btn-secondary {!! $project->colors()['text-col'] !!}" href="{{route('frontend.person.show', $project->supervisor)}}">
+                          <strong>{{$project->supervisor_name()}}</strong>
+                          </a>
+                        @endif
+                      </div>
+                      <div class="col">Second reader:
+                        @if($project->secondreader != 0)
+                          <a class="btn btn-secondary {!! $project->colors()['text-col'] !!}" href="{{route('frontend.person.show', $project->secondreader)}}">
+                          {{$project->secondreader_name()}}
+                          </a>
+                        @endif
+                      </div>
+                      <div class="col">Author:
+                          <a class="btn btn-secondary {!! $project->colors()['text-col'] !!}" href="{{route('frontend.person.show', $project->author)}}">
+                          {{$project->author_name()}}
+                        </a>
+                      </div>
+
+                      <div class="col">Assigned to: </div>
+
                     </div>
                     <div class="row">
                       <div class="col">
-                        <div class="card bg-light text-dark">
+                        <div class="card bg-light text-dark mt-2">
                           <div class="card-header"><strong>Full Project Description</strong>
                           </div>
                           <div class="card-body">
