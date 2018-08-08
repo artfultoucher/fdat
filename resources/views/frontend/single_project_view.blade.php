@@ -23,12 +23,12 @@
                        @if ($project->is_owner())
 
                        <div class="col-3">
-                         <div class="card text-white bg-dark">
+                         <div class="card text-white bg-secondary">
                            <div class="card-header"><strong>This project</strong></div>
                            <div class="card-body">
                              <div class="btn-group">
                                <div class="dropdown show">
-                                 <button  class="btn btn-secondary dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 <button  class="btn btn-light dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                    Modify
                                  </button>
                                  <div class="dropdown-menu">
@@ -41,7 +41,7 @@
                                </div>
 
                                <div class="dropdown show">
-                                 <button type="button" class="btn btn-secondary dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 <button type="button" class="btn btn-light dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                    Visibility
                                  </button>
                                  <div class="dropdown-menu">
@@ -73,15 +73,14 @@
                       @endif
 
                       @can('supervise projects')
-
                       <div class="col-3">
-                        <div class="card text-white bg-dark">
+                        <div class="card text-white bg-secondary">
                           <div class="card-header"><strong>Engage</strong></div>
                             <div class="card-body">
                               <div class="btn-group">
                                <div class="dropdown show">
-                                 <button type="button" style="width: 6.5em;" class="btn btn-secondary dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                   You
+                                 <button type="button" style="width: 6.5em;" class="btn btn-light dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                   Lecturers
                                  </button>
                                  <div class="dropdown-menu">
                                     <form action="{{route('frontend.project.supervise', $project->id)}}" method="post">
@@ -104,7 +103,7 @@
                                </div>
 
                                <div class="dropdown show">
-                                 <button type="button" style="width: 6.5em;" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 <button type="button" style="width: 6.5em;" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                    Students
                                  </button>
                                  <div class="dropdown-menu">
@@ -116,34 +115,59 @@
                            </div><!-- card-body -->
                         </div><!-- card -->
                        </div><!-- col -->
-
                      @endcan
-
                     </div><!-- row -->
-                    <div class="row">
-                      <div class="col">Supervisor:
-                        @if($project->supervisor != 0)
-                          <a class="btn btn-secondary {!! $project->colors()['text-col'] !!}" href="{{route('frontend.person.show', $project->supervisor)}}">
-                          <strong>{{$project->supervisor_name()}}</strong>
-                          </a>
-                        @endif
-                      </div>
-                      <div class="col">Second reader:
-                        @if($project->secondreader != 0)
-                          <a class="btn btn-secondary {!! $project->colors()['text-col'] !!}" href="{{route('frontend.person.show', $project->secondreader)}}">
-                          {{$project->secondreader_name()}}
-                          </a>
-                        @endif
-                      </div>
-                      <div class="col">Author:
-                          <a class="btn btn-secondary {!! $project->colors()['text-col'] !!}" href="{{route('frontend.person.show', $project->author)}}">
-                          {{$project->author_name()}}
-                        </a>
-                      </div>
+                    <div class="card bg-light text-dark mt-2">
+                     <div class="card-header"><strong>Currently Engaged</strong></div>
+                         <div class="card-body">
+                            <div class="card-block">
+                                <div class="row">
+                                    <div class="small col-md-3">
+                                     Supervisor
+                                    </div>
+                                    <div class="small col-md-3">
+                                     Second reader
+                                    </div>
+                                    <div class="small col-md-3">
+                                     Author
+                                    </div>
+                                    <div class="small col-md-3">
+                                     Assigned to
+                                    </div>
+                                </div>
 
-                      <div class="col">Assigned to: </div>
-
+                               <div class="row">
+                                   <div class="col-md-3">
+                                    @if($project->supervisor != 0)
+                                      <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $project->supervisor)}}">
+                                      <strong>{{$project->supervisor_name()}}</strong>
+                                      </a>
+                                    @else
+                                      <small>none</small>
+                                    @endif
+                                   </div>
+                                   <div class="col-md-3">
+                                    @if($project->secondreader != 0)
+                                      <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $project->secondreader)}}">
+                                      {{$project->secondreader_name()}}
+                                      </a>
+                                    @else
+                                      <small>none</small>
+                                    @endif
+                                   </div>
+                                   <div class="col-md-3">
+                                    <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $project->author)}}">
+                                      {{$project->author_name()}}
+                                    </a>
+                                   </div>
+                                   <div class="col-md-3">
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
                     </div>
+
+
                     <div class="row">
                       <div class="col">
                         <div class="card bg-light text-dark mt-2">

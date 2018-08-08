@@ -127,10 +127,12 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
         if ($project->is_owner()) {
-          // TODO take care of engaged students and maybe the second reader
-          // make sure function returns from here
+          // TODO take care of engaged students
+          if ($project->secondreader !=0 ) {
+              return back()->withFlashWarning('You must dismiss the second reader before deleting this project.');
+          }
           $project->delete();
-          return redirect()->route('frontend.user.dashboard')->withFlashDanger('Project deleted.');
+          return redirect()->route('frontend.project.index')->withFlashDanger('Project deleted.'); // this should be changed to "My Projects" when ready
         }
           return back()->withFlashDanger('You cannot delete someone else\'s project.');
     }
