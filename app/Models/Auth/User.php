@@ -84,6 +84,35 @@ class User extends Authenticatable
       return (($this->subscr_mask & $flag) == $flag);
     }
 
+    // these methods should perhaps be moved to PersonController
+
+   //WORKING POINT
+
+   // Decide if these functions return arrays or collections
+
+   // Decide where to place them
+
+    public function visible_supervised_projects(){
+        $result = array();
+        foreach ($this->supervised_projects() as $p) {
+          if ($p->is_visible()) {
+            $result[] = $p;
+          }
+        }
+        return $result;
+    }
+
+    public function supervised_projects() { // we do not check for roles in order to expose database errors!
+      return $this->hasMany('App\Project', 'supervisor')->get(); // these are *semester* projects!
+      // TODO join collection with supervised small projects
+    }
+
+    public function co_supervised_projects() { // we do not check for roles in order to expose database errors!
+      return $this->hasMany('App\Project', 'secondreader')->get();
+       // TODO join collection with supervised small projects
+    }
+
+
     /**
      * The attributes that should be hidden for arrays.
      *
