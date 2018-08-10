@@ -93,13 +93,7 @@ class User extends Authenticatable
    // Decide where to place them
 
     public function visible_supervised_projects(){
-        $result = array();
-        foreach ($this->supervised_projects() as $p) {
-          if ($p->is_visible()) {
-            $result[] = $p;
-          }
-        }
-        return $result;
+        return $this->hasMany('App\Project', 'supervisor')->filter(function($p){ return $p->is_visible();});
     }
 
     public function supervised_projects() { // we do not check for roles in order to expose database errors!

@@ -18,7 +18,7 @@
             {{ html()->textarea('abstract')->class('form-control')->attribute('rows', 5)->required() }}
           </div><!--form-group-->
           <div class="form-group">
-            {{ html()->label('Project description - detailed text for single views')->for('description') }}
+            {{ html()->label('Project description - detailed text for single views. You can use <a href="https://www.markdownguide.org/cheat-sheet/">Markdown</a>.')->for('description') }}
             {{ html()->textarea('description')->class('form-control')->attribute('rows', 10)->required() }}
           </div><!--form-group-->
           <div class="form-group">

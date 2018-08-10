@@ -32,6 +32,7 @@ Lecturers are welcome to create small projects for any teaching purpose they wis
 
 MISCELLANEOUS
 
+* You can now use Markdown formatting in the project descriptions.
 * The type of a project's degree program (its associated matter) can now be changed in
   the edit view.
 * Plenty of layout improvements.

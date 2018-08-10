@@ -174,7 +174,7 @@
                           <div class="card-header"><strong>Full Project Description</strong>
                           </div>
                           <div class="card-body">
-                            {{$project->description}}
+                            @markdown($project->description)
                           </div>
                        </div><!-- card -->
                       </div>
