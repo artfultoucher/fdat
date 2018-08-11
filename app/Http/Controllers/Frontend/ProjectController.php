@@ -39,18 +39,6 @@ class ProjectController extends Controller
    }
 
 
-/*
-    public function index_free()
-    {
-        $result = array();
-        foreach (Project::all() as $p) {
-          if ($p->is_available() && $p->is_visible()) {
-            $result[] = $p;
-          }
-        }
-        return view('frontend.project_list', ['projects' => $result, 'page_title' => 'Available Projects' , 'breadcrumb_name' => 'projects_free']);
-    }
-*/
     public function create()
     {  // no real need to guard this here against anauthorized project creation
         return view('frontend.create_project');
@@ -87,7 +75,7 @@ class ProjectController extends Controller
 
    public function show ($id) {
       $project = Project::findOrFail($id);
-      if ($project->is_visible()) {
+      if ($project->is_visible(true)) { // here we ignore subscriptions
         return view('frontend.single_project_view', ['project' => $project]);
       }
       else {

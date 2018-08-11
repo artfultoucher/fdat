@@ -10,7 +10,6 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">Projects</a>
-
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
                     <a href="{{ route('frontend.project.index') }}" class="dropdown-item">Browse all</a>
                     <a href="{{ route('frontend.project.index_free') }}" class="dropdown-item">Available only</a>
@@ -23,8 +22,27 @@
                 </div>
             </li>
 
-            <li class="nav-item"><a href="{{route('frontend.person.show_with_role', 'lecturer')}}" class="nav-link">Lecturers</a></li>
-            <li class="nav-item"><a href="{{route('frontend.person.show_with_role', 'student')}}" class="nav-link">Students</a></li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Lecturers</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
+                    <a href="{{ route('frontend.person.show_all_lecturers') }}" class="dropdown-item">All lecturers</a>
+                    @auth
+                    <a href="{{ route('frontend.person.show_lecturers') }}" class="dropdown-item">Some lecturers</a>
+                   @endauth
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Students</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
+                    <a href="{{ route('frontend.person.show_all_students') }}" class="dropdown-item">All students</a>
+                    @auth
+                    <a href="{{ route('frontend.person.show_students') }}" class="dropdown-item">Some students</a>
+                   @endauth
+                </div>
+            </li>
 
             @auth
                 <li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.dashboard')) }}">{{ __('navs.frontend.dashboard') }}</a></li>

@@ -44,14 +44,14 @@ class Project extends Model
       return !$this->is_new() && $this->updated_at->diffInDays() < 3;
     }
 
-    public function is_visible(){ // public projects are HIDDEN when logged in and not subscribed
+    public function is_visible($ignore_subscriptions = false){ // public projects are HIDDEN when logged in and not subscribed
       if (Auth::guest()) {
         return $this->visibility == 2;
       }
       if ($this->is_owner()){
         return true;
       }
-      return ($this->visibility > 0) && Auth::user()->hasPermissionTo('view projects') && Auth::user()->has_subscribed($this->type);
+      return ($this->visibility > 0) && Auth::user()->hasPermissionTo('view projects') && ($ignore_subscriptions || Auth::user()->has_subscribed($this->type));
     }
 
 /*

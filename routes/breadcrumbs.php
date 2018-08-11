@@ -48,7 +48,9 @@ Breadcrumbs::for('view_person', function ($trail, $person) {
     $trail->push($person->full_name, route('frontend.person.show', $person->id));
 });
 
+/*
 Breadcrumbs::for('view_role', function ($trail, $role) {
     $trail->parent('home'); // change that later
     $trail->push('Users with role ' . $role, route('frontend.person.show_with_role', $role));
 });
+*/

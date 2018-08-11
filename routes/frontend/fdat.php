@@ -5,11 +5,15 @@
  * All route names are prefixed with 'frontend.'.
  */
 
-Route::get('project/free', 'ProjectController@index_free')->name('project.index_free'); 
+Route::get('project/free', 'ProjectController@index_free')->name('project.index_free');
 Route::resource('project', 'ProjectController');
 Route::get('project/{id}/visibility/{vis}', 'ProjectController@set_visibility')->name('project.change_visibility'); // should be PUT but that's so awkward to do from buttons
 
-Route::get('user/role/{string}', 'PersonController@show_with_role')->name('person.show_with_role');
+Route::get('user/lecturers', 'PersonController@show_lecturers')->name('person.show_lecturers');
+Route::get('user/all_lecturers', 'PersonController@show_all_lecturers')->name('person.show_all_lecturers');
+Route::get('user/students', 'PersonController@show_students')->name('person.show_students');
+Route::get('user/show_all_students', 'PersonController@show_all_students')->name('person.show_all_students');
+
 Route::get('user/{id}', 'PersonController@show')->name('person.show');
 
 Route::patch('project/supervise/{id}' , 'EngagementController@supervise')->name('project.supervise');
