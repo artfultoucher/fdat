@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 @section('title', $title)
-
+@section('breadcrumbs', Breadcrumbs::render($breadcrumb_name))
 @section('content')
 <h2>{{$title}} ({{ $persons->count()}})</h2>
 <ul class="list-group">
@@ -11,7 +11,7 @@
        Subscribed to:
        @foreach ($person->matters() as $matter)
            @if ($person->has_subscribed($matter))
-               {{$matter . ' '}}
+               <span class="badge badge-secondary">{{$matter}}</span>
            @endif
        @endforeach
    <br>

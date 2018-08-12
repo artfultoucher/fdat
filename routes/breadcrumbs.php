@@ -48,9 +48,30 @@ Breadcrumbs::for('view_person', function ($trail, $person) {
     $trail->push($person->full_name, route('frontend.person.show', $person->id));
 });
 
+Breadcrumbs::for('all_students', function ($trail) {
+    $trail->parent('home');
+    $trail->push('All students', route('frontend.person.show_all_students'));
+});
+
+Breadcrumbs::for('students', function ($trail) {
+    $trail->parent('all_students');
+    $trail->push('Relevant students', route('frontend.person.show_students'));
+});
+
+Breadcrumbs::for('all_lecturers', function ($trail) {
+    $trail->parent('home');
+    $trail->push('All lecturers', route('frontend.person.show_all_lecturers'));
+});
+
+Breadcrumbs::for('lecturers', function ($trail) {
+    $trail->parent('all_lecturers');
+    $trail->push('Relevant lecturers', route('frontend.person.show_lecturers'));
+});
+
 /*
-Breadcrumbs::for('view_role', function ($trail, $role) {
+Breadcrumbs::for('person_list', function ($trail, $role) {
     $trail->parent('home'); // change that later
     $trail->push('Users with role ' . $role, route('frontend.person.show_with_role', $role));
 });
+
 */

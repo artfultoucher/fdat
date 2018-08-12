@@ -17,19 +17,27 @@ class PersonController extends Controller
     }
 
    public function show_students() {
-       return view('frontend.person_list', ['persons' => $this->select_users('student', false), 'title' => 'Students who share subscriptions with you']);
+       return view('frontend.person_list', ['persons' => $this->select_users('student', false),
+       'breadcrumb_name' => 'students',
+       'title' => 'Students who share subscriptions with you']);
    }
 
    public function show_all_students() {
-       return view('frontend.person_list', ['persons' => $this->select_users('student', true), 'title' => 'All registered students']);
+       return view('frontend.person_list', ['persons' => $this->select_users('student', true),
+       'breadcrumb_name' => 'all_students',
+       'title' => 'All registered students']);
    }
 
    public function show_lecturers() {
-       return view('frontend.person_list', ['persons' => $this->select_users('lecturer', false), 'title' => 'Lecturers who share subscriptions with you']);
+       return view('frontend.person_list', ['persons' => $this->select_users('lecturer', false),
+       'breadcrumb_name' => 'lecturers',
+       'title' => 'Lecturers who share subscriptions with you']);
    }
 
    public function show_all_lecturers() {
-       return view('frontend.person_list', ['persons' => $this->select_users('lecturer', true), 'title' => 'All registered Lecturers']);
+       return view('frontend.person_list', ['persons' => $this->select_users('lecturer', true),
+       'breadcrumb_name' => 'all_lecturers',
+       'title' => 'All registered Lecturers']);
    }
 
    private function select_users ($role, $ignore_subscriptions) {

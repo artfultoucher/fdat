@@ -28,7 +28,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
                     <a href="{{ route('frontend.person.show_all_lecturers') }}" class="dropdown-item">All lecturers</a>
                     @auth
-                    <a href="{{ route('frontend.person.show_lecturers') }}" class="dropdown-item">Some lecturers</a>
+                    <a href="{{ route('frontend.person.show_lecturers') }}" class="dropdown-item">Relevant lecturers</a>
                    @endauth
                 </div>
             </li>
@@ -39,7 +39,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
                     <a href="{{ route('frontend.person.show_all_students') }}" class="dropdown-item">All students</a>
                     @auth
-                    <a href="{{ route('frontend.person.show_students') }}" class="dropdown-item">Some students</a>
+                    <a href="{{ route('frontend.person.show_students') }}" class="dropdown-item">Relevant students</a>
                    @endauth
                 </div>
             </li>
