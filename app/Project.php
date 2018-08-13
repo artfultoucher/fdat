@@ -11,38 +11,66 @@ class Project extends Model
     // these columns can be modified together at once (aka mass assignable)
     protected $fillable = ['title', 'type', 'author', 'supervisor', 'visibility', 'abstract', 'description'];
 
+
     public function owner() {
       return $this->supervisor == 0 ? $this->author : $this->supervisor;
     }
+
 
     public function is_owner() {
       return Auth::check() && Auth::user()->id == $this->owner();
     }
 
+
     public function is_orphan() { // no supervisor
       return $this->supervisor == 0;
     }
 
-  //  public function is_editable() {
-  //    return $this->is_owner() && Auth::user()->hasPermissionTo('write projects');
-  //  }
 
-
-    public function is_available(){
-      return !($this->is_assigned() || $this->is_orphan()); // ah De Morgan...
+    public function is_available(){ // available for students to take on
+      // return !($this->is_assigned() || $this->is_orphan()); // ah De Morgan...
+      if ($this->is_orphan() || $this->assigned_students()->get()->isNotEmpty()) {
+          return false;
+      }
+      // return $this->visibility > 0; // not really need or..?
+      return true;
     }
 
+
+    public function user_can_assign_students() {
+        return Auth::check() && Auth::user()->id == $this->supervisor && $this->visibility > 0; // must also return false for orphan!
+    }
+
+    public function assigned_students(){
+        return $this->hasMany('App\Models\Auth\User', 'sproject_id', 'id')->get();
+        /* // this does work
+        $result = array();
+        $all_users = User::all();
+        foreach ($all_users as $student) {
+            if ($student->sproject_id == $this->id) {
+                $result[] = $student;
+            }
+        }
+        return $result;
+        */
+    }
+
+    /*
     public function is_assigned() {
       return false; // TODO
     }
+    */
+
 
     public function is_new(){
       return $this->created_at->diffInDays() < 3;
     }
 
+
     public function is_updated(){
       return !$this->is_new() && $this->updated_at->diffInDays() < 3;
     }
+
 
     public function is_visible($ignore_subscriptions = false){ // public projects are HIDDEN when logged in and not subscribed
       if (Auth::guest()) {
@@ -54,18 +82,7 @@ class Project extends Model
       return ($this->visibility > 0) && Auth::user()->hasPermissionTo('view projects') && ($ignore_subscriptions || Auth::user()->has_subscribed($this->type));
     }
 
-/*
-    public function is_visible () { // public projects are SHOWN when logged in and not subscribed
-      if ($this->visibility == 2 || $this->is_owner()) { // public or owned
-        return true;
-      }
-      // private or platform project of some other user
-      if (Auth::check()) {
-        return ($this->visibility > 0) && Auth::user()->hasPermissionTo('view projects') && Auth::user()->has_subscribed($this->type); // grrrr.... :-(
-      }
-      return false;
-    }
-*/
+
 
     public function author_name()
       {
@@ -76,6 +93,7 @@ class Project extends Model
         }
       }
 
+
     public function supervisor_name()
       {
         if ($this->supervisor == 0) {
@@ -84,6 +102,7 @@ class Project extends Model
           return User::findOrFail($this->supervisor)->full_name;
         }
       }
+
 
     public function secondreader_name()
       {
@@ -94,12 +113,15 @@ class Project extends Model
         }
       }
 
+
     public function owner_name()
       {
         return User::findOrFail($this->owner())->full_name;
       }
 
+
     public static $possible_types = ['BSc', 'MScCS', 'MScDA', 'MScIM', 'BADHIT']; // each type must also be a matter in User.php
+
 
     public function colors () { // for use in views
       if ($this->is_owner()) { // top priority
@@ -114,6 +136,7 @@ class Project extends Model
       }
       return ['bg-col' => 'bg-info', 'text-col' => 'text-white']; // remaining cases
     }
+
 
     public function icons () {
       switch ($this->visibility) {

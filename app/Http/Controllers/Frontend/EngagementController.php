@@ -81,29 +81,47 @@ class EngagementController extends Controller
     }
 
 
-    public function student_form ($id) { // TODO: Access control
+    public function reassign_students (Request $req, $project_id) {
+        $project = Project::findOrFail($project_id);
+        if (!$project->user_can_assign_students()) {
+            abort (403, 'You can\'t do that. Period.');
+            }
+        foreach ($project->assigned_students() as $student) {
+             $student->sproject_id = 0; // first we dismiss all currently assigned students
+             $student->save();
+         }
+         if ($req->has('assigned_ids')) {
+             foreach ($req->assigned_ids as $std_id) {
+                 $student = User::findOrFail($std_id);
+                 $student->sproject_id = $project_id;
+                 $student->save();
+             }
+            }
+        // return back()->withFlashSuccess('Students successfully reassigned.'); // change this view
+        return view('frontend.single_project_view' , ['project' => $project] )->withFlashSuccess('Students successfully reassigned.');
+        }
+
+
+    public function student_form ($id) {
         $project = Project::findOrFail($id);
-        $users = User::all();
-        $available_ids = array(); // associative array; id => full_name
-        $assigned_ids = array(); // array of integer
-        foreach ($users as $user) {
-            if ($user->hasPermissionTo('undertake projects') && $user->has_subscribed($project->type))  {
-                if ($user->sproject_id == 0) { // no semester project assigned
-                    $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
-                }
-                elseif ($user->sproject_id == $project->id) { // already working on this project
-                    $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
-                    $assigned_ids[] = $user->id; // additionally put this id to array of currently assigned students
+        if ( ! $project->user_can_assign_students()) {
+            return back()->withFlashWarning('You must be supervisor and the project must not be private.');
+        }
+            $users = User::all();
+            $available_ids = array(); // associative array; id => full_name
+            $assigned_ids = array(); // array of integer
+            foreach ($users as $user) {
+                if ($user->hasPermissionTo('undertake projects') && $user->has_subscribed($project->type))  {
+                    if ($user->sproject_id == 0) { // no semester project assigned
+                        $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
+                    }
+                    elseif ($user->sproject_id == $project->id) { // already working on this project
+                        $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
+                        $assigned_ids[] = $user->id; // additionally put this id to array of currently assigned students
+                    }
                 }
             }
-        }
         return view('frontend.assign_students', ['project' => $project, 'students' => $available_ids, 'selected_ids' => $assigned_ids]);
-    }
-
-    public function reassign_students (Request $req, $project_id) {
-
-        // TODO
-
     }
 
 }
