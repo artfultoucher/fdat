@@ -37,6 +37,11 @@ Breadcrumbs::for('edit_project', function ($trail, $project) {
     $trail->push('Edit', route('frontend.project.edit', $project->id));
 });
 
+Breadcrumbs::for('assign_students', function ($trail, $project) {
+    $trail->parent('view_project', $project);
+    $trail->push('Assign students', route('frontend.project.student_form', $project->id));
+});
+
 // Home -> My account
 Breadcrumbs::for('profile', function ($trail) {
     $trail->parent('home');
@@ -67,11 +72,3 @@ Breadcrumbs::for('lecturers', function ($trail) {
     $trail->parent('all_lecturers');
     $trail->push('Relevant lecturers', route('frontend.person.show_lecturers'));
 });
-
-/*
-Breadcrumbs::for('person_list', function ($trail, $role) {
-    $trail->parent('home'); // change that later
-    $trail->push('Users with role ' . $role, route('frontend.person.show_with_role', $role));
-});
-
-*/

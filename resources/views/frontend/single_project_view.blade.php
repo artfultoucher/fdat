@@ -107,7 +107,7 @@
                                    Students
                                  </button>
                                  <div class="dropdown-menu">
-                                   <a class="dropdown-item" href="#">ReAssign students</a>
+                                   <a class="dropdown-item" href="{{route('frontend.project.student_form', $project->id)}}">ReAssign students</a>
                                    <a class="dropdown-item" href="#">Dismiss all students</a>
                                  </div>
                                </div>

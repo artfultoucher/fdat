@@ -21,3 +21,6 @@ Route::patch('project/unsupervise/{id}' , 'EngagementController@unsupervise')->n
 
 Route::patch('project/second/{id}' , 'EngagementController@become_second_reader')->name('project.second');
 Route::patch('project/unsecond/{id}' , 'EngagementController@dismiss_second_reader')->name('project.unsecond');
+
+Route::get('project/students/{id}' , 'EngagementController@student_form')->name('project.student_form');
+Route::patch('project/students/{id}' , 'EngagementController@reassign_students')->name('project.students');

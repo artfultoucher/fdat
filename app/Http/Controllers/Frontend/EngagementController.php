@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Project;
+use App\Models\Auth\User;
 
 class EngagementController extends Controller
 {
@@ -77,6 +78,32 @@ class EngagementController extends Controller
       $project->secondreader = 0;
       $project->save();
       return back()->withFlashSuccess('Second reader dismissed.');
+    }
+
+
+    public function student_form ($id) { // TODO: Access control
+        $project = Project::findOrFail($id);
+        $users = User::all();
+        $available_ids = array(); // associative array; id => full_name
+        $assigned_ids = array(); // array of integer
+        foreach ($users as $user) {
+            if ($user->hasPermissionTo('undertake projects') && $user->has_subscribed($project->type))  {
+                if ($user->sproject_id == 0) { // no semester project assigned
+                    $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
+                }
+                elseif ($user->sproject_id == $project->id) { // already working on this project
+                    $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
+                    $assigned_ids[] = $user->id; // additionally put this id to array of currently assigned students
+                }
+            }
+        }
+        return view('frontend.assign_students', ['project' => $project, 'students' => $available_ids, 'selected_ids' => $assigned_ids]);
+    }
+
+    public function reassign_students (Request $req, $project_id) {
+
+        // TODO
+
     }
 
 }
