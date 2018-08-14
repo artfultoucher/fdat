@@ -24,3 +24,4 @@ Route::patch('project/unsecond/{id}' , 'EngagementController@dismiss_second_read
 
 Route::get('project/students/{id}' , 'EngagementController@student_form')->name('project.student_form');
 Route::patch('project/students/{id}' , 'EngagementController@reassign_students')->name('project.students');
+Route::patch('project/dismiss_students/{id}' , 'EngagementController@dismiss_students')->name('project.dismiss_students');

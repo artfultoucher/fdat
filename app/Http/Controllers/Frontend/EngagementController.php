@@ -110,6 +110,22 @@ class EngagementController extends Controller
         return redirect()->route('frontend.project.show', $project_id)->withFlashSuccess('Students successfully reassigned.');
         }
 
+    public function dismiss_students (Request $req, $project_id) {
+        $project = Project::findOrFail($project_id);
+        if ($req->user()->id != $project->supervisor) {
+            return back()->withFlashDanger('Only the supervisor can assign and release students.');
+        }
+        $students = $project->assigned_students();
+        if ($students->isEmpty()) {
+            return back()->withFlashWarning('There are no students assigned to this project.');
+        }
+        foreach ($students as $student) {
+            $student->sproject_id = 0;
+            $student->save();
+         }
+        return redirect()->route('frontend.project.show', $project_id)->withFlashSuccess('All assigned students have been freed from this project.');
+    }
+
 
     public function student_form ($id) {
         $project = Project::findOrFail($id);

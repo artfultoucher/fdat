@@ -108,7 +108,10 @@
                                  </button>
                                  <div class="dropdown-menu">
                                    <a class="dropdown-item" href="{{route('frontend.project.student_form', $project->id)}}">ReAssign students</a>
-                                   <a class="dropdown-item" href="#">Dismiss all students</a>
+                                   <form action="{{route('frontend.project.dismiss_students', $project->id)}}" method="post">
+                                       @csrf @method('patch')
+                                       <button class="dropdown-item" type="submit">Dismiss all students</button>
+                                   </form>
                                  </div>
                              </div>
                          </div><!-- btn-group -->
