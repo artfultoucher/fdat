@@ -29,7 +29,7 @@ class Project extends Model
 
     public function is_available(){ // available for students to take on
       // return !($this->is_assigned() || $this->is_orphan()); // ah De Morgan...
-      if ($this->is_orphan() || $this->assigned_students()->get()->isNotEmpty()) {
+      if ($this->is_orphan() || ! empty($this->assigned_students()))  {
           return false;
       }
       // return $this->visibility > 0; // not really need or..?
@@ -43,23 +43,7 @@ class Project extends Model
 
     public function assigned_students(){
         return $this->hasMany('App\Models\Auth\User', 'sproject_id', 'id')->get();
-        /* // this does work
-        $result = array();
-        $all_users = User::all();
-        foreach ($all_users as $student) {
-            if ($student->sproject_id == $this->id) {
-                $result[] = $student;
-            }
-        }
-        return $result;
-        */
     }
-
-    /*
-    public function is_assigned() {
-      return false; // TODO
-    }
-    */
 
 
     public function is_new(){

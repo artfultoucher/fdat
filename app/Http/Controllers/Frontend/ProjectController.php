@@ -83,41 +83,6 @@ class ProjectController extends Controller
       }
    }
 
-/*
-// This version assumes permission is not checked in is_visible()
-// It reports detailed 403 messages.
-
-    public function show ($id) {
-      $project = Project::findOrFail($id);
-      if ($project->visibility == 2) {
-        return view('frontend.single_project_view', ['project' => $project]); // public project
-      }
-      if (Auth::guest()) {
-        abort(403,'You must at least be logged in to view this project.');
-      }
-      if ($project->visibility == 1) { // platform project and logged in
-        if (Auth::user()->hasPermissionTo('view projects')) {
-          if (Auth::user()->has_subscribed($project->type)) {
-            return view('frontend.single_project_view', ['project' => $project]);
-          } else {
-            abort(403,'You are not subscribed to matter ' . $project->type . '.');  // even if user is owner. fix that?
-          }
-        } else {
-          abort(403,'Insufficient permission. You can only view public projects.');
-        }
-      } else { // private project and logged in
-        if (Auth()->user()->id == $project->owner()) {
-          return view('frontend.single_project_view', ['project' => $project]);
-        } else {
-          abort(403,'You cannot view someone else\'s private projects.');
-        }
-      }
-    }
-*/
-    /**
-     * Show the form for editing the specified resource.
-
-     */
     public function edit($id)
     {
        $project = Project::findOrFail($id);
@@ -145,9 +110,11 @@ class ProjectController extends Controller
       $project = Project::findOrFail($id);
       if ($project->is_owner() && ($vis >= 0) && ($vis <= 2)) { // takes care of Auth too
         if ( ($vis == 0) && ($project->secondreader != 0) ) {
-            return back()->withFlashWarning('A private project must not have a second reader engaged.');
+            return back()->withFlashWarning('A project with a second reader engaged cannot be private.');
         }
-        // TODO test against engaged students
+        if ( $vis == 0 && count($project->assigned_students()) > 0 ) {
+            return back()->withFlashDanger('A project with students engaged cannot be private.');
+        }
         $project->timestamps = false; // temporarily so
         $project->visibility = $vis;
         $project->save();

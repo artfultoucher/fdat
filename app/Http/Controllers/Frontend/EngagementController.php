@@ -33,11 +33,20 @@ class EngagementController extends Controller
       if ($project->supervisor != $user->id) {
         return back()->withFlashWarning('You are not the supervisor if this project.');
       }
-      // TODO return with warning if others are still engaged
+      if($project->secondreader != 0) {
+          return back()->withFlashWarning('You cannot abandon this project as long as there is still second reader attached.');
+      }
+      if(count($project->assigned_students()) > 0) {
+          return back()->withFlashDanger('You cannot abandon this project as long as there are still students attached.');
+      }
       $project->timestamps = false;
       $project->supervisor = 0;
       $project->secondreader = 0; // quietly dismissed without messaging
       $project->save();
+
+      // TODO redirect to project view
+      // check where view returns should be changed to redirects!
+
       return back()->withFlashSuccess('You are now no longer supervising this project.');
     }
 
@@ -94,11 +103,11 @@ class EngagementController extends Controller
              foreach ($req->assigned_ids as $std_id) {
                  $student = User::findOrFail($std_id);
                  $student->sproject_id = $project_id;
+                 $student->subscribe_matter($project->type); // just in case, might be needed at some stage
                  $student->save();
              }
             }
-        // return back()->withFlashSuccess('Students successfully reassigned.'); // change this view
-        return view('frontend.single_project_view' , ['project' => $project] )->withFlashSuccess('Students successfully reassigned.');
+        return redirect()->route('frontend.project.show', $project_id)->withFlashSuccess('Students successfully reassigned.');
         }
 
 
@@ -111,16 +120,17 @@ class EngagementController extends Controller
             $available_ids = array(); // associative array; id => full_name
             $assigned_ids = array(); // array of integer
             foreach ($users as $user) {
-                if ($user->hasPermissionTo('undertake projects') && $user->has_subscribed($project->type))  {
-                    if ($user->sproject_id == 0) { // no semester project assigned
-                        $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
-                    }
-                    elseif ($user->sproject_id == $project->id) { // already working on this project
-                        $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
-                        $assigned_ids[] = $user->id; // additionally put this id to array of currently assigned students
-                    }
+                if ($user->sproject_id == $project->id) { // aready assigned to this project. permissions and subscriptions *must* be ignored here!!
+                    $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
+                    $assigned_ids[] = $user->id; // additionally put this id to array of currently assigned students
+                }
+                elseif ($user->hasPermissionTo('undertake projects') && $user->has_subscribed($project->type)) {
+                    $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
                 }
             }
+        if (empty($available_ids)) {
+            return back()->withFlashDanger('A rare case! No free student with proper subscription available!');
+        }
         return view('frontend.assign_students', ['project' => $project, 'students' => $available_ids, 'selected_ids' => $assigned_ids]);
     }
 

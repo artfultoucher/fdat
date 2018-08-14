@@ -22,6 +22,12 @@ class PersonController extends Controller
        'title' => 'Students who share subscriptions with you']);
    }
 
+   /*
+   TODO: Show all students without project who share some subscription with viewer
+   public function show_free_students() {
+   }
+   */
+
    public function show_all_students() {
        return view('frontend.person_list', ['persons' => $this->select_users('student', true),
        'breadcrumb_name' => 'all_students',

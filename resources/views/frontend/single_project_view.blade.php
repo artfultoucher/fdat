@@ -143,7 +143,7 @@
                                       <strong>{{$project->supervisor_name()}}</strong>
                                       </a>
                                     @else
-                                      <small>none</small>
+                                      <small>None</small>
                                     @endif
                                    </div>
                                    <div class="col-md-3">
@@ -152,7 +152,7 @@
                                       {{$project->secondreader_name()}}
                                       </a>
                                     @else
-                                      <small>none</small>
+                                      <small>None</small>
                                     @endif
                                    </div>
                                    <div class="col-md-3">
@@ -161,6 +161,14 @@
                                     </a>
                                    </div>
                                    <div class="col-md-3">
+                                       @forelse ($project->assigned_students() as $student)
+                                           <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $student->id)}}">
+                                             {{$student->full_name}}
+                                         </a><br>                          
+                                       @empty
+                                           <small>No students</small>
+                                       @endforelse
+
                                    </div>
                                </div>
                            </div>
