@@ -3,6 +3,7 @@
 @section('breadcrumbs', Breadcrumbs::render($breadcrumb_name))
 @section('content')
 <h2>{{$title}} ({{ $persons->count()}})</h2>
+<small>Click the avatars to view details.</small>
 <ul class="list-group">
 @forelse ($persons as $person)
    <li class="list-group-item">
@@ -21,6 +22,9 @@
        @if ($person->co_supervised_projects()->isNotEmpty())
             Co-supervised projects: {{$person->co_supervised_projects()->count()}}
        @endif
+        @if ($person->sproject_id > 0)
+            Working on {!! $person->link_to_sproject() !!}
+        @endif
    </li>
 @empty
   Nothing  to show.

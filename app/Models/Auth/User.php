@@ -106,6 +106,10 @@ class User extends Authenticatable
        // TODO join collection with supervised small projects
     }
 
+    public function link_to_sproject() { // not elegant to generate HTML in model :-(. TODO: use helper or trait
+        $project = \App\Project::findOrFail($this->sproject_id);
+        return '<a href="' . route('frontend.project.show', $project->id ) . '">' . $project->title . '</a>';
+    }
 
     /**
      * The attributes that should be hidden for arrays.

@@ -2,49 +2,49 @@
 @section('title', 'View | ' . $project->title)
 @section('breadcrumbs', Breadcrumbs::render('view_project', $project))
 @section('content')
-               <div class="card {!! $project->colors()['bg-col'] !!} {!! $project->colors()['text-col'] !!}" style="box-shadow: 5px 10px 8px #777777;">
-                 <div class="card-header">
-                     <span class="h5">
-                         {!! $project->icons() !!} {{ $project->title }}
-                     </span><br><i class="fas fa-chalkboard"></i> {{$project->type}}
-                 </div><!--card-header-->
+<div class="card {!! $project->colors()['bg-col'] !!} {!! $project->colors()['text-col'] !!}" style="box-shadow: 5px 10px 8px #777777;">
+<div class="card-header">
+    <span class="h5">
+        {!! $project->icons() !!} {{ $project->title }}
+    </span><br><i class="fas fa-chalkboard"></i> {{$project->type}}
+</div><!--card-header-->
+<div class="card-body">
+    <div class="row mb-2">
+        <div class="col">
+            <div class="card text-white bg-secondary">
+                <div class="card-header"><strong>Abstract</strong>
+                </div>
                 <div class="card-body">
-                    <div class="row mb-2">
-                       <div class="col">
-                         <div class="card text-white bg-secondary">
-                           <div class="card-header"><strong>Abstract</strong>
-                           </div>
-                           <div class="card-body">
-                             {{$project->abstract}}
-                           </div>
-                        </div><!-- card -->
-                       </div>
+                    {{$project->abstract}}
+                </div>
+            </div><!-- card -->
+        </div>
 
-                       @if ($project->is_owner())
+        @if ($project->is_owner())
 
-                       <div class="col-3">
-                         <div class="card text-white bg-secondary">
-                           <div class="card-header"><strong>This project</strong></div>
-                           <div class="card-body">
-                             <div class="btn-group">
-                               <div class="dropdown show">
-                                 <button  class="btn btn-light dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                   Modify
-                                 </button>
-                                 <div class="dropdown-menu">
+        <div class="col-3">
+            <div class="card text-white bg-secondary">
+                <div class="card-header"><strong>This project</strong></div>
+                <div class="card-body">
+                    <div class="btn-group">
+                        <div class="dropdown show">
+                            <button  class="btn btn-light dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 Modify
+                            </button>
+                            <div class="dropdown-menu">
                                    <a class="dropdown-item" href="{{route('frontend.project.edit', $project->id)}}">Edit this project</a>
-                                   <form action="{{route('frontend.project.destroy', $project->id)}}" method="post">
+                                  <form action="{{route('frontend.project.destroy', $project->id)}}" method="post">
                                      @csrf @method('delete')
                                      <button class="dropdown-item text-danger" type="submit">Delete this project</button>
-                                   </form>
-                                 </div>
-                               </div>
+                                 </form>
+                            </div>
+                        </div>
 
-                               <div class="dropdown show">
-                                 <button type="button" class="btn btn-light dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="dropdown show">
+                            <button type="button" class="btn btn-light dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                    Visibility
-                                 </button>
-                                 <div class="dropdown-menu">
+                            </button>
+                            <div class="dropdown-menu">
 
                                    @switch($project->visibility)
                                    @case(0)
@@ -63,21 +63,21 @@
                                    <a class="dropdown-item active" href="#">Public</a>
                                    @endswitch
 
-                                 </div>
-                               </div>
-                             </div>
-                           </div>
-                         </div><!-- card -->
-                       </div><!-- col -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- card -->
+        </div><!-- col -->
 
-                      @endif
+         @endif
 
-                      @can('supervise projects')
-                      <div class="col-3">
-                        <div class="card text-white bg-secondary">
-                          <div class="card-header"><strong>Engage</strong></div>
-                            <div class="card-body">
-                              <div class="btn-group">
+         @can('supervise projects')
+             <div class="col-3">
+                <div class="card text-white bg-secondary">
+                     <div class="card-header"><strong>Engage</strong></div>
+                        <div class="card-body">
+                            <div class="btn-group">
                                <div class="dropdown show">
                                  <button type="button" style="width: 6.5em;" class="btn btn-light dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                    Lecturers
@@ -110,87 +110,85 @@
                                    <a class="dropdown-item" href="{{route('frontend.project.student_form', $project->id)}}">ReAssign students</a>
                                    <a class="dropdown-item" href="#">Dismiss all students</a>
                                  </div>
-                               </div>
-                             </div><!-- btn-group -->
-                           </div><!-- card-body -->
-                        </div><!-- card -->
-                       </div><!-- col -->
-                     @endcan
-                    </div><!-- row -->
-                    <div class="card bg-light text-dark mt-2">
-                     <div class="card-header"><strong>Currently Engaged</strong></div>
-                         <div class="card-body">
-                            <div class="card-block">
-                                <div class="row">
-                                    <div class="small col-md-3">
-                                     Supervisor
-                                    </div>
-                                    <div class="small col-md-3">
-                                     Second reader
-                                    </div>
-                                    <div class="small col-md-3">
-                                     Author
-                                    </div>
-                                    <div class="small col-md-3">
-                                     Assigned to
-                                    </div>
-                                </div>
-
-                               <div class="row">
-                                   <div class="col-md-3">
-                                    @if($project->supervisor != 0)
-                                      <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $project->supervisor)}}">
-                                      <strong>{{$project->supervisor_name()}}</strong>
-                                      </a>
-                                    @else
-                                      <small>None</small>
-                                    @endif
-                                   </div>
-                                   <div class="col-md-3">
-                                    @if($project->secondreader != 0)
-                                      <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $project->secondreader)}}">
-                                      {{$project->secondreader_name()}}
-                                      </a>
-                                    @else
-                                      <small>None</small>
-                                    @endif
-                                   </div>
-                                   <div class="col-md-3">
-                                    <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $project->author)}}">
-                                      {{$project->author_name()}}
-                                    </a>
-                                   </div>
-                                   <div class="col-md-3">
-                                       @forelse ($project->assigned_students() as $student)
-                                           <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $student->id)}}">
-                                             {{$student->full_name}}
-                                         </a><br>                          
-                                       @empty
-                                           <small>No students</small>
-                                       @endforelse
-
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
+                             </div>
+                         </div><!-- btn-group -->
+                     </div><!-- card-body -->
+                </div><!-- card -->
+            </div><!-- col -->
+        @endcan
+    </div><!-- row -->
+    <div class="card bg-light text-dark mt-2">
+        <div class="card-header"><strong>Currently Engaged</strong></div>
+        <div class="card-body">
+            <div class="card-block">
+                <div class="row">
+                    <div class="small col-md-3">
+                        Supervisor
                     </div>
-
-
-                    <div class="row">
-                      <div class="col">
-                        <div class="card bg-light text-dark mt-2">
-                          <div class="card-header"><strong>Full Project Description</strong>
-                          </div>
-                          <div class="card-body">
-                            @markdown($project->description)
-                          </div>
-                       </div><!-- card -->
-                      </div>
+                    <div class="small col-md-3">
+                        Second reader
                     </div>
+                    <div class="small col-md-3">
+                        Author
+                    </div>
+                    <div class="small col-md-3">
+                        Assigned to
+                    </div>
+                </div>
 
-                </div> <!-- card-body -->
-                <div class="card-footer">
-                    <small><i class="fas fa-industry"></i>{{$project->created_at->diffForHumans()}} <i class="fas fa-edit"></i>{{$project->updated_at->diffForHumans()}}</small>
+                <div class="row">
+                                   <div class="col-md-3">
+                        @if($project->supervisor != 0)
+                            <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $project->supervisor)}}">
+                                <strong>{{$project->supervisor_name()}}</strong>
+                            </a>
+                        @else
+                            <small>None</small>
+                        @endif
+                    </div>
+                    <div class="col-md-3">
+                        @if($project->secondreader != 0)
+                            <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $project->secondreader)}}">
+                                {{$project->secondreader_name()}}
+                            </a>
+                        @else
+                            <small>None</small>
+                        @endif
+                    </div>
+                    <div class="col-md-3">
+                        <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $project->author)}}">
+                            {{$project->author_name()}}
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        @forelse ($project->assigned_students() as $student)
+                        <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $student->id)}}">
+                            {{$student->full_name}}
+                        </a><br>
+                        @empty
+                            <small>No students</small>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card bg-light text-dark mt-2">
+                <div class="card-header"><strong>Full Project Description</strong>
+                </div>
+                <div class="card-body">
+                @markdown($project->description)
                 </div>
             </div><!-- card -->
+        </div>
+    </div>
+
+    </div> <!-- card-body -->
+    <div class="card-footer">
+        <small><i class="fas fa-industry"></i>{{$project->created_at->diffForHumans()}} <i class="fas fa-edit"></i>{{$project->updated_at->diffForHumans()}}</small>
+    </div>
+</div><!-- card -->
 @endsection
