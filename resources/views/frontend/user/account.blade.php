@@ -20,7 +20,11 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="#edit" class="nav-link" aria-controls="edit" role="tab" data-toggle="tab">Update Details</a>
+                                <a href="#edit" class="nav-link" aria-controls="edit" role="tab" data-toggle="tab">Account Details</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="#intro" class="nav-link" aria-controls="edit" role="tab" data-toggle="tab">Personal Introduction</a>
                             </li>
 
                             @if ($logged_in_user->canChangePassword())
@@ -37,7 +41,11 @@
 
                             <div role="tabpanel" class="tab-pane fade show pt-3" id="edit" aria-labelledby="edit-tab">
                                 @include('frontend.user.account.tabs.edit')
-                            </div><!--tab panel profile-->
+                            </div>
+
+                            <div role="tabpanel" class="tab-pane fade show pt-3" id="intro" aria-labelledby="intro-tab">
+                                @include('frontend.user.account.tabs.intro')
+                            </div>
 
                             @if ($logged_in_user->canChangePassword())
                                 <div role="tabpanel" class="tab-pane fade show pt-3" id="password" aria-labelledby="password-tab">

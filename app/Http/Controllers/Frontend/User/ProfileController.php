@@ -61,4 +61,14 @@ class ProfileController extends Controller
         }
 
     }
+
+    public function intro_update (\Illuminate\Http\Request $request) { // I believe this is secure without further checks
+        if (strlen($request->interests) < 10) {
+            return back()->withFlashWarning('A bit more text please.');
+        }
+        $user = $request->user();
+        $user->interests = $request->interests;
+        $user->save();
+        return redirect()->route('frontend.person.show', $user->id)->withFlashSuccess('Personal introduction saved.');
+    }
 }

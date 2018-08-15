@@ -5,7 +5,6 @@
  * All route names are prefixed with 'frontend.'.
  */
 Route::get('/', 'HomeController@index')->name('index');
-Route::view('test', 'frontend.test');
 
 /*
 Route::get('contact', 'ContactController@index')->name('contact');
@@ -33,5 +32,9 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
          * User Profile Specific
          */
         Route::patch('profile/update', 'ProfileController@update')->name('profile.update');
+
+        /* Added by F.B. for the extra tab */
+        Route::patch('profile/intro', 'ProfileController@intro_update')->name('profile.intro');
+
     });
 });
