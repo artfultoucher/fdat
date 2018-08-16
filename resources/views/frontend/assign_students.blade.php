@@ -5,8 +5,8 @@
 @section('breadcrumbs', Breadcrumbs::render('assign_students', $project))
 
 @section('content')
-<h4 class="display-4">Assign Students to</h4>
-<p class="lead">{{$project->title}}</p>
+<h4>Assign Students to</h4>
+<p><em>{{$project->title}}</em></p>
 Click to select single entry. Hold <kbd>ctrl</kbd> to add or toggle entries.
 <hr>
     <div class="row mb-4">
@@ -25,7 +25,7 @@ Click to select single entry. Hold <kbd>ctrl</kbd> to add or toggle entries.
             </select>
             </div><!--form-group-->
           <div class="form-group mb-0 clearfix">
-           {{ form_submit('Make this selection effective') }}
+           {{ form_submit('Make effective') }}
           </div><!--form-group-->
           {{ html()->form()->close() }}
         </div><!--col-->

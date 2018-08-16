@@ -10,12 +10,16 @@
 @else
 <div class="card  bg-light" style="box-shadow: 5px 10px 8px #777777;">
 @endif
-    <div class="card-header">
-      {{$person->full_name}}
-    </div><!-- card-header-->
-    <div class="card-body">
-      <h2 class="card-title">Personal Information</h2>
-        @markdown($person->interests)
-    </div><!-- card-body-->
+<div class="card-header h3">{{$person->full_name}}</div><!-- card-header-->
+@if (strlen($person->interests) > 9)
+<div class="card-body">
+  <div class="card bg-light text-dark">
+    <div class="card-header">{{$person->first_name}}'s introduction</div>
+    <div class="card-body">@markdown($person->interests)</div>
+  </div>
+@endif
+
+More info
+</div><!-- card-body-->
 </div><!-- card -->
 @endsection

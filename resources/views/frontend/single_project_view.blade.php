@@ -4,9 +4,7 @@
 @section('content')
 <div class="card {!! $project->colors()['bg-col'] !!} {!! $project->colors()['text-col'] !!}" style="box-shadow: 5px 10px 8px #777777;">
 <div class="card-header">
-    <span class="h5">
-        {!! $project->icons() !!} {{ $project->title }}
-    </span><br><i class="fas fa-chalkboard"></i> {{$project->type}}
+    <span class="h5">{{ $project->title }}</span><br>{{$project->type}}
 </div><!--card-header-->
 <div class="card-body">
     <div class="row mb-2">
@@ -190,7 +188,8 @@
     </div>
 
     </div> <!-- card-body -->
-    <div class="card-footer">
+    <div class="card-footer d-flex justify-content-between">
+        {!! $project->icons() !!}
         <small><i class="fas fa-industry"></i>{{$project->created_at->diffForHumans()}} <i class="fas fa-edit"></i>{{$project->updated_at->diffForHumans()}}</small>
     </div>
 </div><!-- card -->
