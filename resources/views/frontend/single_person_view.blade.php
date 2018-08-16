@@ -11,15 +11,36 @@
 <div class="card  bg-light" style="box-shadow: 5px 10px 8px #777777;">
 @endif
 <div class="card-header h3">{{$person->full_name}}</div><!-- card-header-->
-@if (strlen($person->interests) > 9)
 <div class="card-body">
-  <div class="card bg-light text-dark">
+@if (strlen($person->interests) > 9)
+  <div class="card bg-light text-dark mb-3">
     <div class="card-header">{{$person->first_name}}'s introduction</div>
     <div class="card-body">@markdown($person->interests)</div>
   </div>
 @endif
+<ul class="list-group text-dark">
+    @if ($person->supervised_projects()->isNotEmpty())
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Supervised projects: <span class="badge badge-primary badge-pill">{{$person->supervised_projects()->count()}}</span>
+        </li>
+    @endif
+    @if ($person->co_supervised_projects()->isNotEmpty())
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Co-supervised projects: <span class="badge badge-primary badge-pill">{{$person->co_supervised_projects()->count()}}</span>
+        </li>
+    @endif
+    @if ($person->yielded_projects()->isNotEmpty())
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Yielded projects: <span class="badge badge-primary badge-pill">{{$person->yielded_projects()->count()}}</span>
+        </li>
+    @endif
+    @if ($person->sproject_id > 0)
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Working on: <span>{!! $person->link_to_sproject() !!}</span>
+        </li>
+    @endif
+</ul>
 
-More info
 </div><!-- card-body-->
 </div><!-- card -->
 @endsection

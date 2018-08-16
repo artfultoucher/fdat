@@ -63,9 +63,6 @@ class User extends Authenticatable
     public function unsubscribe_matter ($matter) {
       $this->subscr_mask &= ~self::$matter_bit_masks[$matter];
       $this->save();
-      //if ($this->subscr_mask == 0) {
-    //    session(['flash_warning' => 'You may want to subscribe to at least one matter. Just to let you know.']);
-    //  }
     }
 
     public function set_subscriptions_to_array ($arr) {
@@ -74,9 +71,6 @@ class User extends Authenticatable
         $this->subscribe_matter($matter);
       }
       $this->save();
-    //  if ($this->subscr_mask == 0) {
-    //    session(['flash_warning' => 'You may want to subscribe to at least one matter. Just to let you know.']);
-    //  }
     }
 
     public function has_subscribed($matter) {
@@ -86,24 +80,27 @@ class User extends Authenticatable
 
     // these methods should perhaps be moved to PersonController
 
-   //WORKING POINT
-
    // Decide if these functions return arrays or collections
 
    // Decide where to place them
 
-    public function visible_supervised_projects(){
-        return $this->hasMany('App\Project', 'supervisor')->filter(function($p){ return $p->is_visible();});
+/*
+
+    The functions below filter against privacy setting but not against subscription matters
+    This stuff must be fixed..
+
+*/
+
+    public function yielded_projects() { // projects created by this user but supervised by someone else or none
+        return $this->hasMany('App\Project', 'author')->where('visibility','>',0)->whereRaw('supervisor <> author')->get();
     }
 
-    public function supervised_projects() { // we do not check for roles in order to expose database errors!
-      return $this->hasMany('App\Project', 'supervisor')->get(); // these are *semester* projects!
-      // TODO join collection with supervised small projects
+    public function supervised_projects() {
+      return $this->hasMany('App\Project', 'supervisor')->where('visibility','>',0)->get(); // these are *semester* projects!
     }
 
-    public function co_supervised_projects() { // we do not check for roles in order to expose database errors!
-      return $this->hasMany('App\Project', 'secondreader')->get();
-       // TODO join collection with supervised small projects
+    public function co_supervised_projects() {
+      return $this->hasMany('App\Project', 'secondreader')->where('visibility','>',0)->get();
     }
 
     public function link_to_sproject() { // not elegant to generate HTML in model :-(. TODO: use helper or trait
