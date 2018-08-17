@@ -87,7 +87,8 @@ class User extends Authenticatable
 /*
 
     The functions below filter against privacy setting but not against subscription matters
-    This stuff must be fixed..
+
+    Private projects are not shown if author is logged in!
 
 */
 
@@ -101,6 +102,10 @@ class User extends Authenticatable
 
     public function co_supervised_projects() {
       return $this->hasMany('App\Project', 'secondreader')->where('visibility','>',0)->get();
+    }
+
+    public function my_projects() { // only used in dashboard!
+        return \App\Project::all()->filter(function($p) {return $p->is_owner();});
     }
 
     public function link_to_sproject() { // not elegant to generate HTML in model :-(. TODO: use helper or trait

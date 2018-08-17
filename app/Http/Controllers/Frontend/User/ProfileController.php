@@ -69,6 +69,6 @@ class ProfileController extends Controller
         $user = $request->user();
         $user->interests = $request->interests;
         $user->save();
-        return redirect()->route('frontend.person.show', $user->id)->withFlashSuccess('Personal introduction saved.');
+        return redirect()->route('frontend.user.dashboard')->withFlashSuccess('Personal introduction saved.');
     }
 }
