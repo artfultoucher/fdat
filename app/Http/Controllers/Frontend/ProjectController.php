@@ -35,7 +35,7 @@ class ProjectController extends Controller
    public function index_free()
    {
        $collection = Project::all()->filter(function ($p){return $p->is_available() && $p->is_visible();}); // not an array yet but ->all() not needed
-       return view('frontend.project_list', ['projects' => $collection, 'page_title' => 'Available Projects' , 'breadcrumb_name' => 'projects_free']);
+       return view('frontend.project_list', ['projects' => $collection, 'page_title' => 'Unassigned Projects' , 'breadcrumb_name' => 'projects_free']);
    }
 
 
@@ -75,7 +75,7 @@ class ProjectController extends Controller
 
    public function show ($id) {
       $project = Project::findOrFail($id);
-      if ($project->is_visible(true)) { // here we ignore subscriptions
+      if ($project->is_visible(true) || $project->is_owner()) { // here we ignore subscriptions
         return view('frontend.single_project_view', ['project' => $project]);
       }
       else {

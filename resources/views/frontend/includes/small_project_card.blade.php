@@ -1,18 +1,18 @@
 <div class="card {!! $project->colors()['bg-col'] !!} {!! $project->colors()['text-col'] !!}" style="box-shadow: 5px 10px 8px #777777;" >
     <div class="card-header">
+    {{$project->type}}
      @if($project->is_new())
-       <span class="badge badge-secondary">New</span>
+       <span class="badge badge-secondary float-right">New</span>
      @endif
      @if($project->is_updated())
-       <span class="badge badge-secondary">Updated</span>
+       <span class="badge badge-secondary float-right">Updated</span>
      @endif
      @if($project->is_available())
-       <span class="badge badge-secondary">Free</span>
+       <span class="badge badge-secondary float-right">Free</span>
      @endif
      @if($project->is_orphan())
-       <span class="badge badge-secondary">Orphan</span>
+       <span class="badge badge-secondary float-right">Orphan</span>
      @endif
-     {{$project->type}}
    </div>
 
     <div class="card-body">

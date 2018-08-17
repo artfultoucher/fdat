@@ -12,7 +12,7 @@
                    aria-haspopup="true" aria-expanded="false">Projects</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
                     <a href="{{ route('frontend.project.index') }}" class="dropdown-item">Browse all</a>
-                    <a href="{{ route('frontend.project.index_free') }}" class="dropdown-item">Available only</a>
+                    <a href="{{ route('frontend.project.index_free') }}" class="dropdown-item">Unassigned only</a>
                     @auth
                       @if ($logged_in_user->hasPermissionTo('write projects'))
                       <div class="dropdown-divider"></div>

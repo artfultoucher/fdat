@@ -11,7 +11,7 @@
         </div><!--card-header-->
         <div class="card-body">
         @include('frontend.includes.public_user_info', ['person' => $logged_in_user])
-        <h3>Your projects</h3>
+        <h3>My projects</h3>
         <div class="card-columns">
         @forelse ($logged_in_user->my_projects() as $project)
             @include('frontend.includes.small_project_card')

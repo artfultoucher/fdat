@@ -29,7 +29,7 @@ class Project extends Model
 
     public function is_available(){ // available for students to take on
       // return !($this->is_assigned() || $this->is_orphan()); // ah De Morgan...
-      if ($this->is_orphan() || ! empty($this->assigned_students()))  {
+      if ($this->is_orphan() || $this->assigned_students()->isNotEmpty() )  {
           return false;
       }
       // return $this->visibility > 0; // not really need or..?
@@ -61,7 +61,8 @@ class Project extends Model
         return $this->visibility == 2;
       }
       if ($this->is_owner()){
-        return true;
+        // return true;
+        return $this->visibility > 0; // private projects hidden everywhere except in dashboard
       }
       return ($this->visibility > 0) && Auth::user()->hasPermissionTo('view projects') && ($ignore_subscriptions || Auth::user()->has_subscribed($this->type));
     }
@@ -108,17 +109,20 @@ class Project extends Model
 
 
     public function colors () { // for use in views
-      if ($this->is_owner()) { // top priority
-        return ['bg-col' => 'bg-success', 'text-col' => 'text-white'];
+      if ($this->visibility == 0 ) {
+          return ['bg-col' => 'bg-danger', 'text-col' => 'text-white']; // red
+      }
+      if ($this->is_owner()) {
+        return ['bg-col' => 'bg-success', 'text-col' => 'text-white']; // green
       }
       if ($this->supervisor == 0) { // orphan
-        return ['bg-col' => 'bg-warning', 'text-col' => 'text-dark'];
+        return ['bg-col' => 'bg-warning', 'text-col' => 'text-dark']; // yellow
       }
       // insert test for small projects here!
       if ($this->visibility == 2) { // public, this case can be deleted in favour of small projects
-        return ['bg-col' => 'bg-primary', 'text-col' => 'text-white'];
+        return ['bg-col' => 'bg-primary', 'text-col' => 'text-white']; // blue
       }
-      return ['bg-col' => 'bg-info', 'text-col' => 'text-white']; // remaining cases
+      return ['bg-col' => 'bg-info', 'text-col' => 'text-white']; // cyan, remaining cases
     }
 
 
