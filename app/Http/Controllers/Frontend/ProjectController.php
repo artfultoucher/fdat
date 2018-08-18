@@ -8,6 +8,7 @@ use App\Http\Requests\StoreProject;
 use App\Http\Requests\UpdateProject;
 use App\Project;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Auth\User;
 
 
 class ProjectController extends Controller
@@ -123,6 +124,27 @@ class ProjectController extends Controller
       else {
         abort(403, 'I know you are messing with URLs!');
        }
+    }
+
+    public function supervised_projects($user_id) {
+        $person = User::findOrFail($user_id);
+        return view('frontend.project_list', ['projects' => $person->supervised_projects(),
+        'page_title' => 'Projects supervised by ' . $person->full_name,
+        'breadcrumb_name' => 'supervised_projects', 'person' => $person]);
+    }
+
+    public function sr_projects($user_id) {
+        $person = User::findOrFail($user_id);
+        return view('frontend.project_list', ['projects' => $person->co_supervised_projects(),
+        'page_title' => 'Projects where ' . $person->full_name . ' is Second Reader',
+        'breadcrumb_name' => 'sr_projects', 'person' => $person]);
+    }
+
+    public function yielded_projects($user_id) {
+        $person = User::findOrFail($user_id);
+        return view('frontend.project_list', ['projects' => $person->yielded_projects(),
+        'page_title' => 'Projects created but not supervised by ' . $person->full_name,
+        'breadcrumb_name' => 'yielded_projects', 'person' => $person]);
     }
 
 }

@@ -14,8 +14,11 @@ Route::get('user/all_lecturers', 'PersonController@show_all_lecturers')->name('p
 Route::get('user/students', 'PersonController@show_students')->name('person.show_students');
 Route::get('user/show_all_students', 'PersonController@show_all_students')->name('person.show_all_students');
 Route::get('user/supervisees/{id}', 'PersonController@show_students_of_supervisor')->name('person.supervisees');
-
 Route::get('user/{id}', 'PersonController@show')->name('person.show');
+
+Route::get('user/supervised_projects/{id}', 'ProjectController@supervised_projects')->name('person.supervised_projects');
+Route::get('user/sr_projects/{id}', 'ProjectController@sr_projects')->name('person.sr_projects');
+Route::get('user/yielded_projects/{id}', 'ProjectController@yielded_projects')->name('person.yielded_projects');
 
 Route::patch('project/supervise/{id}' , 'EngagementController@supervise')->name('project.supervise');
 Route::patch('project/unsupervise/{id}' , 'EngagementController@unsupervise')->name('project.unsupervise');

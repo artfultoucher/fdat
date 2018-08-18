@@ -1,6 +1,10 @@
 @extends('frontend.layouts.app')
 @section('title', $page_title)
-@section('breadcrumbs', Breadcrumbs::render($breadcrumb_name))
+@if (isset($person))
+    @section('breadcrumbs', Breadcrumbs::render($breadcrumb_name, $person))
+@else
+    @section('breadcrumbs', Breadcrumbs::render($breadcrumb_name))
+@endif
 @section('content')
 <h2>{{$page_title}}</h2>
 <div class="card-columns">

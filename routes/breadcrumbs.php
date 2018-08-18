@@ -75,5 +75,20 @@ Breadcrumbs::for('lecturers', function ($trail) {
 
 Breadcrumbs::for('supervised_students', function ($trail, $person) {
     $trail->parent('view_person', $person);
-    $trail->push('Supervisees of ' . $person->full_name, route('frontend.person.supervisees', $person->id)); // not really good yet
+    $trail->push('Supervised students', route('frontend.person.supervisees', $person->id));
+});
+
+Breadcrumbs::for('supervised_projects', function ($trail, $person) {
+    $trail->parent('view_person', $person);
+    $trail->push('Supervised projects', route('frontend.person.supervised_projects', $person->id));
+});
+
+Breadcrumbs::for('sr_projects', function ($trail, $person) {
+    $trail->parent('view_person', $person);
+    $trail->push('Co-Supervised projects', route('frontend.person.sr_projects', $person->id));
+});
+
+Breadcrumbs::for('yielded_projects', function ($trail, $person) {
+    $trail->parent('view_person', $person);
+    $trail->push('Yielded projects', route('frontend.person.yielded_projects', $person->id));
 });
