@@ -72,3 +72,8 @@ Breadcrumbs::for('lecturers', function ($trail) {
     $trail->parent('all_lecturers');
     $trail->push('Relevant lecturers', route('frontend.person.show_lecturers'));
 });
+
+Breadcrumbs::for('supervised_students', function ($trail, $person) {
+    $trail->parent('view_person', $person);
+    $trail->push('Supervisees of ' . $person->full_name, route('frontend.person.supervisees', $person->id)); // not really good yet
+});

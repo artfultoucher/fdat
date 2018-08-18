@@ -46,8 +46,13 @@ class PersonController extends Controller
        'title' => 'All registered Lecturers']);
    }
 
+   public function show_students_of_supervisor($id) {
+       $supervisor = User::findOrFail($id);
+       return view('frontend.supervised_students', ['supervisor' => $supervisor]);
+   }
+
    private function select_users ($role, $ignore_subscriptions) {
        $bitmask = $ignore_subscriptions ? 0b1111111111111111 : Auth::user()->subscr_mask; // works for up to 16 matters
-       return User::role($role)->get()->filter(function ($u) use ($bitmask) {return ($bitmask & $u->subscr_mask);});
+       return User::role($role)->get()->filter(function ($u) use ($bitmask) {return ($bitmask & $u->subscr_mask);})->all();
    }
 }

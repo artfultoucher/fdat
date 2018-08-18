@@ -46,8 +46,8 @@
           @if ($person->subscr_mask == 0)
               <span class="badge badge-danger">Nothing!</span>
           @else
-              @foreach ($logged_in_user->matters() as $matter)
-                  @if ($logged_in_user->has_subscribed($matter))
+              @foreach ($person->matters() as $matter)
+                  @if ($person->has_subscribed($matter))
                   <span class="badge badge-secondary">{{$matter}}</span>
                   @endif
               @endforeach
@@ -69,6 +69,11 @@
           Yielded projects: <span class="badge badge-primary badge-pill">{{$person->yielded_projects()->count()}}</span>
         </li>
     @endif
+    @unless (empty($person->supervised_students()))
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <a href="{{route('frontend.person.supervisees', $person->id)}}">Supervised students:</a> <span class="badge badge-primary badge-pill">{{count($person->supervised_students())}}</span>
+        </li>
+    @endunless
     @if ($person->sproject_id > 0)
         <li class="list-group-item d-flex justify-content-between align-items-center">
           Working on: <span>{!! $person->link_to_sproject() !!}</span>

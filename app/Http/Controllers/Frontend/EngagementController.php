@@ -140,7 +140,8 @@ class EngagementController extends Controller
                     $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
                     $assigned_ids[] = $user->id; // additionally put this id to array of currently assigned students
                 }
-                elseif ($user->hasPermissionTo('undertake projects') && $user->has_subscribed($project->type)) {
+                elseif ($user->sproject_id == 0 && $user->hasPermissionTo('undertake projects') && $user->has_subscribed($project->type)) {
+                    // not yet assigned && can work on projects && has subscribed to this proejct type
                     $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
                 }
             }
