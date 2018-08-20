@@ -28,6 +28,11 @@ Click to select single entry. Hold <kbd>ctrl</kbd> to add or toggle entries.
            {{ form_submit('Make effective') }}
           </div><!--form-group-->
           {{ html()->form()->close() }}
+          @unless (Request::is('*/all_students'))
+          Are you looking for a student <strong>not in this list</strong>? Maybe s/he has not subscribed to <strong>{{$project->type}}</strong> matters.
+          Try again selecting from
+          <a href="{{route('frontend.project.student_form',['id' => $project->id, 'pool' => 'all_students'])}}">all students</a>.
+          @endunless
         </div><!--col-->
     </div><!--row-->
 @endsection

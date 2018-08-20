@@ -19,15 +19,25 @@
         <!-- Check if the language is set to RTL, so apply the RTL layouts -->
         <!-- Otherwise apply the normal LTR layouts -->
         {{ style(mix('css/frontend.css')) }}
+    <style>
 
-        @stack('after-styles')
-        <style>
-      body {background-image: linear-gradient(to bottom right, #E3E3E3 0%, #8A9CB5 100%);}
-    .navbar-custom {
-    background-color: #224455;
-}
+     body { background-image: linear-gradient(to bottom right, #E3E3E3 0%, #8A9CB5 100%);}
 
-</style>
+     a:link, a:visited {
+     	//font-weight: bold;
+     	text-decoration: none;
+     	color: #3D9970;
+     	}
+
+     a:hover, a:focus, a:active {
+     	text-decoration: underline;
+     	color: #85144b;
+     	}
+
+    </style>
+
+    @stack('after-styles')
+
     </head>
     <body>
         <div id="app">

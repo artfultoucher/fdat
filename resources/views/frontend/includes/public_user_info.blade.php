@@ -56,22 +56,26 @@
     </li>
     @if ($person->supervised_projects()->isNotEmpty())
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          Supervised projects: <span class="badge badge-primary badge-pill">{{$person->supervised_projects()->count()}}</span>
+          <a href="{{route('frontend.person.supervised_projects', $person->id)}}">Supervised projects:</a>
+          <span class="badge badge-primary badge-pill">{{$person->supervised_projects()->count()}}</span>
         </li>
     @endif
     @if ($person->co_supervised_projects()->isNotEmpty())
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          Co-supervised projects: <span class="badge badge-primary badge-pill">{{$person->co_supervised_projects()->count()}}</span>
+          <a href="{{route('frontend.person.sr_projects', $person->id)}}">Co-supervised projects:</a>
+          <span class="badge badge-primary badge-pill">{{$person->co_supervised_projects()->count()}}</span>
         </li>
     @endif
     @if ($person->yielded_projects()->isNotEmpty())
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          Yielded projects: <span class="badge badge-primary badge-pill">{{$person->yielded_projects()->count()}}</span>
+          <a href="{{route('frontend.person.yielded_projects', $person->id)}}">Yielded projects:</a>
+          <span class="badge badge-primary badge-pill">{{$person->yielded_projects()->count()}}</span>
         </li>
     @endif
     @unless (empty($person->supervised_students()))
         <li class="list-group-item d-flex justify-content-between align-items-center">
-          <a href="{{route('frontend.person.supervisees', $person->id)}}">Supervised students:</a> <span class="badge badge-primary badge-pill">{{count($person->supervised_students())}}</span>
+          <a href="{{route('frontend.person.supervisees', $person->id)}}">Supervised students:</a>
+          <span class="badge badge-primary badge-pill">{{count($person->supervised_students())}}</span>
         </li>
     @endunless
     @if ($person->sproject_id > 0)

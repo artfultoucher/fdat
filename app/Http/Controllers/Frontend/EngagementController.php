@@ -127,8 +127,9 @@ class EngagementController extends Controller
     }
 
 
-    public function student_form ($id) {
+    public function student_form ($id, $pool = 'some') {
         $project = Project::findOrFail($id);
+        $offer_all_students = ($pool == 'all_students' ? true : false);
         if ( ! $project->user_can_assign_students()) {
             return back()->withFlashWarning('You must be supervisor and the project must not be private.');
         }
@@ -140,12 +141,12 @@ class EngagementController extends Controller
                     $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
                     $assigned_ids[] = $user->id; // additionally put this id to array of currently assigned students
                 }
-                elseif ($user->sproject_id == 0 && $user->hasPermissionTo('undertake projects') && $user->has_subscribed($project->type)) {
+                elseif ($user->sproject_id == 0 && $user->hasPermissionTo('undertake projects') && ($offer_all_students || $user->has_subscribed($project->type))) {
                     // not yet assigned && can work on projects && has subscribed to this proejct type
                     $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
                 }
             }
-        if (empty($available_ids)) {
+        if (empty($available_ids)) { 
             return back()->withFlashDanger('A rare case! No free student with proper subscription available!');
         }
         return view('frontend.assign_students', ['project' => $project, 'students' => $available_ids, 'selected_ids' => $assigned_ids]);

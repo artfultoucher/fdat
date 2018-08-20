@@ -14,29 +14,17 @@ use App\Models\Auth\User;
 class ProjectController extends Controller
 {
 
-/*
-    public function index()
-    {
-        $result = array();
-        foreach (Project::all() as $p) {
-          if ($p->is_visible()) {
-            $result[] = $p;
-          }
-        }
-        return view('frontend.project_list', ['projects' => $result, 'page_title' => 'All Projects', 'breadcrumb_name' => 'projects']);
-    }
-*/
 
    public function index()
    {
        $arr = Project::all()->filter(function ($p){return $p->is_visible();})->all();
-       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'All Projects' , 'breadcrumb_name' => 'projects']);
+       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'All Projects (' . count($arr) . ')' , 'breadcrumb_name' => 'projects']);
    }
 
    public function index_free()
    {
        $arr= Project::all()->filter(function ($p){return $p->is_available() && $p->is_visible();})->all();
-       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Available Projects' , 'breadcrumb_name' => 'projects_free']);
+       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Available Projects (' . count($arr) . ')' , 'breadcrumb_name' => 'projects_free']);
    }
 
 
@@ -128,22 +116,25 @@ class ProjectController extends Controller
 
     public function supervised_projects($user_id) {
         $person = User::findOrFail($user_id);
-        return view('frontend.project_list', ['projects' => $person->supervised_projects(),
-        'page_title' => 'Projects supervised by ' . $person->full_name,
+        $arr = $person->supervised_projects();
+        return view('frontend.project_list', ['projects' => $arr,
+        'page_title' => 'Projects supervised by ' . $person->full_name . ' (' . count($arr) . ')',
         'breadcrumb_name' => 'supervised_projects', 'person' => $person]);
     }
 
     public function sr_projects($user_id) {
         $person = User::findOrFail($user_id);
-        return view('frontend.project_list', ['projects' => $person->co_supervised_projects(),
-        'page_title' => 'Projects where ' . $person->full_name . ' is Second Reader',
+        $arr = $person->co_supervised_projects();
+        return view('frontend.project_list', ['projects' => $arr,
+        'page_title' => 'Projects where ' . $person->full_name . ' is Second Reader (' . count($arr) . ')',
         'breadcrumb_name' => 'sr_projects', 'person' => $person]);
     }
 
     public function yielded_projects($user_id) {
         $person = User::findOrFail($user_id);
-        return view('frontend.project_list', ['projects' => $person->yielded_projects(),
-        'page_title' => 'Projects created but not supervised by ' . $person->full_name,
+        $arr = $person->yielded_projects();
+        return view('frontend.project_list', ['projects' => $arr,
+        'page_title' => 'Projects created but not supervised by ' . $person->full_name . ' (' . count($arr) . ')',
         'breadcrumb_name' => 'yielded_projects', 'person' => $person]);
     }
 
