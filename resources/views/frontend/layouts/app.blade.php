@@ -24,15 +24,32 @@
      body { background-image: linear-gradient(to bottom right, #E3E3E3 0%, #8A9CB5 100%);}
 
      a:link, a:visited {
-     	//font-weight: bold;
      	text-decoration: none;
-     	color: #3D9970;
+     	color: #008080
      	}
 
      a:hover, a:focus, a:active {
      	text-decoration: underline;
      	color: #85144b;
      	}
+
+     .dropdown-menu a:link, .dropdown-menu a:visited {
+         color: #222222;
+     }
+
+     .dropdown-menu a:hover, .dropdown-menu a:focus, .dropdown-menu a:active {
+        background-color: #696969;
+     	color: #FAEBD7;
+     	}
+
+     .dropdown:hover>.dropdown-menu {
+      display: block;
+     }
+
+     .dropdown>.dropdown-toggle:active {
+      /*Without this, clicking will make it sticky*/
+        pointer-events: none;
+     }
 
     </style>
 

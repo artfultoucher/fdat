@@ -4,7 +4,7 @@
 
 @section('content')
     <h1>HTTP 403</h1>
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-danger" role="alert">
       {{ $exception->getMessage() }}
     </div>
 

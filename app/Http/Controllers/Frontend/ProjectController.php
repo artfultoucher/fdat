@@ -38,6 +38,9 @@ class ProjectController extends Controller
 
     public function create()
     {  // no real need to guard this here against anauthorized project creation
+        if (Auth::guest() || ! Auth::user()->hasPermissionTo('write projects')) {
+            abort(403,'Nice try! You do\'nt have permission to create projects.');
+        }
         return view('frontend.create_project');
     }
 

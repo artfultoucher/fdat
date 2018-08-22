@@ -28,12 +28,12 @@ Breadcrumbs::for('projects_available', function ($trail) {
 
 // Home > New Project
 Breadcrumbs::for('new_project', function ($trail) {
-    $trail->parent('projects');
+    $trail->parent('projects_all');
     $trail->push('New', route('frontend.project.create'));
 });
 
 Breadcrumbs::for('view_project', function ($trail, $project) {
-    $trail->parent('projects');
+    $trail->parent('projects_all');
     $trail->push($project->title, route('frontend.project.show', $project->id));
 });
 
