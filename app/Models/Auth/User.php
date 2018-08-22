@@ -94,15 +94,15 @@ class User extends Authenticatable
 */
 
     public function yielded_projects() { // projects created by this user but supervised by someone else or none
-        return $this->hasMany('App\Project', 'author')->where('visibility','>',0)->whereRaw('supervisor <> author')->get();
+        return $this->hasMany('App\Project', 'author')->whereRaw('supervisor <> author')->get()->filter(function ($p){return $p->is_visible();});
     }
 
     public function supervised_projects() {
-      return $this->hasMany('App\Project', 'supervisor')->where('visibility','>',0)->get(); // these are *semester* projects!
+      return $this->hasMany('App\Project', 'supervisor')->get()->filter(function ($p){return $p->is_visible();}); // these are *semester* projects!
     }
 
     public function co_supervised_projects() {
-      return $this->hasMany('App\Project', 'secondreader')->where('visibility','>',0)->get();
+      return $this->hasMany('App\Project', 'secondreader')->get()->filter(function ($p){return $p->is_visible();});
     }
 
     public function supervised_students() {
@@ -131,15 +131,11 @@ class User extends Authenticatable
     public function my_projects() { // Only used in dashboard! This is the only function that returns private projects
         return \App\Project::all()->filter(function($p) {return $p->is_owner();});
     }
+    
 
-/* not used yet
-    public function project_status() { // 0 no project, 1 platform project, 2 public project
-        return $this->sproject_id == 0 ? 0 : \App\Project::findOrFail($this->sproject_id)->visibility;
-    }
-*/
     public function link_to_sproject() { // not elegant to generate HTML in model :-(. TODO: use helper or trait
         $project = \App\Project::findOrFail($this->sproject_id);
-        if ($project->visibility == 2 || Auth::check() && Auth::user()->hasPermissionTo('view projects')) {
+        if ($project->is_visible()) { // we ignore subscriptions!
             return '<a href="' . route('frontend.project.show', $project->id ) . '">' . $project->title . '</a>';
         }
         else {

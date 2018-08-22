@@ -110,6 +110,7 @@ class EngagementController extends Controller
         return redirect()->route('frontend.project.show', $project_id)->withFlashSuccess('Students successfully reassigned.');
         }
 
+
     public function dismiss_students (Request $req, $project_id) {
         $project = Project::findOrFail($project_id);
         if ($req->user()->id != $project->supervisor) {
@@ -146,7 +147,7 @@ class EngagementController extends Controller
                     $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
                 }
             }
-        if (empty($available_ids)) { 
+        if (empty($available_ids)) {
             return back()->withFlashDanger('A rare case! No free student with proper subscription available!');
         }
         return view('frontend.assign_students', ['project' => $project, 'students' => $available_ids, 'selected_ids' => $assigned_ids]);

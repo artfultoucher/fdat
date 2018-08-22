@@ -5,6 +5,7 @@
  * All route names are prefixed with 'frontend.'.
  */
 
+Route::get('project/all', 'ProjectController@index_all')->name('project.index_all');
 Route::get('project/free', 'ProjectController@index_free')->name('project.index_free');
 Route::resource('project', 'ProjectController');
 Route::get('project/{id}/visibility/{vis}', 'ProjectController@set_visibility')->name('project.change_visibility'); // should be PUT but that's so awkward to do from buttons

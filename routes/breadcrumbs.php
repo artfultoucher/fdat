@@ -9,17 +9,22 @@ Breadcrumbs::for('home', function ($trail) {
     $trail->push('Home', route('frontend.user.dashboard'));
 });
 
-// Home > Projects
-Breadcrumbs::for('projects', function ($trail) {
+
+Breadcrumbs::for('projects_all', function ($trail) {
     $trail->parent('home');
-    $trail->push('Projects', route('frontend.project.index'));
+    $trail->push('Projects', route('frontend.project.index_all'));
 });
 
-// Home > Projects > free
-Breadcrumbs::for('projects_free', function ($trail) {
-    $trail->parent('projects');
-    $trail->push('Available', route('frontend.project.index_free'));
+Breadcrumbs::for('projects_relevant', function ($trail) {
+    $trail->parent('projects_all');
+    $trail->push('Relevant to you', route('frontend.project.index'));
 });
+
+Breadcrumbs::for('projects_available', function ($trail) {
+    $trail->parent('projects_relevant');
+    $trail->push('Unassigned', route('frontend.project.index_free'));
+});
+
 
 // Home > New Project
 Breadcrumbs::for('new_project', function ($trail) {

@@ -11,9 +11,10 @@
                 <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">Projects</a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
-                    <a href="{{ route('frontend.project.index') }}" class="dropdown-item">Browse all</a>
-                    <a href="{{ route('frontend.project.index_free') }}" class="dropdown-item">Available only</a>
+                    <a href="{{ route('frontend.project.index_all') }}" class="dropdown-item">..all</a>
                     @auth
+                    <a href="{{ route('frontend.project.index') }}" class="dropdown-item">..relevant</a>
+                    <a href="{{ route('frontend.project.index_free') }}" class="dropdown-item">..relevant and unassigned</a>
                       @if ($logged_in_user->hasPermissionTo('write projects'))
                       <div class="dropdown-divider"></div>
                       <a href="{{ route('frontend.project.create') }}" class="dropdown-item">New Project</a>
