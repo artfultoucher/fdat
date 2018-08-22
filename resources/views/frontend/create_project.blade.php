@@ -38,6 +38,7 @@
            <label class="radio-inline"><input type="radio" name="semester_project" value="no" disabled>Small Project (not yet available)</label>
          </div><!--form-group-->
           <div class="form-group mb-0 clearfix">
+           {{form_cancel(url()->previous(), 'Cancel', 'btn btn-secondary text-white btn-sm')}}
            {{ form_submit('Save new project') }}
           </div><!--form-group-->
           {{ html()->form()->close() }}

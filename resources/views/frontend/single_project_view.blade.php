@@ -33,7 +33,7 @@
                                    <a class="dropdown-item" href="{{route('frontend.project.edit', $project->id)}}">Edit this project</a>
                                   <form action="{{route('frontend.project.destroy', $project->id)}}" method="post">
                                      @csrf @method('delete')
-                                     <button class="dropdown-item text-danger" type="submit">Delete this project</button>
+                                     <button data-method="delete" class="dropdown-item text-danger" type="submit">Delete this project</button>
                                  </form>
                             </div>
                         </div>
