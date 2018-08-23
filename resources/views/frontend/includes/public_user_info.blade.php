@@ -28,6 +28,9 @@
                         @endif
                     </small>
                 </p>
+                @if (Auth::check() && $logged_in_user->id != $person->id)
+                    <p class="text-center"><a href="#" class="btn btn-outline-dark"><i class="fas fa-envelope"></i> Contact</a></p>
+                @endif
             </div>
     </div>
 </div>

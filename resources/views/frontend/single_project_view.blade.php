@@ -33,7 +33,7 @@
                                    <a class="dropdown-item" href="{{route('frontend.project.edit', $project->id)}}">Edit this project</a>
                                   <form action="{{route('frontend.project.destroy', $project->id)}}" method="post">
                                      @csrf @method('delete')
-                                     <button data-method="delete" class="dropdown-item text-danger" type="submit">Delete this project</button>
+                                     <button class="dropdown-item text-danger" type="submit">Delete this project</button>
                                  </form>
                             </div>
                         </div>
@@ -119,7 +119,11 @@
         @endcan
     </div><!-- row -->
     <div class="card bg-light text-dark mt-2">
-        <div class="card-header"><strong>Currently Engaged</strong></div>
+        <div class="card-header"><strong>Currently Engaged</strong>
+            @auth ()
+                <span class="float-right"><a class="btn btn-outline-dark" href="#"><i class="fas fa-envelope"></i> Contact all</a></span>
+            @endauth
+        </div>
         <div class="card-body">
             <div class="card-block">
                 <div class="row">
@@ -140,7 +144,7 @@
                 <div class="row">
                                    <div class="col-md-3">
                         @if($project->supervisor != 0)
-                            <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $project->supervisor)}}">
+                            <a href="{{route('frontend.person.show', $project->supervisor)}}">
                                 <strong>{{$project->supervisor_name()}}</strong>
                             </a>
                         @else
@@ -149,7 +153,7 @@
                     </div>
                     <div class="col-md-3">
                         @if($project->secondreader != 0)
-                            <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $project->secondreader)}}">
+                            <a href="{{route('frontend.person.show', $project->secondreader)}}">
                                 {{$project->secondreader_name()}}
                             </a>
                         @else
@@ -157,13 +161,13 @@
                         @endif
                     </div>
                     <div class="col-md-3">
-                        <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $project->author)}}">
+                        <a href="{{route('frontend.person.show', $project->author)}}">
                             {{$project->author_name()}}
                         </a>
                     </div>
                     <div class="col-md-3">
                         @forelse ($project->assigned_students() as $student)
-                        <a class="btn btn-outline-dark" href="{{route('frontend.person.show', $student->id)}}">
+                        <a href="{{route('frontend.person.show', $student->id)}}">
                             {{$student->full_name}}
                         </a><br>
                         @empty
