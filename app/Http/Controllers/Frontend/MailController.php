@@ -8,6 +8,7 @@ use App\Mail\Frontend\Contact\SendContact;
 use App\Http\Requests\Frontend\Contact\SendContactRequest;
 use App\Models\Auth\User;
 use App\Project;
+use Illuminate\Support\Facades\Auth;
 
 
 class MailController extends Controller
@@ -19,18 +20,21 @@ class MailController extends Controller
     {
         if(Auth::guest())
         {
-            abort(403, 'You must be logged in to compose mail.')
+            abort(403, 'You must be logged in to compose mail.');
+        }
+        if (Auth::user()->id == $uid) {
+            return back()->withFlashWarning('It makes no sense to message yourself.');
         }
         $rec = array();
         $rec[] = User::findOrFail($uid);
-        return view('frontend.contact', ['recipients' => $rec]);
+        return view('frontend.mail', ['recipients' => $rec]);
     }
 
     public function mail_project($pid)
     {
         if(Auth::guest())
         {
-            abort(403, 'You must be logged in to compose mail.')
+            abort(403, 'You must be logged in to compose mail.');
         }
         $my_id = Auth::user()->id;
         $rec = array();
@@ -43,20 +47,21 @@ class MailController extends Controller
             $rec[] = User::findOrFail($svid);
         }
         $srid = $p->secondreader;
-        if ($srid != $my_id) {
+        if ($srid > 0 && $srid != $my_id) {
             $rec[] = User::findOrFail($srid);
         }
         foreach ($p->assigned_students() as $student) { // I know there are union and merge functions...
-            $rec[] = $student;
+            if ($student->id != $p->author) {
+                $rec[] = $student;
+            }
         }
-        return view('frontend.contact', ['recipients' => $rec]);
+        if (empty($rec)) {
+            return back()->withFlashWarning('It makes no sense to message only yourself.');
+        }
+        return view('frontend.mail', ['recipients' => $rec]);
     }
 
-    /**
-     * @param SendContactRequest $request
-     *
-     * @return mixed
-     */
+
     public function mail_post(SendContactRequest $request)
     {
         Mail::send(new SendContact($request));

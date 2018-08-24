@@ -121,7 +121,7 @@
     <div class="card bg-light text-dark mt-2">
         <div class="card-header"><strong>Currently Engaged</strong>
             @auth ()
-                <span class="float-right"><a class="btn btn-outline-dark" href="#"><i class="fas fa-envelope"></i> Contact all</a></span>
+                <span class="float-right"><a class="btn btn-outline-dark" href="{{route('frontend.mail.project', $project->id)}}"><i class="fas fa-envelope"></i> Contact all</a></span>
             @endauth
         </div>
         <div class="card-body">
