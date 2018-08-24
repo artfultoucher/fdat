@@ -5,7 +5,7 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col col-sm-8 align-self-center">
-            <div class="card">
+            <div class="card mt-4">
                 <div class="card-header">
                     <strong>
                         Send message
@@ -14,19 +14,27 @@
 
                 <div class="card-body">
                     {{ html()->form('POST', route('frontend.mail.post'))->open() }}
-
-                    @foreach ($recipients as $to_someone)
-                        {{$to_someone->full_name}}<br>
-                    @endforeach
-
                         <div class="row">
                             <div class="col">
+                                @foreach ($recipients as $key => $to)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="to_ids[]" value="{{$to->id}}" checked id="box-id-{{$key}}">
+                                        <label class="form-check-label" for="box-id-{{$key}}">
+                                            {{$to->full_name}}
+                                        </label>
+                                    </div>
+                                @endforeach
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="cc" value="yes" checked id="cc-box">
+                                    <label class="form-check-label" for="cc-box">
+                                        CC to yourself
+                                    </label>
+                                </div><hr>
                                 <div class="form-group">
                                     {{ html()->label('Your message:')->for('message') }}
-
                                     {{ html()->textarea('message')
                                         ->class('form-control')
-                                        ->placeholder('Hello')
+                                        ->value($intro)
                                         ->attribute('rows', 8) }}
                                 </div><!--form-group-->
                             </div><!--col-->

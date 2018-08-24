@@ -27,7 +27,7 @@ class MailController extends Controller
         }
         $rec = array();
         $rec[] = User::findOrFail($uid);
-        return view('frontend.mail', ['recipients' => $rec]);
+        return view('frontend.mail', ['recipients' => $rec, 'intro' => 'Hello ' . $rec[0]->full_name .','.PHP_EOL]);
     }
 
     public function mail_project($pid)
@@ -58,7 +58,8 @@ class MailController extends Controller
         if (empty($rec)) {
             return back()->withFlashWarning('It makes no sense to message only yourself.');
         }
-        return view('frontend.mail', ['recipients' => $rec]);
+        return view('frontend.mail', ['recipients' => $rec,
+        'intro' => 'Hello all,'.PHP_EOL.'I refer to project ' . route('frontend.project.show', $pid)]);
     }
 
 
