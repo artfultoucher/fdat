@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\Frontend\Contact\SendContact;
-use App\Http\Requests\Frontend\Contact\SendContactRequest;
+use App\Mail\UserMail;
+use Illuminate\Http\Request;
 use App\Models\Auth\User;
 use App\Project;
 use Illuminate\Support\Facades\Auth;
@@ -63,10 +63,17 @@ class MailController extends Controller
     }
 
 
-    public function mail_post(SendContactRequest $request)
+    public function mail_post(Request $request)
     {
-        Mail::send(new SendContact($request));
-
+        if (Auth::guest()) {
+            abort(403, 'Haha! Nice try.');
+        }
+        if (! $request->has('to_ids')) {
+            return redirect()->back()->withFlashWarning('Select at least one recipient!');
+        }
+        $destinations = User::findMany($request->to_ids);
+        // TODO take care of cc
+        Mail::to($destinations)->send(new UserMail($request));
         return redirect()->back()->withFlashSuccess('Mail sent.');
     }
 }

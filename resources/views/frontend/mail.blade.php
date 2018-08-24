@@ -35,7 +35,7 @@
                                     {{ html()->textarea('message')
                                         ->class('form-control')
                                         ->value($intro)
-                                        ->attribute('rows', 8) }}
+                                        ->attribute('rows', 8)->required() }}
                                 </div><!--form-group-->
                             </div><!--col-->
                         </div><!--row-->

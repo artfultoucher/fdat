@@ -1,0 +1,3 @@
+{{$body}}
+--
+Sent via FDAT
