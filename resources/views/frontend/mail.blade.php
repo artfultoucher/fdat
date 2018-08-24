@@ -8,7 +8,7 @@
             <div class="card mt-4">
                 <div class="card-header">
                     <strong>
-                        Send message
+                        Send mail
                     </strong>
                 </div><!--card-header-->
 
@@ -16,6 +16,7 @@
                     {{ html()->form('POST', route('frontend.mail.post'))->open() }}
                         <div class="row">
                             <div class="col">
+                                To:
                                 @foreach ($recipients as $key => $to)
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="to_ids[]" value="{{$to->id}}" checked id="box-id-{{$key}}">
@@ -29,7 +30,12 @@
                                     <label class="form-check-label" for="cc-box">
                                         CC to yourself
                                     </label>
-                                </div><hr>
+                                </div><p>
+                                <div class="form-group">
+                                    {{ html()->label('Subject:')->for('subject') }}
+                                    {{ html()->text('subject')
+                                        ->class('form-control')->required() }}
+                                </div><!--form-group-->
                                 <div class="form-group">
                                     {{ html()->label('Your message:')->for('message') }}
                                     {{ html()->textarea('message')

@@ -30,10 +30,8 @@ class UserMail extends Mailable
      */
     public function build()
     {
-        return $this->text('frontend.mail.mail_render')->with(['body' => $this->request->message]);
-        //return $this->text('frontend.mail.mail_render');
-
+        return $this->from($this->request->user())->subject($this->request->subject)->text('frontend.mail.mail_render');
     }
 
-    private $request;
+    public $request;
 }

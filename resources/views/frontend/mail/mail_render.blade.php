@@ -1,3 +1,3 @@
-{{$body}}
+{{$request->message}}
 --
 Sent via FDAT

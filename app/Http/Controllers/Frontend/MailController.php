@@ -72,8 +72,12 @@ class MailController extends Controller
             return redirect()->back()->withFlashWarning('Select at least one recipient!');
         }
         $destinations = User::findMany($request->to_ids);
-        // TODO take care of cc
-        Mail::to($destinations)->send(new UserMail($request));
+        if (isset($request->cc)) {
+            Mail::to($destinations)->cc($request->user())->send(new UserMail($request));
+        }
+        else {
+            Mail::to($destinations)->send(new UserMail($request));
+        }
         return redirect()->back()->withFlashSuccess('Mail sent.');
     }
 }
