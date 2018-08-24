@@ -96,7 +96,10 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
         if ($project->is_owner()) {
-          // TODO take care of engaged students
+          if ($project->assigned_students()->isNotEmpty())
+          {
+              return back()->withFlashDanger('You must first release all students before deleting a project.');
+          }
           if ($project->secondreader !=0 ) {
               return back()->withFlashWarning('You must dismiss the second reader before deleting this project.');
           }

@@ -10,9 +10,6 @@ use App\Models\Auth\User;
 use App\Project;
 
 
-/**
- * Class ContactController.
- */
 class MailController extends Controller
 {
     /**
@@ -20,6 +17,10 @@ class MailController extends Controller
      */
     public function mail_user($uid)
     {
+        if(Auth::guest())
+        {
+            abort(403, 'You must be logged in to compose mail.')
+        }
         $rec = array();
         $rec[] = User::findOrFail($uid);
         return view('frontend.contact', ['recipients' => $rec]);
