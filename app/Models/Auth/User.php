@@ -131,11 +131,11 @@ class User extends Authenticatable
     public function my_projects() { // Only used in dashboard! This is the only function that returns private projects
         return \App\Project::all()->filter(function($p) {return $p->is_owner();});
     }
-    
+
 
     public function link_to_sproject() { // not elegant to generate HTML in model :-(. TODO: use helper or trait
         $project = \App\Project::findOrFail($this->sproject_id);
-        if ($project->is_visible()) { // we ignore subscriptions!
+        if ($project->is_visible(true)) { // we ignore subscriptions!
             return '<a href="' . route('frontend.project.show', $project->id ) . '">' . $project->title . '</a>';
         }
         else {

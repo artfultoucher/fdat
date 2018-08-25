@@ -1,6 +1,6 @@
 <a href="{{route('frontend.person.show', $person->id)}}">
     <img width="100" src="{{$person->picture}}" class="img-thumbnail float-left mr-2">
-</a> <strong>{{$person->full_name}}</strong>
+</a> <span class="h5 fancy">{{$person->full_name}}</span>
 @foreach ($person->matters() as $matter)
     @if ($person->has_subscribed($matter))
         <span class="badge badge-secondary float-right">{{$matter}}</span>

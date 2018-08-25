@@ -35,13 +35,17 @@
     </div>
 </div>
     <div class="col">
-        @if (strlen($person->interests) > 9)
           <div class="card bg-light text-dark mb-3">
             <div class="card-header">{{$person->first_name}}'s introduction</div>
-            <div class="card-body">@markdown($person->interests)</div>
+            <div class="card-body">
+                @if (strlen($person->interests) > 9)
+                    @markdown($person->interests)
+                @else
+                    <i>Nothing provided.</i> <i class="fas fa-frown"></i>
+                @endif
+            </div>
           </div>
           <BR>
-        @endif
 <ul class="list-group text-dark">
     <li class="list-group-item d-flex justify-content-between align-items-center">
       Subscribed to:
