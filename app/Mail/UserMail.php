@@ -23,11 +23,6 @@ class UserMail extends Mailable
         $this->request = $request;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
         return $this->from($this->request->user())->subject($this->request->subject)->text('frontend.mail.mail_render');

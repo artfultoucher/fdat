@@ -23,10 +23,12 @@ a:hover, a:focus, a:active {
  display: block;
 }
 
+/*
 .dropdown>.dropdown-toggle:active {
- /*Without this, clicking will make it sticky*/
    pointer-events: none;
 }
+
+*/
 
 .zebra li:nth-child(odd)
 {

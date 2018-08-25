@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-
+@section('breadcrumbs', Breadcrumbs::render($bc_name, $bc_object))
 @section('title', app_name() . ' | Send Message')
 
 @section('content')

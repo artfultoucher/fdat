@@ -13,11 +13,9 @@ use Illuminate\Support\Facades\Auth;
 
 class MailController extends Controller
 {
-    /**
-     * @return \Illuminate\View\View
-     */
-    public function mail_user($uid)
-    {
+
+    public function mail_user(Request $request, $uid) // a get method but we need request for back url
+    {  // TODO fix the return route with session key or similar
         if(Auth::guest())
         {
             abort(403, 'You must be logged in to compose mail.');
@@ -26,11 +24,14 @@ class MailController extends Controller
             return back()->withFlashWarning('It makes no sense to message yourself.');
         }
         $rec = array();
-        $rec[] = User::findOrFail($uid);
-        return view('frontend.mail', ['recipients' => $rec, 'intro' => 'Hello ' . $rec[0]->full_name .','.PHP_EOL]);
+        $user = User::findOrFail($uid);
+        $rec[] = $user;
+        //session('backurl', $request->server('HTTP_REFERER'));
+        return view('frontend.mail', ['recipients' => $rec, 'intro' => 'Hello ' . $rec[0]->full_name .','.PHP_EOL,
+        'bc_name' => 'mail_user', 'bc_object' => $user]);
     }
 
-    public function mail_project($pid)
+    public function mail_project(Request $request, $pid) // a get method but we need request for back url
     {
         if(Auth::guest())
         {
@@ -58,8 +59,10 @@ class MailController extends Controller
         if (empty($rec)) {
             return back()->withFlashWarning('It makes no sense to message only yourself.');
         }
+        //session('backurl', $request->server('HTTP_REFERER'));
         return view('frontend.mail', ['recipients' => $rec,
-        'intro' => 'Hello all,'.PHP_EOL.'I refer to project ' . route('frontend.project.show', $pid)]);
+        'intro' => 'Hello all,'.PHP_EOL.'I refer to project ' . route('frontend.project.show', $pid),
+        'bc_name' => 'mail_project', 'bc_object' => $p]);
     }
 
 
@@ -71,13 +74,14 @@ class MailController extends Controller
         if (! $request->has('to_ids')) {
             return redirect()->back()->withFlashWarning('Select at least one recipient!');
         }
-        $destinations = User::findMany($request->to_ids);
+        $destinations = User::findMany($request->to_ids); // nice :-)
         if (isset($request->cc)) {
             Mail::to($destinations)->cc($request->user())->send(new UserMail($request));
         }
         else {
             Mail::to($destinations)->send(new UserMail($request));
         }
-        return redirect()->back()->withFlashSuccess('Mail sent.');
+        return redirect()->route('frontend.user.dashboard')->withFlashSuccess('Mail sent.');
+        //return redirect(session('backurl'));
     }
 }

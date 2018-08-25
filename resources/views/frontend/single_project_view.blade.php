@@ -1,6 +1,13 @@
 @extends('frontend.layouts.app')
 @section('title', 'View | ' . $project->title)
 @section('breadcrumbs', Breadcrumbs::render('view_project', $project))
+@push('after-scripts')
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+</script>
+@endpush
 @section('content')
 <div class="card {!! $project->colors()['bg-col'] !!} {!! $project->colors()['text-col'] !!}" style="box-shadow: 5px 10px 8px #777777;">
 <div class="card-header">
@@ -22,7 +29,10 @@
 
         <div class="col-3">
             <div class="card text-white bg-secondary">
-                <div class="card-header"><strong>This project</strong></div>
+                <div data-toggle="popover" data-trigger="hover" title="Modify this project"
+                data-content="You can edit and delete projects and you can also change their visibility. Private projects are not shown to anyone except yourself.
+                Permitted users means logged in users with the permission to view projects. Public means world wide."
+                class="card-header"><strong>This project</strong></div>
                 <div class="card-body">
                     <div class="btn-group">
                         <div class="dropdown show">
@@ -73,7 +83,10 @@
          @can('supervise projects')
              <div class="col-3">
                 <div class="card text-white bg-secondary">
-                     <div class="card-header"><strong>Engage</strong></div>
+                     <div  data-toggle="popover" data-trigger="hover" title="Attach people to this project"
+                     data-content="Specify which students undertake this project and which role you assume as a lecturer. A noticible contraint is that the
+                     supervisor can only dismiss but not appoint the second reader."
+                     class="card-header"><strong>Engage</strong></div>
                         <div class="card-body">
                             <div class="btn-group">
                                <div class="dropdown show">
@@ -121,7 +134,9 @@
     <div class="card bg-light text-dark mt-2">
         <div class="card-header"><strong>Currently Engaged</strong>
             @auth ()
-                <span class="float-right"><a class="btn btn-outline-dark" href="{{route('frontend.mail.project', $project->id)}}"><i class="fas fa-envelope"></i> Contact all</a></span>
+                <span  data-toggle="popover" data-trigger="hover" title="Mail to multiple recipients"
+                data-content="Click to compose mail to some or all people who are currently involved in this project."
+                class="float-right"><a class="btn btn-outline-dark" href="{{route('frontend.mail.project', $project->id)}}"><i class="fas fa-envelope"></i> Contact all</a></span>
             @endauth
         </div>
         <div class="card-body">

@@ -2,13 +2,9 @@
 
 require __DIR__.'/breadcrumbs/backend/backend.php';
 
-// added for my app
-
-// logged in users
 Breadcrumbs::for('home', function ($trail) {
     $trail->push('Home', route('frontend.user.dashboard'));
 });
-
 
 Breadcrumbs::for('projects_all', function ($trail) {
     $trail->parent('home');
@@ -24,7 +20,6 @@ Breadcrumbs::for('projects_available', function ($trail) {
     $trail->parent('projects_relevant');
     $trail->push('Unassigned', route('frontend.project.index_free'));
 });
-
 
 // Home > New Project
 Breadcrumbs::for('new_project', function ($trail) {
@@ -96,4 +91,14 @@ Breadcrumbs::for('sr_projects', function ($trail, $person) {
 Breadcrumbs::for('yielded_projects', function ($trail, $person) {
     $trail->parent('view_person', $person);
     $trail->push('Yielded projects', route('frontend.person.yielded_projects', $person->id));
+});
+
+Breadcrumbs::for('mail_user', function ($trail, $user) {
+    $trail->parent('view_person', $user);
+    $trail->push('Compose mail', route('frontend.mail.user', $user->id));
+});
+
+Breadcrumbs::for('mail_project', function ($trail, $project) {
+    $trail->parent('view_project', $project);
+    $trail->push('Compose mail to all involved', route('frontend.mail.project', $project->id));
 });
