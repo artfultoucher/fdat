@@ -16,43 +16,50 @@ class PersonController extends Controller
       return view('frontend.single_person_view', ['person' => $person]);
     }
 
-   public function show_students() {
-       return view('frontend.person_list', ['persons' => $this->select_users('student', false),
-       'breadcrumb_name' => 'students',
-       'title' => 'Students who share subscriptions with you']);
-   }
-
-   /*
-   TODO: Show all students without project who share some subscription with viewer
-   public function show_free_students() {
-   }
-   */
 
    public function show_all_students() {
-       return view('frontend.person_list', ['persons' => $this->select_users('student', true),
-       'breadcrumb_name' => 'all_students',
-       'title' => 'All registered students']);
+       $students =  User::role('student')->get()->all();
+       return view('frontend.person_list', ['persons' => $students, 'breadcrumb_name' => 'all_students',
+        'title' => 'All registered students']);
+    }
+
+
+   public function show_students() {
+      $students =  User::role('student')->get()->filter( function ($u) {return $u->shares_tags();} )->all();
+      return view('frontend.person_list', ['persons' => $students, 'breadcrumb_name' => 'students',
+     'title' => 'All students who share subscriptions with you']);
    }
 
+   public function show_busy_students(){
+       $students =  User::role('student')->get()->filter( function ($u) {return $u->shares_tags() && $u->sproject_id > 0;} )->all();
+       return view('frontend.person_list', ['persons' => $students, 'breadcrumb_name' => 'busy_students',
+      'title' => 'Students with projects who share subscriptions with you']);
+   }
+
+   public function show_free_students(){
+       $students =  User::role('student')->get()->filter( function ($u) {return $u->shares_tags() && $u->sproject_id == 0;} )->all();
+       return view('frontend.person_list', ['persons' => $students, 'breadcrumb_name' => 'free_students',
+      'title' => 'Students without projects who share subscriptions with you']);
+   }
+
+
+   public function show_all_lecturers() {
+       $lecturers =  User::role('lecturer')->get()->all();
+       return view('frontend.person_list', ['persons' => $lecturers, 'breadcrumb_name' => 'all_lecturers',
+       'title' => 'All registered Lecturers']);
+   }
+
+
    public function show_lecturers() {
-       return view('frontend.person_list', ['persons' => $this->select_users('lecturer', false),
-       'breadcrumb_name' => 'lecturers',
+       $lecturers =  User::role('lecturer')->get()->filter( function ($u) {return $u->shares_tags();} )->all();
+       return view('frontend.person_list', ['persons' => $lecturers, 'breadcrumb_name' => 'lecturers',
        'title' => 'Lecturers who share subscriptions with you']);
    }
 
-   public function show_all_lecturers() {
-       return view('frontend.person_list', ['persons' => $this->select_users('lecturer', true),
-       'breadcrumb_name' => 'all_lecturers',
-       'title' => 'All registered Lecturers']);
-   }
 
    public function show_students_of_supervisor($id) {
        $supervisor = User::findOrFail($id);
        return view('frontend.supervised_students', ['supervisor' => $supervisor]);
    }
 
-   private function select_users ($role, $ignore_subscriptions) {
-       $bitmask = $ignore_subscriptions ? 0b1111111111111111 : Auth::user()->subscr_mask; // works for up to 16 matters
-       return User::role($role)->get()->filter(function ($u) use ($bitmask) {return ($bitmask & $u->subscr_mask);})->all();
-   }
 }

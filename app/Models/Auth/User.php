@@ -79,19 +79,7 @@ class User extends Authenticatable
       return (($this->subscr_mask & $flag) == $flag);
     }
 
-    // these methods should perhaps be moved to PersonController
 
-   // Decide if these functions return arrays or collections
-
-   // Decide where to place them
-
-/*
-
-    The functions below filter against privacy setting but not against subscription matters
-
-    Private projects are not shown if author is logged in!
-
-*/
 
     public function yielded_projects() { // projects created by this user but supervised by someone else or none
         return $this->hasMany('App\Project', 'author')->whereRaw('supervisor <> author')->get()->filter(function ($p){return $p->is_visible();});
@@ -128,8 +116,12 @@ class User extends Authenticatable
         return $result;
     }
 
+    public function shares_tags() { // Does this user share subscription tags with the logged in user?
+        return ($this->subscr_mask & Auth::user()->subscr_mask) != 0; // bitwise AND
+    }
+
     public function my_projects() { // Only used in dashboard! This is the only function that returns private projects
-        return \App\Project::all()->filter(function($p) {return $p->is_owner();});
+        return \App\Project::all()->filter(function($p) {return $p->is_owner() || $p->id == $this->sproject_id;});
     }
 
 

@@ -84,7 +84,7 @@ $(function () {
              <div class="col-3">
                 <div class="card text-white bg-secondary">
                      <div  data-toggle="popover" data-trigger="hover" title="Attach people to this project"
-                     data-content="Specify which students undertake this project and which role you assume as a lecturer. A noticible contraint is that the
+                     data-content="Specify which students undertake this project and which role you assume as a lecturer. A noticible constraint is that the
                      supervisor can only dismiss but not appoint the second reader."
                      class="card-header"><strong>Engage</strong></div>
                         <div class="card-body">

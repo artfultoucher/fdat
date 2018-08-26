@@ -14,11 +14,12 @@
                     <a href="{{ route('frontend.project.index_all') }}" class="dropdown-item">All</a>
                     @auth
                     <a href="{{ route('frontend.project.index') }}" class="dropdown-item">Relevant to you</a>
-                    <a href="{{ route('frontend.project.index_free') }}" class="dropdown-item">Relevant and unassigned</a>
-                      @if ($logged_in_user->hasPermissionTo('write projects'))
+                    <a href="{{ route('frontend.project.index_free') }}" class="dropdown-item">Available</a>
+                    <a href="{{ route('frontend.project.index_taken') }}" class="dropdown-item">Taken</a>
+                    @can('write projects')
                       <div class="dropdown-divider"></div>
                       <a href="{{ route('frontend.project.create') }}" class="dropdown-item">New Project</a>
-                      @endif
+                   @endcan
                    @endauth
                 </div>
             </li>
@@ -30,7 +31,7 @@
                     <a href="{{ route('frontend.person.show_all_lecturers') }}" class="dropdown-item">All</a>
                     @auth
                     <a href="{{ route('frontend.person.show_lecturers') }}" class="dropdown-item">Relevant to you</a>
-                   @endauth
+                    @endauth
                 </div>
             </li>
 
@@ -41,6 +42,8 @@
                     <a href="{{ route('frontend.person.show_all_students') }}" class="dropdown-item">All</a>
                     @auth
                     <a href="{{ route('frontend.person.show_students') }}" class="dropdown-item">Relevant to you</a>
+                    <a href="{{ route('frontend.person.show_free_students') }}" class="dropdown-item">Without project</a>
+                    <a href="{{ route('frontend.person.show_busy_students') }}" class="dropdown-item">With project</a>
                    @endauth
                 </div>
             </li>

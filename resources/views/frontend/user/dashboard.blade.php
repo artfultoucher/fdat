@@ -3,7 +3,7 @@
 <script>
 $(function () {
   $('#pop').popover({title: "All your projects",
-  content: "Below you can access all projects which you can currently modify. This is the <strong>only place</strong> where your <strong>private projects</strong> (shown in red) appear.",
+  content: "Below you can find all projects which you either own or undertake. This is the <strong>only place</strong> where your <strong>private projects</strong> (shown in red) appear.",
   placement: "left",
   trigger: "hover",
   html: true});
@@ -25,7 +25,7 @@ $(function () {
         <div class="card-columns">
         @forelse ($logged_in_user->my_projects() as $project)
             @include('frontend.includes.small_project_card')
-            @empty
+        @empty
             None
         @endforelse
         </div>

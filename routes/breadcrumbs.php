@@ -18,7 +18,12 @@ Breadcrumbs::for('projects_relevant', function ($trail) {
 
 Breadcrumbs::for('projects_available', function ($trail) {
     $trail->parent('projects_relevant');
-    $trail->push('Unassigned', route('frontend.project.index_free'));
+    $trail->push('Available', route('frontend.project.index_free'));
+});
+
+Breadcrumbs::for('projects_taken', function ($trail) {
+    $trail->parent('projects_relevant');
+    $trail->push('Taken', route('frontend.project.index_taken'));
 });
 
 // Home > New Project
@@ -61,6 +66,16 @@ Breadcrumbs::for('all_students', function ($trail) {
 Breadcrumbs::for('students', function ($trail) {
     $trail->parent('all_students');
     $trail->push('Relevant students', route('frontend.person.show_students'));
+});
+
+Breadcrumbs::for('busy_students', function ($trail) {
+    $trail->parent('students');
+    $trail->push('With project', route('frontend.person.show_busy_students'));
+});
+
+Breadcrumbs::for('free_students', function ($trail) {
+    $trail->parent('students');
+    $trail->push('Without project', route('frontend.person.show_free_students'));
 });
 
 Breadcrumbs::for('all_lecturers', function ($trail) {

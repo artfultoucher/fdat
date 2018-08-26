@@ -21,14 +21,12 @@ class Project extends Model
       return Auth::check() && Auth::user()->id == $this->owner();
     }
 
-
     public function is_orphan() { // no supervisor
       return $this->supervisor == 0;
     }
 
-
-    public function is_available(){ // available for students to take on
-      // return !($this->is_assigned() || $this->is_orphan()); // ah De Morgan...
+    public function is_available() { // available for students to take on
+        // this is *not* the opposite of is_taken()
       if ($this->is_orphan() || $this->assigned_students()->isNotEmpty() )  {
           return false;
       }
@@ -36,6 +34,9 @@ class Project extends Model
       return true;
     }
 
+    public function is_taken() {
+        return $this->assigned_students()->isNotEmpty();
+    }
 
     public function user_can_assign_students() {
         return Auth::check() && Auth::user()->id == $this->supervisor && $this->visibility > 0; // must also return false for orphan!
@@ -45,16 +46,13 @@ class Project extends Model
         return $this->hasMany('App\Models\Auth\User', 'sproject_id', 'id')->get();
     }
 
-
     public function is_new(){
       return $this->created_at->diffInDays() < 3;
     }
 
-
     public function is_updated(){
       return !$this->is_new() && $this->updated_at->diffInDays() < 3;
     }
-
 
     public function is_visible($ignore_subscriptions = false){ // public projects are HIDDEN when logged in and not subscribed
       if (Auth::guest()) {
@@ -66,7 +64,6 @@ class Project extends Model
       }
       return ($this->visibility > 0) && Auth::user()->hasPermissionTo('view projects') && ($ignore_subscriptions || Auth::user()->has_subscribed($this->type));
     }
-
 
 
     public function author_name()

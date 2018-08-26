@@ -35,6 +35,12 @@ class ProjectController extends Controller
        'breadcrumb_name' => 'projects_available']);
    }
 
+   public function index_taken()
+   {
+       $arr= Project::all()->filter(function ($p){return $p->is_taken() && $p->is_visible();})->all();
+       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Undertaken projects matching your subscription tags (' . count($arr) . ')' ,
+       'breadcrumb_name' => 'projects_taken']);
+   }
 
     public function create()
     {  // no real need to guard this here against anauthorized project creation
