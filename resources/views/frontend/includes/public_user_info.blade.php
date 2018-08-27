@@ -1,3 +1,11 @@
+@push('after-scripts')
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover({html: true})
+})
+</script>
+@endpush
+
 @if($person->hasRole('student'))
 <div class="card text-white bg-secondary mb-4" style="box-shadow: 5px 10px 8px #777777;">
 @elseif ($person->hasRole('lecturer'))
@@ -32,7 +40,8 @@
     </div>
     <div class="col">
          <div class="card bg-light text-dark mb-3">
-           <div class="card-header h5 fancy">Introduction</div>
+           <div class="card-header h5 fancy" data-toggle="popover" data-trigger="hover" data-placement="right" title="Personal Introduction"
+           data-content="Logged in users can create or modify this from <strong>My Account -> Personal Introduction</strong>".>Introduction</div>
              <div class="card-body">
                @if (strlen($person->interests) > 9)
                   @markdown($person->interests)
@@ -47,7 +56,10 @@
     <div class="col">
 
     <div class="card bg-light text-dark mb-3">
-      <div class="card-header h5 fancy">Subscribed matters</div>
+      <div class="card-header h5 fancy" data-toggle="popover" data-trigger="hover" data-placement="left" title="Subscribed matters or tags"
+      data-content="Logged in users can modify this from <strong>My Account -> Account Details</strong>. These tags have nothing to do with permissions. They
+      just act as a <strong>filter</strong>. Some but not all views are filtered against these tags.<br>Most users should select <strong>at least
+      one</strong> of these tags"> Subscribed matters</div>
       <div class="card-body">
           <span>
               @if ($person->subscr_mask == 0)

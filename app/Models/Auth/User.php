@@ -135,17 +135,6 @@ class User extends Authenticatable
         return '<span class="badge badge-success">Working on</span> <i class="text-muted">Non-public project</i>';
     }
 
-    public function link_to_sproject() {
-        // SLATED FOR DELETION
-        $project = \App\Project::findOrFail($this->sproject_id);
-        if ($project->is_visible(true)) { // we ignore subscriptions!
-            return '<a href="' . route('frontend.project.show', $project->id ) . '">' . $project->title . '</a>';
-        }
-        else {
-            return '<span class="text-info">Non-public project</span>';
-        }
-    }
-
     /**
      * The attributes that should be hidden for arrays.
      *

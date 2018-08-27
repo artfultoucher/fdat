@@ -16,28 +16,28 @@ class ProjectController extends Controller
 
    public function index_all()
     {
-        $arr = Project::all()->filter(function ($p) {return $p->is_visible(true);})->all();
+        $arr = Project::latest()->get()->filter(function ($p) {return $p->is_visible(true);})->all();
         return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'All projects (' . count($arr) . ')' ,
         'breadcrumb_name' => 'projects_all']);
     }
 
    public function index()
    {
-       $arr = Project::all()->filter(function ($p) {return $p->is_visible();})->all();
+       $arr = Project::latest()->get()->filter(function ($p) {return $p->is_visible();})->all();
        return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Projects matching your subscripton tags (' . count($arr) . ')' ,
        'breadcrumb_name' => 'projects_relevant']);
    }
 
    public function index_free()
    {
-       $arr= Project::all()->filter(function ($p){return $p->is_available() && $p->is_visible();})->all();
+       $arr= Project::latest()->get()->filter(function ($p){return $p->is_available() && $p->is_visible();})->all();
        return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Unassigned projects matching your subscription tags (' . count($arr) . ')' ,
        'breadcrumb_name' => 'projects_available']);
    }
 
    public function index_taken()
    {
-       $arr= Project::all()->filter(function ($p){return $p->is_taken() && $p->is_visible();})->all();
+       $arr= Project::latest()->get()->filter(function ($p){return $p->is_taken() && $p->is_visible();})->all();
        return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Undertaken projects matching your subscription tags (' . count($arr) . ')' ,
        'breadcrumb_name' => 'projects_taken']);
    }

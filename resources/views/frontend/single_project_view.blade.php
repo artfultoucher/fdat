@@ -4,14 +4,15 @@
 @push('after-scripts')
 <script>
 $(function () {
-  $('[data-toggle="popover"]').popover()
+  $('[data-toggle="popover"]').popover({html: true})
 })
 </script>
 @endpush
 @section('content')
 <div class="card {!! $project->colors()['bg-col'] !!} {!! $project->colors()['text-col'] !!}" style="box-shadow: 5px 10px 8px #777777;">
 <div class="card-header">
-    <span class="h4 fancy">{{ $project->title }}</span><br>{{$project->type}}
+    <span class="h4 fancy">{{ $project->title }}</span><br>
+    <span class="h5">{{$project->type}}</span>
 </div><!--card-header-->
 <div class="card-body">
     <div class="row mb-2">
@@ -19,7 +20,7 @@ $(function () {
             <div class="card text-white bg-secondary">
                 <div class="card-header"><strong>Abstract</strong>
                 </div>
-                <div class="card-body">
+                <div class="card-body"><img width="80" src="{{$project->avatar()}}" class="img-thumbnail float-left mr-2">
                     {{$project->abstract}}
                 </div>
             </div><!-- card -->
@@ -29,9 +30,10 @@ $(function () {
 
         <div class="col-3">
             <div class="card text-white bg-secondary">
-                <div data-toggle="popover" data-trigger="hover" title="Modify this project"
-                data-content="You can edit and delete projects and you can also change their visibility. Private projects are not shown to anyone except yourself.
-                Permitted users means logged in users with the permission to view projects. Public means world wide."
+                <div data-toggle="popover" data-trigger="hover" data-placement="left" title="Modify this project"
+                data-content="You can edit and delete projects and you can also change their visibility.<br><strong>Private</strong> projects are not shown to
+                anyone except yourself.
+                <strong>Permitted users</strong> means logged in users with the permission to view projects. <strong>Public</strong> means world wide."
                 class="card-header"><strong>This project</strong></div>
                 <div class="card-body">
                     <div class="btn-group">
@@ -84,8 +86,8 @@ $(function () {
              <div class="col-3">
                 <div class="card text-white bg-secondary">
                      <div  data-toggle="popover" data-trigger="hover" title="Attach people to this project"
-                     data-content="Specify which students undertake this project and which role you assume as a lecturer. A noticible constraint is that the
-                     supervisor can only dismiss but not appoint the second reader."
+                     data-content="Specify which students undertake this project and which role you assume as a lecturer.<br> A noticible constraint is that the
+                     supervisor can <strong>only dismiss</strong> but not appoint the second reader."
                      class="card-header"><strong>Engage</strong></div>
                         <div class="card-body">
                             <div class="btn-group">
@@ -209,7 +211,7 @@ $(function () {
     </div> <!-- card-body -->
     <div class="card-footer d-flex justify-content-between">
         {!! $project->icons() !!}
-        <small><i class="fas fa-industry"></i>{{$project->created_at->diffForHumans()}} <i class="fas fa-edit"></i>{{$project->updated_at->diffForHumans()}}</small>
+        <small><i class="fas fa-industry"></i>{{$project->created_at->diffForHumans()}}  <i class="fas fa-edit"></i>{{$project->updated_at->diffForHumans()}}</small>
     </div>
 </div><!-- card -->
 @endsection

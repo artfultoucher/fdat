@@ -16,6 +16,9 @@ class Project extends Model
       return $this->supervisor == 0 ? $this->author : $this->supervisor;
     }
 
+    public function avatar(){ // the avatar of the owner
+        return User::findOrFail($this->owner())->picture;
+    }
 
     public function is_owner() {
       return Auth::check() && Auth::user()->id == $this->owner();

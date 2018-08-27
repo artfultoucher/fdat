@@ -1,7 +1,8 @@
 {{ html()->modelForm($logged_in_user, 'PATCH', route('frontend.user.profile.intro'))->class('form-horizontal')->open() }}
     <div class="row">
         <div class="col">
-            You are welcome to tell other users about your interests etc. You can use <a href="https://www.markdownguide.org/cheat-sheet/">Markdown</a>.
+            You are welcome to tell other users about your interests etc.
+            @include('frontend.includes.markdown_label')
             <div class="form-group">
                 {{ html()->textarea('interests')->class('form-control')->attribute('rows', 10)->required() }}
             </div><!--form-group-->
