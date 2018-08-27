@@ -59,7 +59,9 @@ class PersonController extends Controller
 
    public function show_students_of_supervisor($id) {
        $supervisor = User::findOrFail($id);
-       return view('frontend.supervised_students', ['supervisor' => $supervisor]);
+       $students = $supervisor->supervised_students();
+       return view('frontend.person_list', ['persons' => $students, 'title' => 'Supervisees of '. $supervisor->full_name,
+       'breadcrumb_name' => 'supervised_students', 'breadcrumb_object' => $supervisor]);
    }
 
 }

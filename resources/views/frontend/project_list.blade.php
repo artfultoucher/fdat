@@ -7,6 +7,7 @@
 @endif
 @section('content')
 <h2>{{$page_title}}</h2>
+@include('frontend.includes.only_public_warning')
 <div class="card-columns">
 @forelse ($projects as $project)
   @include('frontend.includes.small_project_card')

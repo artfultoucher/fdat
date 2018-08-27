@@ -10,7 +10,7 @@ h1, h2, h3, h4, h5 {
 }
 
 body { background-image: linear-gradient(to bottom right, #E3E3E3 0%, #8A9CB5 100%);}
-
+/*
 a:link, a:visited {
    text-decoration: none;
    color: #008080
@@ -20,7 +20,7 @@ a:hover, a:focus, a:active {
    text-decoration: underline;
    color: #85144b;
    }
-
+*/
 .dropdown-menu a:link, .dropdown-menu a:visited {
     color: #222222;
 }
