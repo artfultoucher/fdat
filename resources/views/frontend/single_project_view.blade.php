@@ -12,7 +12,7 @@ $(function () {
 <div class="card {!! $project->colors()['bg-col'] !!} {!! $project->colors()['text-col'] !!}" style="box-shadow: 5px 10px 8px #777777;">
 <div class="card-header">
     <span class="h4 fancy">{{ $project->title }}</span><br>
-    <span class="h5">{{$project->type}}</span>
+    <a href="{{route('frontend.matters',$project->type)}}" class="h5">{{$project->type}}</a>
 </div><!--card-header-->
 <div class="card-body">
     <div class="row mb-2">

@@ -10,7 +10,7 @@
   <div class="card-header h2 fancy"> {{$title}} ({{ count($persons) }}) </div>
 <div class="card-body">
 @include('frontend.includes.only_public_warning')
-<small>Click the avatar to view a personal introduction, if given. Click the Engagement entries to view details.</small>
+<small>Click the avatar to view a personal introduction, if given. All badges are also clickable links.</small>
 <table class="table table-striped">
   <thead class="bg-secondary text-white">
     <tr>
@@ -61,7 +61,7 @@
       <td>
           @foreach ($person->matters() as $matter)
               @if ($person->has_subscribed($matter))
-                  <span class="badge badge-secondary">{{$matter}}</span>
+                  <a href="{{route('frontend.matters',$matter)}}" class="badge badge-secondary">{{$matter}}</a>
               @endif
           @endforeach
       </td>

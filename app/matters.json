@@ -1,7 +1,21 @@
-[
-"BSC": {"title": "Computer Science Undergraduate Course CK401", "links": [{}]},
-"MScCS": {},
-"MScDA": {},
-"MScIM": {},
-"BADHIT": {}
-]
+{
+"BSc": {"title": "Computer Science Undergraduate Course CK401", "links": [{"name": "Website", "url": "https://www.ucc.ie/en/ck401/"},
+    {"name": "Project module", "url": "https://www.ucc.ie/admin/registrar/modules/?mod=CS4501"}]
+    },
+
+"MScCS": {"title": "MSc in Computing Science", "links": [{"name": "Website", "url": "https://www.ucc.ie/en/ckr40/"},
+    {"name": "Project module", "url": "https://www.ucc.ie/admin/registrar/modules/?mod=CS6400"}]
+    },
+
+"MScDA": {"title": "MSc in Data Science and Analytics", "links": [{"name": "Website", "url": "https://www.ucc.ie/en/ckr49/"},
+    {"name": "Project module", "url": "https://www.ucc.ie/admin/registrar/modules/?mod=CS6500"}]
+    },
+
+"MScIM": {"title": "MSc in Interactive Media", "links": [{"name": "Website", "url": "https://www.ucc.ie/en/ckr05/"},
+    {"name": "Project Module", "url": "https://www.ucc.ie/admin/registrar/modules/?mod=CS6200"}]
+    },
+
+"BADHIT": {"title": "BA Digital Humanities and Information Technology CK118", "links": [{"name": "Website", "url": "https://www.ucc.ie/en/ck118/"},
+    {"name": "Project Module", "url": "https://www.ucc.ie/admin/registrar/modules/?mod=DH4003"}]
+    }
+}

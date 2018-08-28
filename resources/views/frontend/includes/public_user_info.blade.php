@@ -41,7 +41,7 @@ $(function () {
     <div class="col">
          <div class="card bg-light text-dark mb-3">
            <div class="card-header h5 fancy" data-toggle="popover" data-trigger="hover" data-placement="right" title="Personal Introduction"
-           data-content="Logged in users can create or modify this from <strong>My Account -> Personal Introduction</strong>".>Introduction</div>
+           data-content="Logged in users can create or modify this from <strong>My Account -> Personal Introduction</strong>.">Introduction</div>
              <div class="card-body">
                @if (strlen($person->interests) > 9)
                   @markdown($person->interests)
@@ -59,7 +59,7 @@ $(function () {
       <div class="card-header h5 fancy" data-toggle="popover" data-trigger="hover" data-placement="left" title="Subscribed matters or tags"
       data-content="Logged in users can modify this from <strong>My Account -> Account Details</strong>. These tags have nothing to do with permissions. They
       just act as a <strong>filter</strong>. Some but not all views are filtered against these tags.<br>Most users should select <strong>at least
-      one</strong> of these tags"> Subscribed matters</div>
+      one</strong> of these tags."> Subscribed matters</div>
       <div class="card-body">
           <span>
               @if ($person->subscr_mask == 0)
@@ -67,7 +67,7 @@ $(function () {
               @else
                   @foreach ($person->matters() as $matter)
                       @if ($person->has_subscribed($matter))
-                      <span class="badge badge-secondary">{{$matter}}</span>
+                      <a href="{{route('frontend.matters',$matter)}}" class="badge badge-secondary">{{$matter}}</a>
                       @endif
                   @endforeach
               @endif
