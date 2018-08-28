@@ -101,7 +101,7 @@
 
     <div class="row">
         <div class="col">
-           <div class="form-group">Subscribed Matters
+           <div class="form-group">Matters subscribed. Look <a href="{{route('frontend.matters')}}">here for details</a>.
              <div class="form-control">
               @foreach ($logged_in_user->matters() as $matter)
                  <div class="form-check form-check-inline">

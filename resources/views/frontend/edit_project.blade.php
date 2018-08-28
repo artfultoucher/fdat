@@ -24,7 +24,7 @@
             {{ html()->textarea('description')->class('form-control')->attribute('rows', 10)->required() }}
           </div><!--form-group-->
           <div class="form-group">
-           <label for="type">Project type (degree program)</label>
+           <label for="type">Project type (degree program). Look <a href="{{route('frontend.matters')}}">here for details</a>.</label>
            <select id="type" name='type'>
              @foreach (App\Project::$possible_types as $code)
                @if($code == $project->type)

@@ -117,3 +117,13 @@ Breadcrumbs::for('mail_project', function ($trail, $project) {
     $trail->parent('view_project', $project);
     $trail->push('Compose mail to all involved', route('frontend.mail.project', $project->id));
 });
+
+Breadcrumbs::for('matters_all', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Subscription tags', route('frontend.matters'));
+});
+
+Breadcrumbs::for('matters_single', function ($trail, $tag) {
+    $trail->parent('matters_all');
+    $trail->push($tag, route('frontend.matters', $tag));
+});

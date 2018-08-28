@@ -50,6 +50,8 @@ class User extends Authenticatable
         'interests',
     ];
 
+// Here we define the subscription tags. TODO: Do this properly with a config file.
+
     public static $matter_bit_masks = ['BSc' => 1, 'MScCS' => 2, 'MScDA' => 4, 'MScIM' => 8, 'BADHIT' => 16];
 
     public static function matters () {
