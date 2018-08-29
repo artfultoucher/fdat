@@ -1,10 +1,10 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark mb-3">
     <a href="{{ route('frontend.index') }}" class="navbar-brand">{{ app_name() }}</a>
 
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('labels.general.toggle_navigation') }}">
         <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+    </button>@yield('breadcrumbs')
+    <div class="collapse navbar-collapse justify-content-end mr-4" id="navbarSupportedContent">
         <ul class="navbar-nav">
 
             <li class="nav-item dropdown">
@@ -75,4 +75,4 @@
             @endguest
         </ul>
     </div>
-</nav>@yield('breadcrumbs')
+</nav>

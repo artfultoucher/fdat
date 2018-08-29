@@ -17,7 +17,9 @@ $(function () {
      @include('frontend.includes.public_user_info', ['person' => $logged_in_user])
      <div class="card bg-light">
          <div class="card-header"><span class="h5 fancy" id="pop" data-toggle="popover">My projects</span>
+        @can('write projects')
         <a href="{{route('frontend.project.create')}}" class="btn btn-info float-right fancy"><i class="fas fa-plus-circle"></i> New Project</a>
+        @endcan
          </div>
          <div class="card-body">
              <div class="card-columns">

@@ -28,7 +28,16 @@ class UserEventListener
      */
     public function onRegistered($event)
     {
-        \Log::info('User Registered: '.$event->user->full_name);
+        // Modifications below made by F.B.
+        // Do not use str_contains() for this! Coz of false positives with truncated genuine addresses!
+        $mail_array = explode(',',env('LECTURERS'));
+        if (in_array($event->user->email, $mail_array)) {
+            $event->user->syncRoles(['lecturer']);
+            \Log::info('Lecturer registered: '.$event->user->full_name);
+        }
+        else {
+            \Log::info('User registered: '.$event->user->full_name);
+        }
     }
 
     /**

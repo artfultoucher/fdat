@@ -23,6 +23,7 @@ class EngagementController extends Controller
       $project->timestamps = false; // don't modify timestamps
       $project->supervisor = $user->id;
       $project->save();
+      $user->subscribe_matter($project->type); // in theory the user could still not be subscribed to this matter.
       return back()->withFlashSuccess('You are now the supervisor of this project.');
     }
 
@@ -69,6 +70,7 @@ class EngagementController extends Controller
       $project->timestamps = false;
       $project->secondreader = $user->id;
       $project->save();
+      $user->subscribe_matter($project->type); // there are cases.. at least in theory..
       return back()->withFlashSuccess('You are now the second reader of this project.');
     }
 
@@ -134,17 +136,17 @@ class EngagementController extends Controller
         if ( ! $project->user_can_assign_students()) {
             return back()->withFlashWarning('You must be supervisor and the project must not be private.');
         }
-            $users = User::all();
+            $users = User::orderBy('last_name')->get()->all();
             $available_ids = array(); // associative array; id => full_name
             $assigned_ids = array(); // array of integer
             foreach ($users as $user) {
                 if ($user->sproject_id == $project->id) { // aready assigned to this project. permissions and subscriptions *must* be ignored here!!
-                    $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
+                    $available_ids[$user->id] = 'StdID '. $user->studentid . ' - ' . $user->full_name;
                     $assigned_ids[] = $user->id; // additionally put this id to array of currently assigned students
                 }
                 elseif ($user->sproject_id == 0 && $user->hasPermissionTo('undertake projects') && ($offer_all_students || $user->has_subscribed($project->type))) {
                     // not yet assigned && can work on projects && has subscribed to this proejct type
-                    $available_ids[$user->id] = $user->studentid . ' - ' . $user->full_name;
+                    $available_ids[$user->id] = 'StdID '. $user->studentid . ' - ' . $user->full_name;
                 }
             }
         if (empty($available_ids)) {

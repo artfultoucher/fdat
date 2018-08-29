@@ -7,7 +7,13 @@
 @foreach ($keys as $key)
 
 <div class="card mt-4">
- <div class="card-header h4 fancy">{{$key}} - {{$json_obj->$key->title}}</div>
+ <div class="card-header"><span class="h5 fancy">{{$key}} - {{$json_obj->$key->title}}</span>
+@auth ()
+    @if ($logged_in_user->has_subscribed($key))
+        <span class="float-right badge badge-info">Subscribed</span>
+    @endif
+@endauth
+ </div>
     <div class="card-body">
         @foreach ($json_obj->$key->links as $link)
         <div class="row">

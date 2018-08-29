@@ -5,7 +5,13 @@
 @section('content')
 
 <div class="card mt-5">
-    <div class="card-header h4 fancy">{{$code}} - {{$obj->title}}</div>
+    <div class="card-header"><span class="h5 fancy">{{$code}} - {{$obj->title}}</span>
+        @auth ()
+            @if ($logged_in_user->has_subscribed($code))
+                <span class="float-right badge badge-info">Subscribed</span>
+            @endif
+        @endauth
+    </div>
     <div class="card-body">
         @foreach ($obj->links as $link)
         <div class="row">

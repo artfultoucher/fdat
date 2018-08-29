@@ -18,40 +18,40 @@ class PersonController extends Controller
 
 
    public function show_all_students() {
-       $students =  User::role('student')->get()->all();
+       $students =  User::role('student')->orderBy('last_name')->get()->all();
        return view('frontend.person_list', ['persons' => $students, 'breadcrumb_name' => 'all_students',
         'title' => 'All registered students']);
     }
 
 
    public function show_students() {
-      $students =  User::role('student')->get()->filter( function ($u) {return $u->shares_tags();} )->all();
+      $students =  User::role('student')->orderBy('last_name')->get()->filter( function ($u) {return $u->shares_tags();} )->all();
       return view('frontend.person_list', ['persons' => $students, 'breadcrumb_name' => 'students',
      'title' => 'All students who share subscriptions with you']);
    }
 
    public function show_busy_students(){
-       $students =  User::role('student')->get()->filter( function ($u) {return $u->shares_tags() && $u->sproject_id > 0;} )->all();
+       $students =  User::role('student')->orderBy('last_name')->get()->filter( function ($u) {return $u->shares_tags() && $u->sproject_id > 0;} )->all();
        return view('frontend.person_list', ['persons' => $students, 'breadcrumb_name' => 'busy_students',
       'title' => 'Students with projects who share subscriptions with you']);
    }
 
    public function show_free_students(){
-       $students =  User::role('student')->get()->filter( function ($u) {return $u->shares_tags() && $u->sproject_id == 0;} )->all();
+       $students =  User::role('student')->orderBy('last_name')->get()->filter( function ($u) {return $u->shares_tags() && $u->sproject_id == 0;} )->all();
        return view('frontend.person_list', ['persons' => $students, 'breadcrumb_name' => 'free_students',
       'title' => 'Students without projects who share subscriptions with you']);
    }
 
 
    public function show_all_lecturers() {
-       $lecturers =  User::role('lecturer')->get()->all();
+       $lecturers =  User::role('lecturer')->orderBy('last_name')->get()->all();
        return view('frontend.person_list', ['persons' => $lecturers, 'breadcrumb_name' => 'all_lecturers',
        'title' => 'All registered Lecturers']);
    }
 
 
    public function show_lecturers() {
-       $lecturers =  User::role('lecturer')->get()->filter( function ($u) {return $u->shares_tags();} )->all();
+       $lecturers =  User::role('lecturer')->orderBy('last_name')->get()->filter( function ($u) {return $u->shares_tags();} )->all();
        return view('frontend.person_list', ['persons' => $lecturers, 'breadcrumb_name' => 'lecturers',
        'title' => 'Lecturers who share subscriptions with you']);
    }
