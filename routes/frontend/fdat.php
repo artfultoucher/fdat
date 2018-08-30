@@ -41,3 +41,6 @@ Route::get('mail/project/{id}', 'MailController@mail_project')->name('mail.proje
 Route::post('mail/post', 'MailController@mail_post')->name('mail.post');
 
 Route::get('matters/{code?}', 'ExtraContentController@view_matters')->name('matters');
+
+Route::get('deliverable/form/{pid}', 'DeliverableController@upload_form')->name('deliverable_form');
+Route::post('deliverable/{pid}', 'DeliverableController@store')->name('deliverable.store');

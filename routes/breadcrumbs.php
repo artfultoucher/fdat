@@ -127,3 +127,8 @@ Breadcrumbs::for('matters_single', function ($trail, $tag) {
     $trail->parent('matters_all');
     $trail->push($tag, route('frontend.matters', $tag));
 });
+
+Breadcrumbs::for('deliverable_upload', function ($trail, $project) {
+    $trail->parent('view_project', $project);
+    $trail->push('Upload deliverable'); // TODO check other breadcrumbs if route can be eleminated
+});

@@ -7,12 +7,12 @@
 @section('content')
 
 
-    <div class="card bg-light w-50">
+    <div class="card bg-light align-self-center">
         <div class="card-header h4 fancy">Assign Students</div>
 
         <div class="card-body">
 
-        Click to select single entry. Hold <kbd>ctrl</kbd> to add or toggle entries.
+        Click to select single entry. Hold <kbd>CTRL</kbd> to add or toggle entries.
 
           {{ html()->form('PATCH', route('frontend.project.students', $project->id))->open() }}
           <div class="form-group form-inline mt-3">
@@ -31,8 +31,8 @@
           </div><!--form-group-->
           {{ html()->form()->close() }}
           @unless (Request::is('*/all_students'))
-          <p>Are you looking for a student <strong>not in this list</strong>? Maybe s/he has not subscribed to <strong>{{$project->type}}</strong> matters.
-          Try again selecting from
+          <p>Are you looking for a student who is <strong>not in this list</strong>? Perhaps s/he has not subscribed to <strong>{{$project->type}}</strong> matters.
+          Try selecting from
           <a href="{{route('frontend.project.student_form',['id' => $project->id, 'pool' => 'all_students'])}}">all students</a>.</p>
           @endunless
       </div><!--card-body-->

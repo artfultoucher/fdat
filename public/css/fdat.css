@@ -36,6 +36,7 @@ a:hover, a:focus, a:active {
    color: #FAEBD7;
    }
 
+/*
 .dropdown:hover>.dropdown-menu {
  display: block;
 }
@@ -44,8 +45,7 @@ a:hover, a:focus, a:active {
 .dropdown>.dropdown-toggle:active {
    pointer-events: none;
 }
-
-
+*/
 
 .zebra li:nth-child(odd)
 {

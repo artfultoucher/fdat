@@ -10,7 +10,7 @@
  <div class="card-header"><span class="h5 fancy">{{$key}} - {{$json_obj->$key->title}}</span>
 @auth ()
     @if ($logged_in_user->has_subscribed($key))
-        <span class="float-right badge badge-info">Subscribed</span>
+        <span class="float-right badge badge-info"><i class="fas fa-check"></i>Subscribed</span>
     @endif
 @endauth
  </div>

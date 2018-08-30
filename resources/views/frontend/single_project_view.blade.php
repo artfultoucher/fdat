@@ -16,26 +16,17 @@ $(function () {
 </div><!--card-header-->
 <div class="card-body">
     <div class="row mb-2">
-        <div class="col">
-            <div class="card text-white bg-secondary">
-                <div class="card-header"><strong>Abstract</strong>
-                </div>
-                <div class="card-body"><img width="80" src="{{$project->avatar()}}" class="img-thumbnail float-left mr-2">
-                    {{$project->abstract}}
-                </div>
-            </div><!-- card -->
-        </div>
 
         @if ($project->is_owner())
 
-        <div class="col-3">
+        <div class="col">
             <div class="card text-white bg-secondary">
                 <div data-toggle="popover" data-trigger="hover" data-placement="left" title="Modify this project"
                 data-content="You can edit and delete projects and you can also change their visibility.<br><strong>Private</strong> projects are not shown to
                 anyone except yourself.
                 <strong>Permitted users</strong> means logged in users with the permission to view projects. <strong>Public</strong> means world wide."
                 class="card-header"><strong>This project</strong></div>
-                <div class="card-body">
+                <div class="card-body text-center">
                     <div class="btn-group">
                         <div class="dropdown show">
                             <button  class="btn btn-light dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -83,16 +74,16 @@ $(function () {
          @endif
 
          @can('supervise projects')
-             <div class="col-3">
+             <div class="col">
                 <div class="card text-white bg-secondary">
                      <div  data-toggle="popover" data-trigger="hover" title="Attach people to this project"
                      data-content="Specify which students undertake this project and which role you assume as a lecturer.<br> A noticible constraint is that the
                      supervisor can <strong>only dismiss</strong> but not appoint the second reader."
                      class="card-header"><strong>Engage</strong></div>
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             <div class="btn-group">
                                <div class="dropdown show">
-                                 <button type="button" style="width: 6.5em;" class="btn btn-light dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 <button type="button" class="btn btn-light dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                    Lecturers
                                  </button>
                                  <div class="dropdown-menu">
@@ -132,7 +123,28 @@ $(function () {
                 </div><!-- card -->
             </div><!-- col -->
         @endcan
+
+        @if ($project->is_student() || $project->is_examiner())
+            <div class="col">
+               <div class="card text-white bg-secondary">
+                   <div class="card-header"><strong>Assessment</strong></div>
+                        <div class="card-body text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Deliverables
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Received Deliverables</a>
+                                    <a class="dropdown-item" href="#">View Deliverable Requests</a>
+                                    <a class="dropdown-item" href="{{route('frontend.deliverable_form', $project->id)}}">Hand in</a>
+                                </div>
+                            </div>
+                        </div>
+               </div><!-- card -->
+            </div> <!-- col -->
+        @endif
     </div><!-- row -->
+
     <div class="card bg-light text-dark mt-2">
         <div class="card-header"><strong>Currently Engaged</strong>
             @auth ()
@@ -159,7 +171,7 @@ $(function () {
                 </div>
 
                 <div class="row">
-                                   <div class="col-md-3">
+                    <div class="col-md-3">
                         @if($project->supervisor != 0)
                             <a href="{{route('frontend.person.show', $project->supervisor)}}">
                                 <strong>{{$project->supervisor_name()}}</strong>
@@ -195,6 +207,18 @@ $(function () {
             </div>
         </div>
     </div>
+
+<div class="row">
+    <div class="col">
+        <div class="card bg-light text-dark mt-2">
+            <div class="card-header"><strong>Abstract</strong>
+            </div>
+            <div class="card-body"><img width="100" src="{{$project->avatar()}}" class="img-thumbnail float-left mr-2">
+                {{$project->abstract}}
+            </div>
+        </div><!-- card -->
+    </div>
+</div>
 
     <div class="row">
         <div class="col">

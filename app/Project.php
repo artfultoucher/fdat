@@ -20,8 +20,16 @@ class Project extends Model
         return User::findOrFail($this->owner())->picture;
     }
 
-    public function is_owner() {
+    public function is_owner() { // is logged in user owner of this project?
       return Auth::check() && Auth::user()->id == $this->owner();
+    }
+
+    public function is_student() { // is logged in user undertaking this project
+        return Auth::check() && $this->assigned_students()->pluck('id')->contains(Auth::user()->id);
+    }
+
+    public function is_examiner(){ // is logged in user involved in grading?
+        return Auth::check() && (Auth::user()->id == $this->supervisor || Auth::user()->id == $this->secondreader);
     }
 
     public function is_orphan() { // no supervisor
