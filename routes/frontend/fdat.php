@@ -43,4 +43,5 @@ Route::post('mail/post', 'MailController@mail_post')->name('mail.post');
 Route::get('matters/{code?}', 'ExtraContentController@view_matters')->name('matters');
 
 Route::get('deliverable/form/{pid}', 'DeliverableController@upload_form')->name('deliverable_form');
+Route::delete('deliverable/delete/{pid}/{rid}', 'DeliverableController@delete')->name('deliverable.delete');
 Route::post('deliverable/{pid}', 'DeliverableController@store')->name('deliverable.store');

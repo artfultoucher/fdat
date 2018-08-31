@@ -81,8 +81,6 @@ class User extends Authenticatable
       return (($this->subscr_mask & $flag) == $flag);
     }
 
-
-
     public function yielded_projects() { // projects created by this user but supervised by someone else or none
         return $this->hasMany('App\Project', 'author')->whereRaw('supervisor <> author')->get()->filter(function ($p){return $p->is_visible();});
     }

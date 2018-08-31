@@ -109,6 +109,9 @@ class ProjectController extends Controller
           if ($project->secondreader !=0 ) {
               return back()->withFlashWarning('You must dismiss the second reader before deleting this project.');
           }
+          if ($project->has_deliverables()) {
+              return back()->withFlashDanger('You must first delete all attached deliverables.');
+          }
           $project->delete();
           return redirect()->route('frontend.project.index')->withFlashDanger('Project deleted.'); // this should be changed to "My Projects" when ready
         }
@@ -124,6 +127,7 @@ class ProjectController extends Controller
         if ( $vis == 0 && count($project->assigned_students()) > 0 ) {
             return back()->withFlashDanger('A project with students engaged cannot be private.');
         }
+        // I believe we do not need to test against attached deliverables because deliverables entail students assigned 
         $project->timestamps = false; // temporarily so
         $project->visibility = $vis;
         $project->save();

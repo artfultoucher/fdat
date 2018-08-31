@@ -16,8 +16,8 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    {{ html()->label('Select file:')->for('deliv') }}
-                                    {{ html()->file('deliv')->class('form-control')}}
+                                    {{ html()->label('Select file:')->for('document') }}
+                                    {{ html()->file('document')->class('form-control')}}
                                 </div><!--form-group-->
                             </div><!--col-->
                         </div><!--row-->

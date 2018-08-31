@@ -57,6 +57,14 @@ class Project extends Model
         return $this->hasMany('App\Models\Auth\User', 'sproject_id', 'id')->get();
     }
 
+    public function attached_deliverables() {
+        return $this->hasMany('App\Deliverable', 'project_id', 'id')->get();
+    }
+
+    public function has_deliverables() {
+        return $this->attached_deliverables()->isNotEmpty();
+    }
+
     public function is_new(){
       return $this->created_at->diffInDays() < 3;
     }

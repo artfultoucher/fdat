@@ -137,6 +137,10 @@ $(function () {
                                     <a class="dropdown-item" href="#">Received Deliverables</a>
                                     <a class="dropdown-item" href="#">View Deliverable Requests</a>
                                     <a class="dropdown-item" href="{{route('frontend.deliverable_form', $project->id)}}">Hand in</a>
+                                    <form action="{{route('frontend.deliverable.delete',['pid' => $project->id, 'rid' => 0])}}" method="post">
+                                       @csrf @method('delete')
+                                       <button class="dropdown-item text-danger" type="submit">Delete all deliverables</button>
+                                   </form>
                                 </div>
                             </div>
                         </div>

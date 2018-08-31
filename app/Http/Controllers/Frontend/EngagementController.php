@@ -92,11 +92,14 @@ class EngagementController extends Controller
     }
 
 
-    public function reassign_students (Request $req, $project_id) {
+    public function reassign_students (Request $req, $project_id) { 
         $project = Project::findOrFail($project_id);
         if (!$project->user_can_assign_students()) {
             abort (403, 'You can\'t do that. Period.');
             }
+        if ($project->has_deliverables()) {
+            abort (403, 'You cannot move students around after the project has already received deliverables.');
+        }
         foreach ($project->assigned_students() as $student) {
              $student->sproject_id = 0; // first we dismiss all currently assigned students
              $student->save();
@@ -118,6 +121,9 @@ class EngagementController extends Controller
         if ($req->user()->id != $project->supervisor) {
             return back()->withFlashDanger('Only the supervisor can assign and release students.');
         }
+        if ($project->has_deliverables()) {
+            return back()->withFlashDanger('You cannot do that on a project that has still deliverables attached.');
+        }
         $students = $project->assigned_students();
         if ($students->isEmpty()) {
             return back()->withFlashWarning('There are no students assigned to this project.');
@@ -135,6 +141,9 @@ class EngagementController extends Controller
         $offer_all_students = ($pool == 'all_students' ? true : false);
         if ( ! $project->user_can_assign_students()) {
             return back()->withFlashWarning('You must be supervisor and the project must not be private.');
+        }
+        if ($project->has_deliverables()) {
+            return back()->withFlashDanger('You cannot move students around after the project has already received deliverables. Delete those first.');
         }
             $users = User::orderBy('last_name')->get()->all();
             $available_ids = array(); // associative array; id => full_name
