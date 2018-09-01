@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDeliverable;
 use Illuminate\Http\Request; // stock requests
-//use App\Project;
+use App\Project;
 use App\Deliverable;
 //use App\Models\Auth\User;
 use Illuminate\Support\Facades\Auth;
@@ -22,10 +22,19 @@ class DeliverableController extends Controller
     }
 
     public function store(StoreDeliverable $request, $pid) {
-        //TODO take care of RID, deadlines and already marked deliverables
-        $rid = 0;
-        $deliverable = Deliverable::where('project_id', $pid)->where('request_id', $rid)->first(); // TODO set request ID from form
+        $project = Project::findOrFail($pid);
+        if (!$project->is_student()) {
+            return back()->withFlashDanger('You can only upload deliverables for projects which you undertake yourself as an assigned student.');
+        }
+        $rid = $this->id_of_next($project->type);
+        if ($rid == -1) {
+            return back()->withFlashDanger('There is no open deliverable request for this project. Deadline in the past?');
+        }
+        $deliverable = Deliverable::where('project_id', $pid)->where('request_id', $rid)->first();
         if ($deliverable) {
+            // TODO lots of stuff here
+            // TODO check if this deliverable has already been marked
+            // go back if already marked!
             Storage::delete($deliverable->path);
             $update = true;
         } else {
@@ -47,8 +56,17 @@ class DeliverableController extends Controller
         }
     }
 
-    public function delete(Request $r, $pid, $rid){ // delete all hand ups for this PID/RID
-        $deliverables = Deliverable::where('project_id', $pid)->where('request_id', $rid)->get();
+    public function delete(Request $r, $rid=null){ // delete all hand ups or all those with request ID specified
+        // entries must be deleted at *model* level rather than just deleting records.
+        if (! Auth::user()->hasRole('administrator')) {
+            return back()->withFlashDanger('You must be Adminstrator');
+        }
+        if($rid) {
+            $deliverables = Deliverable::where('request_id', $rid)->get();
+            }
+        else {
+            $deliverables = Deliverable::all();
+        }
         $count = $deliverables->count();
         foreach ($deliverables as $d) {
             $d->delete();
