@@ -11,7 +11,7 @@
 <div class="card-body">
 @include('frontend.includes.only_public_warning')
 <small>Click the avatar to view a personal introduction, if given. All badges are also clickable links.</small>
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
   <thead class="bg-secondary text-white">
     <tr>
       <th scope="col">Avatar</th>

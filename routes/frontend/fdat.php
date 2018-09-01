@@ -45,3 +45,4 @@ Route::get('matters/{code?}', 'ExtraContentController@view_matters')->name('matt
 Route::get('deliverable/form/{pid}', 'DeliverableController@upload_form')->name('deliverable_form');
 Route::delete('deliverable/delete/{pid}/{rid}', 'DeliverableController@delete')->name('deliverable.delete');
 Route::post('deliverable/{pid}', 'DeliverableController@store')->name('deliverable.store');
+Route::get('deliverable/view/{code}', 'DeliverableController@view_requests')->name('deliverable.requests');

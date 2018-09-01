@@ -76,6 +76,10 @@ class User extends Authenticatable
       $this->save();
     }
 
+    public function uploads_for_project($project_id) {
+        return \App\Deliverable::where('project_id', $project_id)->where('uploader_id', $this->id)->get();
+    }
+
     public function has_subscribed($matter) {
       $flag = self::$matter_bit_masks[$matter];
       return (($this->subscr_mask & $flag) == $flag);

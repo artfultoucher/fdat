@@ -202,7 +202,11 @@ $(function () {
                         @forelse ($project->assigned_students() as $student)
                         <a href="{{route('frontend.person.show', $student->id)}}">
                             {{$student->full_name}}
-                        </a><br>
+                        </a>
+                        @if ($student->uploads_for_project($project->id)->isNotEmpty())
+                            <span class="badge badge-success">{{$student->uploads_for_project($project->id)->count()}} deliverable</span>
+                        @endif
+                        <br>
                         @empty
                             <small>No students</small>
                         @endforelse
