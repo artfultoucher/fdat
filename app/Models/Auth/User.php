@@ -124,10 +124,6 @@ class User extends Authenticatable
         return ($this->subscr_mask & Auth::user()->subscr_mask) != 0; // bitwise AND
     }
 
-    public function my_projects() { // Only used in dashboard! This is the only function that returns private projects
-        return \App\Project::all()->filter(function($p) {return $p->is_owner() || $p->id == $this->sproject_id;});
-    }
-
     public function project_html() { // horrible programming style but it keeps things simple
         if ($this->sproject_id == 0) {
             return '';

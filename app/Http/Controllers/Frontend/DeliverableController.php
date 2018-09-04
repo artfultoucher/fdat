@@ -7,18 +7,23 @@ use App\Http\Requests\StoreDeliverable;
 use Illuminate\Http\Request; // stock requests
 use App\Project;
 use App\Deliverable;
-//use App\Models\Auth\User;
+use App\Models\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
-
 
 class DeliverableController extends Controller
 {
+    use DeliverableRequests;
+
     public function upload_form($pid) {
         $project = Project::findOrFail($pid);
-        //abort_unless($project->is_student(), 403, 'Trying your luck?'); // TODO take care  of deliverable type
-        return view('frontend.deliverable', ['project' => $project]);
+        abort_unless($project->is_student(), 403, 'Trying your luck?'); // TODO take care  of deliverable type
+        $request_obj = $this->upcoming_deliverable($project->type);
+        if (! $request_obj) {
+            return back()->withFlashDanger('There is no open deliverable request for this project. Deadline in the past?');
+        }
+
+        return view('frontend.deliverable', ['project' => $project, 'document_title' => $request_obj->name]);
     }
 
     public function store(StoreDeliverable $request, $pid) {
@@ -26,10 +31,11 @@ class DeliverableController extends Controller
         if (!$project->is_student()) {
             return back()->withFlashDanger('You can only upload deliverables for projects which you undertake yourself as an assigned student.');
         }
-        $rid = $this->id_of_next($project->type);
-        if ($rid == -1) {
+        $request_obj = $this->upcoming_deliverable($project->type);
+        if (! $request_obj) {
             return back()->withFlashDanger('There is no open deliverable request for this project. Deadline in the past?');
         }
+        $rid = $request_obj->id;
         $deliverable = Deliverable::where('project_id', $pid)->where('request_id', $rid)->first();
         if ($deliverable) {
             // TODO lots of stuff here
@@ -56,6 +62,36 @@ class DeliverableController extends Controller
         }
     }
 
+    public function my_deliverables() {
+        // This implmentation assumes that users cannot have student and lecturer roles together
+        $user = Auth::user();
+        if ($user->hasRole('student')) {
+            $result = Deliverable::where('uploader_id', $user->id)->get()->all();}
+        elseif ($user->hasRole('lecturer')) {
+            // TODO I know this can be rewritten for the quey builder.. will do later
+            $result = array();
+            $deliverables = Deliverable::all();
+            foreach ($deliverables as $d) {
+                $project = Project::findOrFail($d->project_id);
+                if ($project->supervisor == $user->id || $project->secondreader == $user->id) {
+                    $result[] = $d;
+                }
+            }
+        }
+        return view('frontend.my_deliverables', ['docs' => $result]);
+    }
+
+    public function download(Request $request){
+        // TODO guard this properly
+        $deliverable = Deliverable::findOrFail($request->doc_id);
+        abort_unless ($request->path == $deliverable->path, 403, "Data corruption.");
+        $uploader = User::findOrFail($deliverable->uploader_id);
+        $filename = $this->request_by_id($deliverable->request_id)->name;
+        $filename .= '-';
+        $filename .= $uploader->last_name;
+        return Storage::download($request->path, snake_case($filename));
+    }
+
     public function delete(Request $r, $rid=null){ // delete all hand ups or all those with request ID specified
         // entries must be deleted at *model* level rather than just deleting records.
         if (! Auth::user()->hasRole('administrator')) {
@@ -74,7 +110,13 @@ class DeliverableController extends Controller
         return back()->withFlashInfo($count .' deliverables deleted.');
     }
 
-    public function view_requests($code){
+    public function index(){
+        return view('frontend.request_index', ['requests' => $this->d_requests]);
+    }
+
+/*
+    public function view_requests($code){ // Maybe change this back to a view of all types
+       // older version with delierables per matter code
         $result = array();
         foreach ($this->d_requests as $d) {
             if ($d->project_type == $code) {
@@ -83,31 +125,6 @@ class DeliverableController extends Controller
         }
         return view('frontend.request_list', ['requests' => $result, 'code' => $code, 'id_of_next' => $this->id_of_next($code)]);
     }
-
-    private function id_of_next($code) { // The ID of the deliverable with the closest future deadline for a given project type
-        //returns -1 if all in the past
-        $result = -1;
-        $closest = Carbon::createFromFormat('d/m/Y', '30/12/2100'); // must be something in the distant future
-        foreach ($this->d_requests as $obj) {
-            $testing = $obj->due_date;
-            if ($obj->project_type == $code && $testing->isFuture() && $testing->lt($closest)) {
-                $closest = $testing;
-                $result = $obj->id;
-            }
-        }
-        return $result;
-    }
-
-    private $d_requests;
-
-    public function __construct() {
-        $fs = New \Illuminate\Filesystem\Filesystem();
-        $json_file = $fs->get(app_path('deliverable_requests.json'));
-        $this->d_requests = json_decode($json_file);
-        foreach ($this->d_requests as $key => $obj) { // replace the string dates with Carbon instances
-            $this->d_requests[$key]->due_date = Carbon::createFromFormat('d/m/Y', $obj->due_date);
-            $this->d_requests[$key]->feedback_date = Carbon::createFromFormat('d/m/Y', $obj->feedback_date);
-        }
-    }
+*/
 
 }

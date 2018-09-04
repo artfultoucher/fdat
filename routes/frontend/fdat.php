@@ -42,7 +42,9 @@ Route::post('mail/post', 'MailController@mail_post')->name('mail.post');
 
 Route::get('matters/{code?}', 'ExtraContentController@view_matters')->name('matters');
 
+Route::post('deliverable/download/', 'DeliverableController@download')->name('deliverable.download');
 Route::get('deliverable/form/{pid}', 'DeliverableController@upload_form')->name('deliverable_form');
 Route::delete('deliverable/delete/{rid?}', 'DeliverableController@delete')->name('deliverable.delete');  // TODO guard this with proper middleware
+Route::get('deliverable/index', 'DeliverableController@index')->name('deliverable.all_requests');
+Route::get('deliverable/my', 'DeliverableController@my_deliverables')->name('deliverable.my');
 Route::post('deliverable/{pid}', 'DeliverableController@store')->name('deliverable.store');
-Route::get('deliverable/view/{code}', 'DeliverableController@view_requests')->name('deliverable.requests');

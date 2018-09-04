@@ -8,9 +8,9 @@
         <ul class="navbar-nav">
 
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser" data-toggle="dropdown"
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuProject" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">Projects</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuProject">
                     <a href="{{ route('frontend.project.index_all') }}" class="dropdown-item">All</a>
                     @auth
                     <a href="{{ route('frontend.project.index') }}" class="dropdown-item">Relevant to you</a>
@@ -25,9 +25,9 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser" data-toggle="dropdown"
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLecturer" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">Lecturers</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLecturer">
                     <a href="{{ route('frontend.person.show_all_lecturers') }}" class="dropdown-item">All</a>
                     @auth
                     <a href="{{ route('frontend.person.show_lecturers') }}" class="dropdown-item">Relevant to you</a>
@@ -36,15 +36,26 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser" data-toggle="dropdown"
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuStudent" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">Students</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuStudent">
                     <a href="{{ route('frontend.person.show_all_students') }}" class="dropdown-item">All</a>
                     @auth
                     <a href="{{ route('frontend.person.show_students') }}" class="dropdown-item">Relevant to you</a>
                     <a href="{{ route('frontend.person.show_free_students') }}" class="dropdown-item">Without project</a>
                     <a href="{{ route('frontend.person.show_busy_students') }}" class="dropdown-item">With project</a>
                    @endauth
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuDeliver" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Deliverables</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuDeliver">
+                    <a href="{{route('frontend.deliverable.all_requests')}}" class="dropdown-item">Deliverable requests</a>
+                   @hasanyrole('lecturer|student')
+                    <a href="{{route('frontend.deliverable.my')}}" class="dropdown-item">My deliverables</a>
+                   @endhasanyrole
                 </div>
             </li>
 

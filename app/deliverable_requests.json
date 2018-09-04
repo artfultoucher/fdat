@@ -37,5 +37,18 @@
 	"marked_by_supervisor": true,
 	"marked_by_secondreader": true,
     "description": "Please refer to the writing guidelines given separately."
+},
+{
+	"id": 4,
+	"name": "Mock up",
+	"project_type": "MScIM",
+	"due_date": "17/4/2019",
+    "feedback_date": "15/6/2019",
+    "late_uploads": false,
+	"pass_mark": 40,
+    "expected_items": 94,
+	"marked_by_supervisor": true,
+	"marked_by_secondreader": true,
+    "description": "Some bogus document for testing."
 }
 ]

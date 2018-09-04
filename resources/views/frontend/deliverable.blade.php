@@ -11,6 +11,11 @@
                     </strong>
                 </div><!--card-header-->
                 <div class="card-body">
+                You have chosen to hand in the document called <p class="lead">{{$document_title}}</p> for your project <p class="lead">{{$project->title}}.</p>
+                Please proceed only if the above is correct.
+                <p>
+                You can override a previously uploaded file as long as it has not been marked yet.
+                </p>
                        <form method="post" action="{{route('frontend.deliverable.store', $project->id)}}" enctype="multipart/form-data">
                            @csrf
                         <div class="row">

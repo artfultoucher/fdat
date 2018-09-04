@@ -124,7 +124,7 @@ $(function () {
             </div><!-- col -->
         @endcan
 
-        @if ($project->is_student() || $project->is_examiner())
+        @if ($project->is_student())
             <div class="col">
                <div class="card text-white bg-secondary">
                    <div class="card-header"><strong>Assessment</strong></div>
@@ -134,10 +134,8 @@ $(function () {
                                     Deliverables
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Received Deliverables</a>
-                                    <a class="dropdown-item" href="#">View Deliverable Requests</a>
-                                    <!--
                                     <a class="dropdown-item" href="{{route('frontend.deliverable_form', $project->id)}}">Hand in</a>
+                                    <!--
                                     <form action="{{route('frontend.deliverable.delete',['pid' => $project->id, 'rid' => 0])}}" method="post">
                                        @csrf @method('delete')
                                        <button class="dropdown-item text-danger" type="submit">Delete all deliverables</button>

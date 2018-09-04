@@ -23,7 +23,7 @@ $(function () {
          </div>
          <div class="card-body">
              <div class="card-columns">
-                 @forelse ($logged_in_user->my_projects() as $project)
+                 @forelse ($my_projects as $project)
                      @include('frontend.includes.small_project_card')
                  @empty
                      None
