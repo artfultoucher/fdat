@@ -29,7 +29,7 @@ class DeliverableController extends Controller
     public function store(StoreDeliverable $request, $pid) {
         $project = Project::findOrFail($pid);
         if (!$project->is_student()) {
-            return back()->withFlashDanger('You can only upload deliverables for projects which you undertake yourself as an assigned student.');
+           return back()->withFlashDanger('You can only upload deliverables for projects which you undertake yourself as an assigned student.');
         }
         $request_obj = $this->upcoming_deliverable($project->type);
         if (! $request_obj) {
@@ -39,7 +39,7 @@ class DeliverableController extends Controller
         $deliverable = Deliverable::where('project_id', $pid)->where('request_id', $rid)->first();
         if ($deliverable) {
             // TODO lots of stuff here
-            // TODO check if this deliverable has already been marked
+            // TODO check if this deliverable has already been marked or if we are past the deadline
             // go back if already marked!
             Storage::delete($deliverable->path);
             $update = true;
@@ -56,7 +56,8 @@ class DeliverableController extends Controller
         if ($update) {
             \Log::info('Replaced existing file: ' . $path);
             return redirect()->route('frontend.project.show', $pid)->withFlashSuccess('Replaced previously uploaded file. Thank you.');
-            } else {
+            }
+        else {
             \Log::info('Stored new file: ' . $path);
             return redirect()->route('frontend.project.show', $pid)->withFlashSuccess('Deliverable received. Thank you.');
         }
@@ -73,7 +74,7 @@ class DeliverableController extends Controller
             $deliverables = Deliverable::all();
             foreach ($deliverables as $d) {
                 $project = Project::findOrFail($d->project_id);
-                if ($project->supervisor == $user->id || $project->secondreader == $user->id) {
+                if ($project->is_examiner()) {
                     $result[] = $d;
                 }
             }
@@ -81,18 +82,46 @@ class DeliverableController extends Controller
         return view('frontend.my_deliverables', ['docs' => $result]);
     }
 
+    public function feedback_form($did){
+        $doc = Deliverable::findOrFail($did);
+        return view('frontend.feedback_form', ['doc' => $doc]);
+    }
+
+    public function feedback_process(Request $request, $did){
+        // TODO handle marks. Only comments are dealt with ATM.
+        //dd($request->all());
+        $doc = Deliverable::findOrFail($did);
+        if (! $doc->is_examiner()) {
+            return redirect()->route('frontend.deliverable.my')->withFlashDanger('You are not an examiner for this document.');
+        }
+        if ($doc->graded) {
+            return redirect()->route('frontend.deliverable.my')->withFlashDanger('You cannot change the feedback after the document has been graded.');
+        }
+        $doc->comment = $request->comment;
+        $doc->private_comment = $request->private_comment;
+        $doc->save();
+        return redirect()->route('frontend.deliverable.my')->withFlashSuccess('Feedback saved and published.');
+    }
+
     public function download(Request $request){
         // TODO guard this properly
         $deliverable = Deliverable::findOrFail($request->doc_id);
         abort_unless ($request->path == $deliverable->path, 403, "Data corruption.");
         $uploader = User::findOrFail($deliverable->uploader_id);
-        $filename = $this->request_by_id($deliverable->request_id)->name;
-        $filename .= '-';
-        $filename .= $uploader->last_name;
+        $filename = $this->request_by_id($deliverable->request_id)->name . '-' . $uploader->last_name . '.';
+        $filename .= pathinfo($request->path, PATHINFO_EXTENSION);
         return Storage::download($request->path, snake_case($filename));
+        // files are downloaded as request_name-last_name_of_uploader.extension
     }
 
-    public function delete(Request $r, $rid=null){ // delete all hand ups or all those with request ID specified
+    public function delete(Request $request){ // TODO guard this properly
+        $deliverable = Deliverable::findOrFail($request->doc_id);
+        abort_unless ($request->path == $deliverable->path, 403, "Data corruption.");
+        $deliverable->my_delete();
+        return back()->withFlashSuccess('Uploaded file removed.');
+    }
+
+    public function delete_many(Request $r, $rid=null){ // delete all hand ups or all those with request ID specified
         // entries must be deleted at *model* level rather than just deleting records.
         if (! Auth::user()->hasRole('administrator')) {
             return back()->withFlashDanger('You must be Adminstrator');
@@ -105,7 +134,7 @@ class DeliverableController extends Controller
         }
         $count = $deliverables->count();
         foreach ($deliverables as $d) {
-            $d->delete();
+            $d->my_delete();
         }
         return back()->withFlashInfo($count .' deliverables deleted.');
     }

@@ -42,9 +42,11 @@ Route::post('mail/post', 'MailController@mail_post')->name('mail.post');
 
 Route::get('matters/{code?}', 'ExtraContentController@view_matters')->name('matters');
 
+Route::patch('deliverable/feedback/{did}', 'DeliverableController@feedback_process')->name('deliverable.feedback_process');
 Route::post('deliverable/download/', 'DeliverableController@download')->name('deliverable.download');
 Route::get('deliverable/form/{pid}', 'DeliverableController@upload_form')->name('deliverable_form');
-Route::delete('deliverable/delete/{rid?}', 'DeliverableController@delete')->name('deliverable.delete');  // TODO guard this with proper middleware
+Route::delete('deliverable/delete', 'DeliverableController@delete')->name('deliverable.delete');
+Route::delete('deliverable/delete_many/{rid?}', 'DeliverableController@delete_many')->name('deliverable.delete_many');  // TODO guard this with proper middleware
 Route::get('deliverable/index', 'DeliverableController@index')->name('deliverable.all_requests');
 Route::get('deliverable/my', 'DeliverableController@my_deliverables')->name('deliverable.my');
-Route::post('deliverable/{pid}', 'DeliverableController@store')->name('deliverable.store');
+Route::get('deliverable/feedback_form/{did}', 'DeliverableController@feedback_form')->name('deliverable.feedback_form');

@@ -132,3 +132,18 @@ Breadcrumbs::for('deliverable_upload', function ($trail, $project) {
     $trail->parent('view_project', $project);
     $trail->push('Upload deliverable'); // TODO check other breadcrumbs if route can be eleminated
 });
+
+Breadcrumbs::for('deliverable_requests', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Deliverable requests', route('frontend.deliverable.all_requests'));
+});
+
+Breadcrumbs::for('my_deliverables', function ($trail) {
+    $trail->parent('deliverable_requests');
+    $trail->push('My deliverables', route('frontend.deliverable.my'));
+});
+
+Breadcrumbs::for('feedback_form', function ($trail) {
+    $trail->parent('my_deliverables');
+    $trail->push('Feedback form');
+});

@@ -1,5 +1,7 @@
 @extends('frontend.layouts.app')
 @section('title', 'Deliverable Requests')
+@section('breadcrumbs', Breadcrumbs::render('deliverable_requests'))
+
 @section('content')
 <div class="card bg-light">
 <div class="card-header h3 fancy">Deliverable Requests</div>
