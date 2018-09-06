@@ -46,6 +46,7 @@ Route::patch('deliverable/feedback/{did}', 'DeliverableController@feedback_proce
 Route::post('deliverable/download/', 'DeliverableController@download')->name('deliverable.download');
 Route::get('deliverable/form/{pid}', 'DeliverableController@upload_form')->name('deliverable_form');
 Route::delete('deliverable/delete', 'DeliverableController@delete')->name('deliverable.delete');
+Route::post('deliverable/store/{pid}', 'DeliverableController@store')->name('deliverable.store');
 Route::delete('deliverable/delete_many/{rid?}', 'DeliverableController@delete_many')->name('deliverable.delete_many');  // TODO guard this with proper middleware
 Route::get('deliverable/index', 'DeliverableController@index')->name('deliverable.all_requests');
 Route::get('deliverable/my', 'DeliverableController@my_deliverables')->name('deliverable.my');

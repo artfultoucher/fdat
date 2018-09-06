@@ -38,9 +38,9 @@ class DeliverableController extends Controller
         $rid = $request_obj->id;
         $deliverable = Deliverable::where('project_id', $pid)->where('request_id', $rid)->first();
         if ($deliverable) {
-            // TODO lots of stuff here
-            // TODO check if this deliverable has already been marked or if we are past the deadline
-            // go back if already marked!
+            if ($deliverable->graded) {
+                return back()->withFlashDanger('You cannot override a file submission once it has been graded by its examiner(s).');
+            }
             Storage::delete($deliverable->path);
             $update = true;
         } else {
@@ -88,17 +88,25 @@ class DeliverableController extends Controller
     }
 
     public function feedback_process(Request $request, $did){
-        // TODO handle marks. Only comments are dealt with ATM.
-        //dd($request->all());
         $doc = Deliverable::findOrFail($did);
         if (! $doc->is_examiner()) {
             return redirect()->route('frontend.deliverable.my')->withFlashDanger('You are not an examiner for this document.');
         }
         if ($doc->graded) {
-            return redirect()->route('frontend.deliverable.my')->withFlashDanger('You cannot change the feedback after the document has been graded.');
+            return redirect()->route('frontend.deliverable.my')->withFlashDanger('Once you have finalized the feedback, you cannot change it again.');
+        }
+        if ($request->mark < 0) {
+            return redirect()->route('frontend.deliverable.my')->withFlashDanger('The awarded mark must be greater than zero.');
+        }
+        if ($request->mark > 100) {
+            return redirect()->route('frontend.deliverable.my')->withFlashDanger('The awarded mark must be less than 100.');
         }
         $doc->comment = $request->comment;
         $doc->private_comment = $request->private_comment;
+        if ($doc->is_marker()) { // In case of a malicious second reader who goes through the lenghts to alter a from :-)
+            $doc->graded = isset($request->graded) ? true : false;
+            $doc->mark = $request->mark;
+        }
         $doc->save();
         return redirect()->route('frontend.deliverable.my')->withFlashSuccess('Feedback saved and published.');
     }
@@ -117,6 +125,9 @@ class DeliverableController extends Controller
     public function delete(Request $request){ // TODO guard this properly
         $deliverable = Deliverable::findOrFail($request->doc_id);
         abort_unless ($request->path == $deliverable->path, 403, "Data corruption.");
+        if (! $deliverable->is_supervisor()) {
+            return back()->withFlashDanger('No cigar. :-P Only the supervisor can do that.');
+        }
         $deliverable->my_delete();
         return back()->withFlashSuccess('Uploaded file removed.');
     }
@@ -140,7 +151,12 @@ class DeliverableController extends Controller
     }
 
     public function index(){
-        return view('frontend.request_index', ['requests' => $this->d_requests]);
+        $count = array();
+        $reqs = $this->d_requests;
+        foreach ($reqs as $req) {
+            $count[$req->id] = Deliverable::where('request_id', $req->id)->count();
+        }
+        return view('frontend.request_index', ['requests' => $reqs, 'count' => $count]);
     }
 
 /*

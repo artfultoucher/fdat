@@ -38,7 +38,7 @@
       </div><!--card-body-->
       <div class="card-footer">
 
-      <small>Yes I know there are fancy multiselect plugins. Those I tried had subtle quirks.</small>
+      <small>Yes I know there are fancy multiselect plugins. Not all of them support Bootstrap 4. And those I tried had certain subtle quirks.</small>
       </div>
   </div><!--card-->
 @endsection

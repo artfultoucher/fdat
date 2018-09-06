@@ -12,21 +12,21 @@
   <tbody>
     <tr><th class="w-25" scope="row">Uploader</th><td><a href="{{route('frontend.person.show', $doc->uploader_id)}}">{{$doc->uploader_name()}}</a></td></tr>
     <tr><th scope="row">For project</th><td><a href="{{route('frontend.project.show',$doc->project_id)}}">{{$doc->project_title()}}</a></td></tr>
-    <tr><th scope="row">Request</th><td>{{$doc->request_name()}}</td></tr>
+    <tr><th scope="row">Request</th><td><a href="{{route('frontend.deliverable.all_requests')}}">{{$doc->request_name()}}</a></td></tr>
     <tr><th scope="row">Document</th><td>
         <div class="form-inline">
         <form method="post" action="{{route('frontend.deliverable.download')}}">
             @csrf
             <input type="hidden" name="doc_id" value="{{$doc->id}}">
             <input type="hidden" name="path" value="{{$doc->path}}">
-            <button class="btn btn-sm btn-primary" type="submit">Download</button>
+            <button class="btn btn-sm btn-primary mx-2" width="8em" type="submit">Download</button>
         </form>
         @if($doc->is_supervisor())
         <form method="post" action="{{route('frontend.deliverable.delete')}}">
             @csrf @method('delete')
             <input type="hidden" name="doc_id" value="{{$doc->id}}">
             <input type="hidden" name="path" value="{{$doc->path}}">
-            <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+            <button class="btn btn-sm btn-danger mx-2" type="submit">Delete</button>
         </form>
         @endif
         </div>
@@ -36,7 +36,7 @@
             {{$doc->mark}}
         @else
             @if ($doc->is_examiner())
-                <a href="{{route('frontend.deliverable.feedback_form', $doc->id)}}" class="btn btn-sm btn-success">Assess or comment</a>
+                <a href="{{route('frontend.deliverable.feedback_form', $doc->id)}}" class="btn btn-sm btn-success mx-2">Assess or comment</a>
             @endif
             <i>Not assessed yet.</i>
         @endif

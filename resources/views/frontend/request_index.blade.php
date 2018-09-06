@@ -32,9 +32,9 @@
       <td class="align-middle">{{$d->pass_mark}}</td>
       <td class="align-middle">@if ($d->marked_by_supervisor) Supervisor<br> @endif @if ($d->marked_by_secondreader) Second Reader @endif</td>
       <td class="align-middle">{{$d->expected_items}}</td>
-      <td class="align-middle">
+      <td class="align-middle w-25">
         <span class="progress">
-            <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="{{$d->expected_items}}">0</div>
+            <div class="progress-bar" role="progressbar" style="width: {{$count[$d->id] * 100 / $d->expected_items}}%;">{{$count[$d->id]}}</div>
         </span>
       </td>
     </tr>

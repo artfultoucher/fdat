@@ -104,12 +104,12 @@ class ProjectController extends Controller
         if ($project->is_owner()) {
           if ($project->assigned_students()->isNotEmpty())
           {
-              return back()->withFlashDanger('You must first release all students before deleting a project.');
+              return back()->withFlashDanger('You must first release all students before you can delete a project.');
           }
           if ($project->secondreader !=0 ) {
               return back()->withFlashWarning('You must dismiss the second reader before deleting this project.');
           }
-          if ($project->has_deliverables()) {
+          if ($project->has_deliverables()) { // in theory this should always fail because attached file uploads imply attached students
               return back()->withFlashDanger('You must first delete all attached deliverables.');
           }
           $project->delete();
@@ -127,7 +127,7 @@ class ProjectController extends Controller
         if ( $vis == 0 && count($project->assigned_students()) > 0 ) {
             return back()->withFlashDanger('A project with students engaged cannot be private.');
         }
-        // I believe we do not need to test against attached deliverables because deliverables entail students assigned 
+        // I believe we do not need to test against attached deliverables because deliverables entail students assigned
         $project->timestamps = false; // temporarily so
         $project->visibility = $vis;
         $project->save();

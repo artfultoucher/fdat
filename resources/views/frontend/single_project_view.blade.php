@@ -127,20 +127,14 @@ $(function () {
         @if ($project->is_student())
             <div class="col">
                <div class="card text-white bg-secondary">
-                   <div class="card-header"><strong>Assessment</strong></div>
+                   <div class="card-header"><strong>For students</strong></div>
                         <div class="card-body text-center">
                             <div class="dropdown">
                                 <button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Deliverables
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="{{route('frontend.deliverable_form', $project->id)}}">Hand in</a>
-                                    <!--
-                                    <form action="{{route('frontend.deliverable.delete',['pid' => $project->id, 'rid' => 0])}}" method="post">
-                                       @csrf @method('delete')
-                                       <button class="dropdown-item text-danger" type="submit">Delete all deliverables</button>
-                                   -->
-                                   </form>
+                                    <a class="dropdown-item" href="{{route('frontend.deliverable_form', $project->id)}}">Submit a requested document</a>
                                 </div>
                             </div>
                         </div>
@@ -204,7 +198,7 @@ $(function () {
                             {{$student->full_name}}
                         </a>
                         @if ($student->uploads_for_project($project->id)->isNotEmpty())
-                            <span class="badge badge-success">{{$student->uploads_for_project($project->id)->count()}} deliverable</span>
+                            <a href="{{route('frontend.deliverable.my')}}" class="badge badge-success">{{$student->uploads_for_project($project->id)->count()}} deliverable</a>
                         @endif
                         <br>
                         @empty
