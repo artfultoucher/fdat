@@ -12,7 +12,7 @@ $(function () {
 @endpush
 @section('content')
 <div class="card bg-light my-3">
- <div class="card-header"><strong><i class="fas fa-tachometer-alt"></i> Dashboad</strong></div><!--card-header-->
+ <div class="card-header h3 fancy"><i class="fas fa-tachometer-alt"></i> Dashboard</div><!--card-header-->
  <div class="card-body">
      @include('frontend.includes.public_user_info', ['person' => $logged_in_user])
      <div class="card bg-light">

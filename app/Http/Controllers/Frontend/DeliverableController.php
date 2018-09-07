@@ -153,7 +153,7 @@ class DeliverableController extends Controller
     public function index(){
         $count = array();
         $reqs = $this->d_requests;
-        foreach ($reqs as $req) {
+        foreach ($reqs as $req) { // this is for the progress bars
             $count[$req->id] = Deliverable::where('request_id', $req->id)->count();
         }
         return view('frontend.request_index', ['requests' => $reqs, 'count' => $count]);

@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Comfortaa');
 
 h1, h2, h3, h4, h5 {
-    //font-family: 'Cinzel', serif;
     font-family: 'Comfortaa', cursive;
+}
+
+.mytext h1, .mytext h2, .mytext h3, .mytext h4, .mytext h5 {
+    color: #3D9970;
 }
 
 .fancy {
@@ -15,7 +18,15 @@ h1, h2, h3, h4, h5 {
     margin: 0px 0px 0px 0px;
 }
 
-body { background-image: linear-gradient(to bottom right, #E3E3E3 0%, #8A9CB5 100%);}
+/* body { background-image: linear-gradient(to bottom right, #E3E3E3 0%, #8A9CB5 100%);} */
+
+body {
+background: #DBE6F6;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #C5796D, #DBE6F6);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #C5796D, #DBE6F6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+
 /*
 a:link, a:visited {
    text-decoration: none;

@@ -41,6 +41,7 @@ Route::get('mail/project/{id}', 'MailController@mail_project')->name('mail.proje
 Route::post('mail/post', 'MailController@mail_post')->name('mail.post');
 
 Route::get('matters/{code?}', 'ExtraContentController@view_matters')->name('matters');
+Route::get('help/{section?}', 'ExtraContentController@help')->name('help');
 
 Route::patch('deliverable/feedback/{did}', 'DeliverableController@feedback_process')->name('deliverable.feedback_process');
 Route::post('deliverable/download/', 'DeliverableController@download')->name('deliverable.download');

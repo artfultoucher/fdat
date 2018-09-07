@@ -6,10 +6,8 @@
     <div class="row justify-content-center align-items-center mb-3">
         <div class="col col-sm-10 align-self-center">
             <div class="card">
-                <div class="card-header">
-                    <strong>
-                        {{ __('navs.frontend.user.account') }}
-                    </strong>
+                <div class="card-header h4 fancy">
+                        My Account
                 </div>
 
                 <div class="card-body">

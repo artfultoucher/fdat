@@ -84,6 +84,17 @@
                     </div>
                 </li>
             @endguest
+
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuHelp" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Help</a>
+                <div class="dropdown-menu">
+                    <a href="{{route('frontend.help', 'about')}}" class="dropdown-item">About</a>
+                    <a href="{{route('frontend.help', 'quickstart')}}" class="dropdown-item">Old users</a>
+                    <a href="{{route('frontend.matters')}}" class="dropdown-item">Categories</a>
+                </div>
+            </li>
+
         </ul>
     </div>
 </nav>

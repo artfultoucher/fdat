@@ -24,7 +24,7 @@ class ProjectController extends Controller
    public function index()
    {
        $arr = Project::latest()->get()->filter(function ($p) {return $p->is_visible();})->all();
-       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Projects matching your subscripton tags (' . count($arr) . ')' ,
+       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Projects matching your subscription tags (' . count($arr) . ')' ,
        'breadcrumb_name' => 'projects_relevant']);
    }
 

@@ -19,4 +19,19 @@ class ExtraContentController extends Controller
             return view('frontend.matters_single', ['obj' => $obj->$code, 'code' => $code]); // note the dollar sign!
         }
     }
+
+    public function help($section = 'about') {
+        $fs = New \Illuminate\Filesystem\Filesystem();
+        switch ($section) {
+            case 'quickstart';
+                $file = 'quickstart.md';
+                $title = 'Information for users of the previous project system';
+                break;
+            default:
+                $file = 'about.md';
+                $title = 'About FDAT';
+        }
+        $md = $fs->get(resource_path('text_content/' . $file));
+        return view('frontend.help', ['md' => $md, 'title' => $title, 'breadcrumb' => $section]); //
+    }
 }

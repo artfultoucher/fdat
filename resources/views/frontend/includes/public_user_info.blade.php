@@ -42,7 +42,7 @@ $(function () {
          <div class="card bg-light text-dark mb-3">
            <div class="card-header h5 fancy" data-toggle="popover" data-trigger="hover" data-placement="right" title="Personal Introduction"
            data-content="Logged in users can create or modify this from <strong>My Account -> Personal Introduction</strong>.">Introduction</div>
-             <div class="card-body">
+             <div class="card-body mytext">
                @if (strlen($person->interests) > 9)
                   @markdown($person->interests)
                 @else
