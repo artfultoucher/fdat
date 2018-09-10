@@ -63,6 +63,16 @@
                 <li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.dashboard')) }}">{{ __('navs.frontend.dashboard') }}</a></li>
             @endauth
 
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuHelp" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Help</a>
+                <div class="dropdown-menu">
+                    <a href="{{route('frontend.help', 'about')}}" class="dropdown-item">About</a>
+                    <a href="{{route('frontend.help', 'quickstart')}}" class="dropdown-item">Existing users</a>
+                    <a href="{{route('frontend.matters')}}" class="dropdown-item">Categories</a>
+                </div>
+            </li>
+
             @guest
                 <li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.auth.login')) }}">{{ __('navs.frontend.login') }}</a></li>
 
@@ -84,16 +94,6 @@
                     </div>
                 </li>
             @endguest
-
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuHelp" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Help</a>
-                <div class="dropdown-menu">
-                    <a href="{{route('frontend.help', 'about')}}" class="dropdown-item">About</a>
-                    <a href="{{route('frontend.help', 'quickstart')}}" class="dropdown-item">Old users</a>
-                    <a href="{{route('frontend.matters')}}" class="dropdown-item">Categories</a>
-                </div>
-            </li>
 
         </ul>
     </div>

@@ -2,7 +2,7 @@
 
 Welcome to FDAT. I dislike paper based offices with word processors, printed documents, forms emailed around and such. I believe administrative things can be handled  more orderly and more efficiently online.
 
-This website is an attempt of doing so. Currently, the only thing which can be done with it is the administration and bookkeeping of student projects. However I will continue adding more functions and improve existing ones depending on necessity and on my free time for development (I like the new **DevOps** SE culture).
+This website is an attempt of doing so. Currently, the only thing which can be done with it is the administration and bookkeeping of student projects. However I will continue adding more functions and improve existing ones depending on necessity and on how much time I have free for development (I love the new **DevOps** SE culture!).
 
 ##### User Interface
 
@@ -20,9 +20,11 @@ Academics who supervise projects as well as students need to **create an account
 
 You are also welcome to enter a **personal introduction** and to set up an **avatar** but neither of these is required.
 
+There is currently a small **bug** in the account creation code (3rd party framework, not mine!) which causes the time zone of new accounts set to UTC instead of Europe/Dublin. You should **set this manually to Europe/Dublin** under *My Account*.
+
 ##### Publication of Project Proposals
 
-This is mainly meant for **supervisors**. Most students will select a project that was proposed by a lecturer. However, students can also publish their own project ideas if they wish. This option is usually taken by a few students who have already a very good idea for a potential FYP.  But project proposals from students do not necessarily develop into real undertaken projects (for multiple reasons, involving assessment, difficulty, project topic etc).
+This is mainly meant for **supervisors**. Most students will select a project that was proposed by a lecturer. However, students can also publish their own project ideas if they wish. This option is usually taken by a few students who have already a very good idea for a potential FYP.  But project proposals from students do not necessarily mature into real undertaken projects (for multiple reasons, such as assessment, difficulty level, project topic etc).
 
 ##### Project Selection
 
@@ -34,4 +36,4 @@ There will be a **strict deadline** by which all students must have selected the
 
 ##### Deliverables
 
-Depending on the type of the project, the student(s) might be required to hand in progress reports or similar deliverables. This can be handled electronically via this site, including feedback and grading (where applicable).
+Depending on the type of the project, the student(s) might be required to hand in progress reports or similar **deliverables**. This can be handled electronically via this site. Feedback, grading (where applicable), deadlines etc can all be administrated by users with the appropriate permissions.
