@@ -12,7 +12,7 @@ This is more user friendly and definitely safer in regard to JavaScript or SQL i
 
 ##### Matters (or categories or tags)
 
-This is my approach to reduce clutter due to the growing number of different project types etc. All users can now subscribe to several categories or tags, aka *matters*. Currently, the set of these tags is made up by the different project types, e.g. BSc, MScDA etc but more will be added later. For example, *site-news*, *lab-organisation* or similar could be added later.
+This is my approach to reduce clutter resulting from the growing number of different project types etc. All users can now subscribe to several categories or tags, aka *matters*. Currently, the set of these tags is identical to the different project types, e.g. BSc, MScDA etc but other tags might be added later. For example, *site-news*, *lab-organisation* or similar could be added in the future.
 
 You can (and should) change your selected tags any time you wish. The idea is that certain pages with large collections of data objects are filtered against your individual set of enabled tags. For example, if you only select "BSc" and a colleague only selects "MScDA" then it's more or less as if you work with two different project systems, each of which dedicated to one special degree programme.
 

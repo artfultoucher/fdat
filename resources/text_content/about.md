@@ -1,14 +1,14 @@
 #### FDAT - Frank's Departmental Administration Tools
 
-Welcome to FDAT. I dislike paper based offices with word processors, printed documents, forms emailed around and such. I believe administrative things can be handled  more orderly and more efficiently online.
+I dislike paper based offices with word processors, printed documents, forms being emailed around and so on. I believe that administrative tasks can be handled  more orderly and more efficiently online.
 
-This website is an attempt of doing so. Currently, the only thing which can be done with it is the administration and bookkeeping of student projects. However I will continue adding more functions and improve existing ones depending on necessity and on how much time I have free for development (I love the new **DevOps** SE culture!).
+This website is an attempt of doing so. Currently, the only thing which can be done with it is the administration and bookkeeping of student projects. However I will continue adding more functions and improve existing ones depending on necessity and on how much time I have free for development (I embrace the new **DevOps** SE culture!).
 
 ##### User Interface
 
-I believe the interface is straightforward enough so that it can be used without a detailed manual.
+I think the interface is straightforward enough so that it can be used without a detailed user manual. Some elements have **popovers** with help texts.
 
-Just one comment: In some places the business logic is a bit more complex than it seems. This means, certain things might be disabled at certain stages to avoid conflicts for less obvious reasons. However, the corresponding button or menu item might still be shown and clickable. When in doubt, just click it and watch what happens. I believe it is better to throw a descriptive warning message than greying out a button and let the user scratch their head why.
+However, in some places the business logic is a bit more complex than it seems. As a result certain things might be disabled at certain stages to avoid conflicts for less obvious reasons. But the corresponding button or menu item might still be shown and clickable. When in doubt, just click it and watch what happens. I believe it is better to throw a descriptive warning message than greying out a button and let the user scratch their head why.
 
 ---
 
