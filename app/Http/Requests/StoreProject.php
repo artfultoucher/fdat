@@ -19,8 +19,8 @@ class StoreProject extends FormRequest
     {
         return [
           'title' => 'required|unique:projects|min:7|max:120',
-          'abstract' => 'required|min:15|max:300',
-          'description' => 'required|min:30|max:3000',
+          'abstract' => 'required|min:15|max:350',
+          'description' => 'required|min:50|max:3000',
            'type' => 'required|' . Rule::in(Project::$possible_types), // pay attention! syntax errors throw weird eceptions here
           'semester_project' => 'sometimes|in:yes,no',
         ];
