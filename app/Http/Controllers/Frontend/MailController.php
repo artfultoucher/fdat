@@ -66,6 +66,10 @@ class MailController extends Controller
     }
 
     public function mail_many(Request $request){ // Recipient ids are in request. Compute and show mail view.
+        if(Auth::guest())
+        {
+            abort(403, 'You must be logged in to compose mail.');
+        }
         $rec = User::find($request->ids)->all(); // we pass an array of primary keys as arg to find
         return view('frontend.mail', ['recipients' => $rec, 'intro' => 'Hello all,', 'bc_name' => 'mail_many', 'bc_object' => null]);
     }
