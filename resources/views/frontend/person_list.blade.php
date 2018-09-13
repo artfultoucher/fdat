@@ -7,13 +7,15 @@
 @endisset
 @section('content')
 <div class="card">
-  <div class="card-header"><span class="h2 fancy">{{$title}} ({{ count($persons) }})</span>
+  <div class="card-header"><span class="h3 fancy">{{$title}} ({{ count($persons) }})</span>
+      @unless(empty($persons))
       <span class="float-right"><form action="{{route('frontend.mail.many')}}" method="post">@csrf
           @foreach ($persons as $person)
               <input type="hidden" name="ids[]" value="{{$person->id}}">
           @endforeach
           <button class="btn btn-info fancy" type="submit"><i class="fas fa-envelope"></i> Contact all</button>
       </form></span>
+      @endunless
 </div>
 <div class="card-body">
 @include('frontend.includes.only_public_warning')
