@@ -52,7 +52,7 @@ class User extends Authenticatable
 
 // Here we define the subscription tags. TODO: Do this properly with a config file.
 
-    public static $matter_bit_masks = ['BSc' => 1, 'MScCS' => 2, 'MScDA' => 4, 'MScIM' => 8, 'BADHIT' => 16];
+    public static $matter_bit_masks = ['BSc' => 0b1, 'MScCS' => 0b10, 'MScDA' => 0b100, 'MScIM' => 0b1000, 'BADHIT' => 0b10000];
 
     public static function matters () {
       return array_keys(self::$matter_bit_masks);
@@ -121,7 +121,14 @@ class User extends Authenticatable
     }
 
     public function shares_tags() { // Does this user share subscription tags with the logged in user?
-        return ($this->subscr_mask & Auth::user()->subscr_mask) != 0; // bitwise AND
+        //return ($this->subscr_mask & Auth::user()->subscr_mask) != 0; // bitwise AND
+        // WEIRD FIX THIS
+        foreach (self::matters() as $tag) {
+            if ($this->has_subscribed($tag) && Auth::user()->has_subscribed($tag)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function project_html() { // horrible programming style but it keeps things simple
