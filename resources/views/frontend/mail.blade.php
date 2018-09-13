@@ -1,15 +1,13 @@
 @extends('frontend.layouts.app')
 @section('breadcrumbs', Breadcrumbs::render($bc_name, $bc_object))
-@section('title', app_name() . ' | Send Message')
+@section('title', 'FDAT | Send Message')
 
 @section('content')
     <div class="row justify-content-center">
         <div class="col col-sm-8 align-self-center">
             <div class="card mt-4">
-                <div class="card-header">
-                    <strong>
+                <div class="card-header h4 fancy">
                         Send mail
-                    </strong>
                 </div><!--card-header-->
 
                 <div class="card-body">

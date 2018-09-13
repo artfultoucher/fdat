@@ -65,6 +65,10 @@ class MailController extends Controller
         'bc_name' => 'mail_project', 'bc_object' => $p]);
     }
 
+    public function mail_many(Request $request){ // Recipient ids are in request. Compute and show mail view.
+        $rec = User::find($request->ids)->all(); // we pass an array of primary keys as arg to find
+        return view('frontend.mail', ['recipients' => $rec, 'intro' => 'Hello all,', 'bc_name' => 'mail_many', 'bc_object' => null]);
+    }
 
     public function mail_post(Request $request)
     {

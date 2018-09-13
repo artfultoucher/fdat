@@ -5,6 +5,7 @@
 @section('breadcrumbs', Breadcrumbs::render('new_project'))
 
 @section('content')
+    <h3>Create New Project</h3>
     <div class="row mb-4">
         <div class="col">
           {{ html()->form('POST', route('frontend.project.store'))->open() }}

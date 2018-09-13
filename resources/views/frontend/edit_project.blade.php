@@ -5,6 +5,7 @@
 @section('breadcrumbs', Breadcrumbs::render('edit_project', $project))
 
 @section('content')
+    <h3>Edit | {{$project->title}}</h3>
     <div class="row mb-4">
         <div class="col">
 

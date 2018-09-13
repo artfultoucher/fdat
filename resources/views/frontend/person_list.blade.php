@@ -7,7 +7,14 @@
 @endisset
 @section('content')
 <div class="card">
-  <div class="card-header h2 fancy"> {{$title}} ({{ count($persons) }}) </div>
+  <div class="card-header"><span class="h2 fancy">{{$title}} ({{ count($persons) }})</span>
+      <span class="float-right"><form action="{{route('frontend.mail.many')}}" method="post">@csrf
+          @foreach ($persons as $person)
+              <input type="hidden" name="ids[]" value="{{$person->id}}">
+          @endforeach
+          <button class="btn btn-info fancy" type="submit"><i class="fas fa-envelope"></i> Contact all</button>
+      </form></span>
+</div>
 <div class="card-body">
 @include('frontend.includes.only_public_warning')
 <small>Click the avatar to view a personal introduction, if given. All badges are also clickable links.</small>

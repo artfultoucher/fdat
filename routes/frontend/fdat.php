@@ -38,7 +38,9 @@ Route::patch('project/dismiss_students/{id}' , 'EngagementController@dismiss_stu
 
 Route::get('mail/user/{id}', 'MailController@mail_user')->name('mail.user');
 Route::get('mail/project/{id}', 'MailController@mail_project')->name('mail.project');
+Route::post('mail/tomany', 'MailController@mail_many')->name('mail.many');
 Route::post('mail/post', 'MailController@mail_post')->name('mail.post');
+
 
 Route::get('matters/{code?}', 'ExtraContentController@view_matters')->name('matters');
 Route::get('help/{section?}', 'ExtraContentController@help')->name('help');
