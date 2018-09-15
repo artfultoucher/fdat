@@ -70,7 +70,7 @@ class User extends Authenticatable
 
     public function set_subscriptions_to_array ($arr) {
       $this->subscr_mask = 0; // unsubscribe all
-      foreach ($arr  as $matter) {
+      foreach ($arr as $matter) {
         $this->subscribe_matter($matter);
       }
       $this->save();
@@ -121,14 +121,16 @@ class User extends Authenticatable
     }
 
     public function shares_tags() { // Does this user share subscription tags with the logged in user?
-        //return ($this->subscr_mask & Auth::user()->subscr_mask) != 0; // bitwise AND
-        // WEIRD FIX THIS
+        return ((int) ($this->subscr_mask)) & ((int) (Auth::user()->subscr_mask)); // bitwise AND
+        // Without the integer casting it breaks!! The types are STRING for some reason
+        /*
         foreach (self::matters() as $tag) {
             if ($this->has_subscribed($tag) && Auth::user()->has_subscribed($tag)) {
                 return true;
             }
         }
         return false;
+        */
     }
 
     public function project_html() { // horrible programming style but it keeps things simple
