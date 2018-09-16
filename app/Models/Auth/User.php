@@ -122,7 +122,9 @@ class User extends Authenticatable
 
     public function shares_tags() { // Does this user share subscription tags with the logged in user?
         return ((int) ($this->subscr_mask)) & ((int) (Auth::user()->subscr_mask)); // bitwise AND
-        // Without the integer casting it breaks!! The types are STRING for some reason
+        // Without the integer casting it breaks!! The types are STRING for some reason (sqlite?)
+        // Also [lhs] != 0 is not working either!
+        // The implementation below works also.
         /*
         foreach (self::matters() as $tag) {
             if ($this->has_subscribed($tag) && Auth::user()->has_subscribed($tag)) {

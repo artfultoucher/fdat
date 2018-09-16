@@ -16,6 +16,7 @@
                     <a href="{{ route('frontend.project.index') }}" class="dropdown-item">Relevant to you</a>
                     <a href="{{ route('frontend.project.index_free') }}" class="dropdown-item">Available</a>
                     <a href="{{ route('frontend.project.index_taken') }}" class="dropdown-item">Taken</a>
+                    <a href="{{ route('frontend.project.search') }}" class="dropdown-item">Search Projects</a>
                     @can('write projects')
                       <div class="dropdown-divider"></div>
                       <a href="{{ route('frontend.project.create') }}" class="dropdown-item">New Project</a>

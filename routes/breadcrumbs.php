@@ -26,6 +26,16 @@ Breadcrumbs::for('projects_taken', function ($trail) {
     $trail->push('Taken', route('frontend.project.index_taken'));
 });
 
+Breadcrumbs::for('search_relevant', function ($trail) {
+    $trail->parent('projects_relevant');
+    $trail->push('Search');
+});
+
+Breadcrumbs::for('search_all', function ($trail) {
+    $trail->parent('projects_all');
+    $trail->push('Search');
+});
+
 // Home > New Project
 Breadcrumbs::for('new_project', function ($trail) {
     $trail->parent('projects_all');

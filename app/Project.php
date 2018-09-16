@@ -5,12 +5,17 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Auth\User;
+use Laravel\Scout\Searchable;
 
 class Project extends Model
 {
+    use Searchable;
     // these columns can be modified together at once (aka mass assignable)
     protected $fillable = ['title', 'type', 'author', 'supervisor', 'visibility', 'abstract', 'description'];
 
+    public function toSearchableArray() { // which fields are searched. The id field MUST always be included!
+        return array_only($this->toArray(), ['id', 'title', 'abstract', 'description']);
+    }
 
     public function owner() {
       return $this->supervisor == 0 ? $this->author : $this->supervisor;

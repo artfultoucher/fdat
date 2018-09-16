@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-// use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreProject;
 use App\Http\Requests\UpdateProject;
 use App\Project;
@@ -160,6 +160,24 @@ class ProjectController extends Controller
         return view('frontend.project_list', ['projects' => $arr,
         'page_title' => 'Projects created but not supervised by ' . $person->full_name . ' (' . count($arr) . ')',
         'breadcrumb_name' => 'yielded_projects', 'person' => $person]);
+    }
+
+    public function search(Request $request) {
+        //dd($request->all());
+        if (isset($request->needle)) {
+            //dd($request->all());
+            $needle = $request->needle;
+            if (isset($request->search_all)) {
+                $result = Project::search($needle)->get()->filter(function ($p) {return $p->is_visible(true);})->all();
+                return view('frontend.search', ['needle' => $needle, 'hits' => $result, 'search_all' => 'yes']);
+            } else {
+                $result = Project::search($needle)->get()->filter(function ($p) {return $p->is_visible(false);})->all();
+                return view('frontend.search', ['needle' => $needle, 'hits' => $result]);
+            }
+        }
+        else {
+            return view('frontend.search', ['hits' => null, 'needle' => '']);
+        }
     }
 
 }

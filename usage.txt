@@ -1,0 +1,8 @@
+Command line
+============
+
+Create search index:
+./artisan scout:import App\\Project
+
+Clear search index:
+./artisan scout:flush App\\Project

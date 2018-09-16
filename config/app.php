@@ -173,7 +173,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\ObserverServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+	// Added by F.B. for full text search
+	TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
+	Laravel\Scout\ScoutServiceProvider::class,
     ],
 
     /*

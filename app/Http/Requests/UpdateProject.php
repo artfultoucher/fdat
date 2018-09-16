@@ -23,7 +23,7 @@ class UpdateProject extends FormRequest
           */
           'title' => 'required|min:7|max:120|' . Rule::unique('projects')->ignore($this->route('project')), // 'project' is the name of the route parameter
           'abstract' => 'required|min:15|max:350',
-          'description' => 'required|min:50|max:3000',
+          'description' => 'required|min:50|max:5000',
            'type' => 'required|' . Rule::in(Project::$possible_types), // pay attention! syntax errors throw weird errors here
           'semester_project' => 'sometimes|in:yes,no',
         ];

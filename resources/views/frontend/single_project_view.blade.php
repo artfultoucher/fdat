@@ -215,7 +215,7 @@ $(function () {
         <div class="card bg-light text-dark mt-2">
             <div class="card-header"><strong>Abstract</strong>
             </div>
-            <div class="card-body"><img width="100" src="{{$project->avatar()}}" class="img-thumbnail float-left mr-2">
+            <div class="card-body">
                 {{$project->abstract}}
             </div>
         </div><!-- card -->
@@ -227,7 +227,7 @@ $(function () {
             <div class="card bg-light text-dark mt-2">
                 <div class="card-header"><strong>Full Project Description</strong>
                 </div>
-                <div class="card-body">
+                <div class="card-body"><img width="100" src="{{$project->avatar()}}" class="img-thumbnail float-left mr-2">
                 @markdown($project->description)
                 </div>
             </div><!-- card -->
