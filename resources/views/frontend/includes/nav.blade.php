@@ -20,7 +20,7 @@
                     @can('write projects')
                       <div class="dropdown-divider"></div>
                       <a href="{{ route('frontend.project.create') }}" class="dropdown-item">New Project</a>
-                   @endcan
+                    @endcan
                    @endauth
                 </div>
             </li>
