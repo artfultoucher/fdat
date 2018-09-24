@@ -1,4 +1,15 @@
 @extends('frontend.layouts.app')
+@push('after-styles')
+    {{ style('css/bootstrap-select.min.css') }}
+@endpush
+@push('after-scripts')
+
+    {{ script('js/bootstrap-select.min.js')}}
+    <script>
+    $('select').selectpicker();
+    </script>
+
+@endpush
 
 @section('title', 'Assign Students')
 
@@ -12,11 +23,11 @@
 
         <div class="card-body">
 
-        Click to select single entry. Hold <kbd>CTRL</kbd> to add or toggle entries.
-
-          {{ html()->form('PATCH', route('frontend.project.students', $project->id))->open() }}
-          <div class="form-group form-inline mt-3">
-            <select name="assigned_ids[]" multiple class="form-control" id="students">
+          <form  class="form-inline" method="post" action="{{route('frontend.project.students', $project->id )}}" >
+          @csrf @method('patch')
+          <div class="form-group my-3">
+            <select name="assigned_ids[]" multiple class="form-control" id="students" data-selected-text-format="count"
+            data-style="btn-secondary" data-width="auto" title="No students" data-live-search="true" data-header="Scroll or type to search. Click to toggle entry.">
                 @foreach ($students as $id => $optiontext)
                     @if ( in_array($id, $selected_ids) )
                         <option value="{{$id}}" selected>{{$optiontext}}</option>
@@ -25,11 +36,8 @@
                     @endif
                 @endforeach
             </select>
+            <button class="btn btn-success form-control ml-3" type="submit">Make effective</button>
             </div><!--form-group-->
-          <div class="form-group">
-           {{ form_submit('Make effective') }}
-          </div><!--form-group-->
-          {{ html()->form()->close() }}
           @unless (Request::is('*/all_students'))
           <p>Are you looking for a student who is <strong>not in this list</strong>? Perhaps s/he has not subscribed to <strong>{{$project->type}}</strong> matters.
           Try selecting from
@@ -37,7 +45,7 @@
           @endunless
       </div><!--card-body-->
       <div class="card-footer">
-      <small>Yes I know there are fancy multiselect plugins. Not all of them support Bootstrap 4. And those I tried had certain subtle quirks.</small>
+      <small>I am now using a multiselect plugin. Please report any quirks with older browsers or mobile devices.</small>
       </div>
   </div><!--card-->
 @endsection

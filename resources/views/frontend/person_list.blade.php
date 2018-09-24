@@ -24,9 +24,9 @@
   <thead class="bg-secondary text-white">
     <tr>
       <th scope="col">Avatar</th>
-      <th scope="col">Name, ID, Contact</th>
+      <th class="text-nowrap" scope="col">Name, ID, Contact</th>
       <th scope="col">Engagements</th>
-      <th scope="col">Subscribed to</th>
+      <th class="text-nowrap" scope="col">Subscribed to</th>
     </tr>
   </thead>
   <tbody>

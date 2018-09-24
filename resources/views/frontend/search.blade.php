@@ -9,7 +9,7 @@
 @section('content')
 @include('frontend.includes.only_public_warning')
 <h2>Search Projects</h2>
-We run fuzzy fulltext search with Levenshtein distance 2. <i class="fas fa-thumbs-up"></i>
+We run fuzzy fulltext search with stemming and Levenshtein distance 2. <i class="fas fa-thumbs-up"></i>
 <form method="get" action="{{route('frontend.project.search')}}">
   <div class="form-group row mt-3">
     <label for="needle" class="col-sm-4 col-form-label">Search in <strong>title</strong>, <strong>abstract</strong> and <strong>description</strong> for</label>
