@@ -26,6 +26,7 @@
           <form  class="form-inline" method="post" action="{{route('frontend.project.students', $project->id )}}" >
           @csrf @method('patch')
           <div class="form-group my-3">
+              {{-- Plugin is from https://developer.snapappointments.com/bootstrap-select/ --}}
             <select name="assigned_ids[]" multiple class="form-control" id="students" data-selected-text-format="count"
             data-style="btn-secondary" data-width="auto" title="No students" data-live-search="true" data-header="Scroll or type to search. Click to toggle entry.">
                 @foreach ($students as $id => $optiontext)
@@ -38,6 +39,7 @@
             </select>
             <button class="btn btn-success form-control ml-3" type="submit">Make effective</button>
             </div><!--form-group-->
+        </form>
           @unless (Request::is('*/all_students'))
           <p>Are you looking for a student who is <strong>not in this list</strong>? Perhaps s/he has not subscribed to <strong>{{$project->type}}</strong> matters.
           Try selecting from
@@ -45,7 +47,7 @@
           @endunless
       </div><!--card-body-->
       <div class="card-footer">
-      <small>I am now using a multiselect plugin. Please report any quirks with older browsers or mobile devices.</small>
+      <small>I am now using a plugin with live search. Please report any quirks with older browsers or mobile devices. I see a spurious check mark when I search and click an item not on top.</small>
       </div>
   </div><!--card-->
 @endsection

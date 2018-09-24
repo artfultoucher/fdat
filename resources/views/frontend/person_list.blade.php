@@ -41,28 +41,40 @@
           @endif
       </td>
       <td>
-          @if ($person->supervised_projects()->isNotEmpty())
+          @php
+            $num = $person->supervised_projects()->count();
+          @endphp
+          @if ($num > 0)
               <div>
               <a class="badge badge-primary" href="{{route('frontend.person.supervised_projects', $person->id)}}">
-             {{$person->supervised_projects()->count()}} Supervised projects</a>
+             {{$num}} supervised {{str_plural('project', $num)}}</a>
               </div>
           @endif
-          @if ($person->co_supervised_projects()->isNotEmpty())
+          @php
+            $num = $person->co_supervised_projects()->count();
+          @endphp
+          @if ($num > 0)
               <div>
               <a class="badge badge-info" href="{{route('frontend.person.sr_projects', $person->id)}}">
-             {{$person->co_supervised_projects()->count()}} Co-supervised projects</a>
+              {{$num}} co-supervised {{str_plural('project', $num)}}</a>
               </div>
           @endif
-          @if ($person->yielded_projects()->isNotEmpty())
+          @php
+            $num = $person->yielded_projects()->count();
+          @endphp
+          @if ($num > 0)
               <div>
               <a class="badge badge-dark" href="{{route('frontend.person.yielded_projects', $person->id)}}">
-              {{$person->yielded_projects()->count()}} Yielded projects</a>
+              {{$num}} yielded {{str_plural('project', $num)}}</a>
               </div>
           @endif
-          @unless (empty($person->supervised_students()))
+          @php
+            $num = count($person->supervised_students());
+          @endphp
+          @if ($num > 0)
               <div>
                <a class="badge badge-success" href="{{route('frontend.person.supervisees', $person->id)}}">
-               {{count($person->supervised_students())}} Supervised students</a>
+                {{$num}} supervised {{str_plural('student', $num)}}</a>
               </div>
           @endunless
           {!! $person->project_html() !!}
