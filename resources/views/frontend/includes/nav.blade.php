@@ -9,7 +9,7 @@
 
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuProject" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Projects</a>
+                   aria-haspopup="true" aria-expanded="false">Projects <span class="badge badge-pill badge-secondary">{{$total_projects}}</span></a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuProject">
                     <a href="{{ route('frontend.project.index_all') }}" class="dropdown-item">All</a>
                     @auth
@@ -27,7 +27,7 @@
 
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLecturer" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Lecturers</a>
+                   aria-haspopup="true" aria-expanded="false">Lecturers <span class="badge badge-pill badge-secondary">{{$total_lecturers}}</span></a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLecturer">
                     <a href="{{ route('frontend.person.show_all_lecturers') }}" class="dropdown-item">All</a>
                     @auth
@@ -38,7 +38,7 @@
 
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuStudent" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Students</a>
+                   aria-haspopup="true" aria-expanded="false">Students <span class="badge badge-pill badge-secondary">{{$total_students}}</span></a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuStudent">
                     <a href="{{ route('frontend.person.show_all_students') }}" class="dropdown-item">All</a>
                     @auth

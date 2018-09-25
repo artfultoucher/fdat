@@ -24,7 +24,7 @@ class EngagementController extends Controller
       $project->supervisor = $user->id;
       $project->save();
       $user->subscribe_matter($project->type); // in theory the user could still not be subscribed to this matter.
-      return back()->withFlashSuccess('You are now the supervisor of this project.');
+      return back()->withFlashSuccess('You are now the supervisor. There are still NO STUDENTs assigned to this project!');
     }
 
 
@@ -35,7 +35,7 @@ class EngagementController extends Controller
         return back()->withFlashWarning('You are not the supervisor if this project.');
       }
       if($project->secondreader != 0) {
-          return back()->withFlashWarning('You cannot abandon this project as long as there is still second reader attached.');
+          return back()->withFlashWarning('You cannot abandon this project as long as there is still a second reader attached.');
       }
       if(count($project->assigned_students()) > 0) {
           return back()->withFlashDanger('You cannot abandon this project as long as there are still students attached.');
@@ -92,7 +92,7 @@ class EngagementController extends Controller
     }
 
 
-    public function reassign_students (Request $req, $project_id) { 
+    public function reassign_students (Request $req, $project_id) {
         $project = Project::findOrFail($project_id);
         if (!$project->user_can_assign_students()) {
             abort (403, 'You can\'t do that. Period.');
