@@ -9,7 +9,7 @@ use App\Models\Auth\User;
 
 class EngagementController extends Controller
 {
-    // for engaging and feeing persons to projects
+    // for engaging and freeing persons to projects
 
     public function supervise (Request $req, $project_id) { // method is PATCH
       $user = $req->user();
@@ -23,6 +23,7 @@ class EngagementController extends Controller
       $project->timestamps = false; // don't modify timestamps
       $project->supervisor = $user->id;
       $project->save();
+      \Log::info('Project adopted: '.$project_id);
       $user->subscribe_matter($project->type); // in theory the user could still not be subscribed to this matter.
       return back()->withFlashSuccess('You are now the supervisor. There are still NO STUDENTs assigned to this project!');
     }
@@ -44,6 +45,7 @@ class EngagementController extends Controller
       $project->supervisor = 0;
       $project->secondreader = 0; // quietly dismissed without messaging
       $project->save();
+      \Log::info('Project abandoned: '.$project_id);
 
       // TODO redirect to project view
       // check where view returns should be changed to redirects!
@@ -70,6 +72,7 @@ class EngagementController extends Controller
       $project->timestamps = false;
       $project->secondreader = $user->id;
       $project->save();
+      \Log::info('Second reader appointed for project: '.$project_id);
       $user->subscribe_matter($project->type); // there are cases.. at least in theory..
       return back()->withFlashSuccess('You are now the second reader of this project.');
     }
@@ -88,6 +91,7 @@ class EngagementController extends Controller
       $project->timestamps = false;
       $project->secondreader = 0;
       $project->save();
+      \Log::info('Second reader dismissed for project: '.$project_id);
       return back()->withFlashSuccess('Second reader dismissed.');
     }
 
@@ -112,6 +116,7 @@ class EngagementController extends Controller
                  $student->save();
              }
             }
+        \Log::info('Students reassinged for project: '.$project_id);
         return redirect()->route('frontend.project.show', $project_id)->withFlashSuccess('Students successfully reassigned.');
         }
 
@@ -132,6 +137,7 @@ class EngagementController extends Controller
             $student->sproject_id = 0;
             $student->save();
          }
+        \Log::info('Students dismissed for project: '.$project_id);
         return redirect()->route('frontend.project.show', $project_id)->withFlashSuccess('All assigned students have been freed from this project.');
     }
 

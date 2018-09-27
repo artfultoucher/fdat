@@ -172,8 +172,8 @@ class ProjectController extends Controller
     public function search(Request $request) {
         //dd($request->all());
         if (isset($request->needle)) {
-            //dd($request->all());
             $needle = $request->needle;
+            \Log::info('Search for: '. $needle);
             if (isset($request->search_all)) {
                 $result = Project::search($needle)->get()->filter(function ($p) {return $p->is_visible(true);})->all();
                 return view('frontend.search', ['needle' => $needle, 'hits' => $result, 'search_all' => 'yes']);

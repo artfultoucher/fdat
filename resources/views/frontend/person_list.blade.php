@@ -7,7 +7,7 @@
 @endisset
 @section('content')
 <div class="card">
-  <div class="card-header h3 fancy">{{$title}} <span class="badge badge-pill badge-secondary">{{count($persons)}}</span>
+  <div class="card-header h4 fancy">{{$title}} <span class="badge badge-pill badge-secondary">{{count($persons)}}</span>
       @unless(Auth::guest() || empty($persons))
       <span class="float-right"><form action="{{route('frontend.mail.many')}}" method="post">@csrf
           @foreach ($persons as $person)
