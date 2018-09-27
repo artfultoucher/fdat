@@ -5,7 +5,9 @@
 @section('breadcrumbs', Breadcrumbs::render('new_project'))
 
 @section('content')
-    <h3>Create New Project</h3>
+    <h3>Create New Project</h3><p>
+    Newly created projects have their visibility set to <strong>private</strong>. Only the author can see them. This allwos for saving a draft
+    proposal for later completion.</p>
     <div class="row mb-4">
         <div class="col">
           {{ html()->form('POST', route('frontend.project.store'))->open() }}

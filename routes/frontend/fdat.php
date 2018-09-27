@@ -8,6 +8,7 @@
 Route::get('project/all', 'ProjectController@index_all')->name('project.index_all');
 Route::get('project/free', 'ProjectController@index_free')->name('project.index_free');
 Route::get('project/taken', 'ProjectController@index_taken')->name('project.index_taken');
+Route::get('project/orphan', 'ProjectController@index_orphan')->name('project.index_orphan');
 Route::get('project/search', 'ProjectController@search')->name('project.search');
 
 Route::resource('project', 'ProjectController');

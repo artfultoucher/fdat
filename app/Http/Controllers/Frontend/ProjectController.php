@@ -17,28 +17,35 @@ class ProjectController extends Controller
    public function index_all()
     {
         $arr = Project::latest()->get()->filter(function ($p) {return $p->is_visible(true);})->all();
-        return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'All projects (' . count($arr) . ')' ,
+        return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'All projects',
         'breadcrumb_name' => 'projects_all']);
     }
 
    public function index()
    {
        $arr = Project::latest()->get()->filter(function ($p) {return $p->is_visible();})->all();
-       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Projects matching your subscription tags (' . count($arr) . ')' ,
+       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Projects matching your subscription tags',
        'breadcrumb_name' => 'projects_relevant']);
    }
 
    public function index_free()
    {
        $arr= Project::latest()->get()->filter(function ($p){return $p->is_available() && $p->is_visible();})->all();
-       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Unassigned projects matching your subscription tags (' . count($arr) . ')' ,
+       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Unassigned projects matching your subscription tags',
        'breadcrumb_name' => 'projects_available']);
    }
 
    public function index_taken()
    {
        $arr= Project::latest()->get()->filter(function ($p){return $p->is_taken() && $p->is_visible();})->all();
-       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Undertaken projects matching your subscription tags (' . count($arr) . ')' ,
+       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Undertaken projects matching your subscription tags',
+       'breadcrumb_name' => 'projects_taken']);
+   }
+
+   public function index_orphan()
+   {
+       $arr= Project::latest()->get()->filter(function ($p){return $p->is_orphan() && $p->is_visible();})->all();
+       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Projects without Supervisor',
        'breadcrumb_name' => 'projects_taken']);
    }
 
@@ -65,7 +72,7 @@ class ProjectController extends Controller
       // semester_project always true for now
       $project->save();
       $request->user()->subscribe_matter($request->type); // we QUIETLY autosubscribe the user!
-      return redirect()->route('frontend.project.show', $project->id)->withFlashSuccess('New project created. Only you can see it.');
+      return redirect()->route('frontend.project.show', $project->id)->withFlashSuccess('New project created. ONLY YOU can see it.');
     }
 
     public function update(UpdateProject $request, $id) { // all checks already done in request
@@ -142,7 +149,7 @@ class ProjectController extends Controller
         $person = User::findOrFail($user_id);
         $arr = $person->supervised_projects();
         return view('frontend.project_list', ['projects' => $arr,
-        'page_title' => 'Projects supervised by ' . $person->full_name . ' (' . count($arr) . ')',
+        'page_title' => 'Projects supervised by ' . $person->full_name,
         'breadcrumb_name' => 'supervised_projects', 'person' => $person]);
     }
 
@@ -150,7 +157,7 @@ class ProjectController extends Controller
         $person = User::findOrFail($user_id);
         $arr = $person->co_supervised_projects();
         return view('frontend.project_list', ['projects' => $arr,
-        'page_title' => 'Projects where ' . $person->full_name . ' is Second Reader (' . count($arr) . ')',
+        'page_title' => 'Projects where ' . $person->full_name . ' is Second Reader',
         'breadcrumb_name' => 'sr_projects', 'person' => $person]);
     }
 
@@ -158,7 +165,7 @@ class ProjectController extends Controller
         $person = User::findOrFail($user_id);
         $arr = $person->yielded_projects();
         return view('frontend.project_list', ['projects' => $arr,
-        'page_title' => 'Projects created but not supervised by ' . $person->full_name . ' (' . count($arr) . ')',
+        'page_title' => 'Projects created but not supervised by ' . $person->full_name,
         'breadcrumb_name' => 'yielded_projects', 'person' => $person]);
     }
 

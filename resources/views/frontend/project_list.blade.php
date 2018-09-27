@@ -6,7 +6,7 @@
     @section('breadcrumbs', Breadcrumbs::render($breadcrumb_name))
 @endif
 @section('content')
-<h2>{{$page_title}}</h2>
+<h2>{{$page_title}} <span class="badge badge-pill badge-secondary">{{count($projects)}}</span></h2>
 @include('frontend.includes.only_public_warning')
 <div class="card-columns">
 @forelse ($projects as $project)

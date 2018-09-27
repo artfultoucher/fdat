@@ -13,9 +13,13 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuProject">
                     <a href="{{ route('frontend.project.index_all') }}" class="dropdown-item">All</a>
                     @auth
+                    <div class="dropdown-divider"></div>
                     <a href="{{ route('frontend.project.index') }}" class="dropdown-item">Relevant to you</a>
+                    <div class="dropdown-divider"></div>
                     <a href="{{ route('frontend.project.index_free') }}" class="dropdown-item">Available</a>
                     <a href="{{ route('frontend.project.index_taken') }}" class="dropdown-item">Taken</a>
+                    <a href="{{ route('frontend.project.index_orphan') }}" class="dropdown-item">Without Supervisor</a>
+                    <div class="dropdown-divider"></div>
                     <a href="{{ route('frontend.project.search') }}" class="dropdown-item">Search Projects</a>
                     @can('write projects')
                       <div class="dropdown-divider"></div>
