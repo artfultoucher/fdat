@@ -18,12 +18,17 @@ Breadcrumbs::for('projects_relevant', function ($trail) {
 
 Breadcrumbs::for('projects_available', function ($trail) {
     $trail->parent('projects_relevant');
-    $trail->push('Available', route('frontend.project.index_free'));
+    $trail->push('Available');
 });
 
 Breadcrumbs::for('projects_taken', function ($trail) {
     $trail->parent('projects_relevant');
-    $trail->push('Taken', route('frontend.project.index_taken'));
+    $trail->push('Taken');
+});
+
+Breadcrumbs::for('projects_orphan', function ($trail) {
+    $trail->parent('projects_relevant');
+    $trail->push('Orphan');
 });
 
 Breadcrumbs::for('search_relevant', function ($trail) {

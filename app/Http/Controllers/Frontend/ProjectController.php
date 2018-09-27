@@ -46,7 +46,7 @@ class ProjectController extends Controller
    {
        $arr= Project::latest()->get()->filter(function ($p){return $p->is_orphan() && $p->is_visible();})->all();
        return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Projects without Supervisor',
-       'breadcrumb_name' => 'projects_taken']);
+       'breadcrumb_name' => 'projects_orphan']);
    }
 
     public function create()
