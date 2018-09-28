@@ -14,11 +14,11 @@
                     <a href="{{ route('frontend.project.index_all') }}" class="dropdown-item">All</a>
                     @auth
                     <div class="dropdown-divider"></div>
-                    <a href="{{ route('frontend.project.index') }}" class="dropdown-item">Relevant to you</a>
+                    <a href="{{ route('frontend.project.index') }}" class="dropdown-item">Relevant (matching your tags)</a>
                     <div class="dropdown-divider"></div>
-                    <a href="{{ route('frontend.project.index_free') }}" class="dropdown-item">Available</a>
-                    <a href="{{ route('frontend.project.index_taken') }}" class="dropdown-item">Taken</a>
-                    <a href="{{ route('frontend.project.index_orphan') }}" class="dropdown-item">Without Supervisor</a>
+                    <a href="{{ route('frontend.project.index_free') }}" class="dropdown-item">Relevant and <strong>available</strong></a>
+                    <a href="{{ route('frontend.project.index_taken') }}" class="dropdown-item">Relevant and <strong>taken</strong></a>
+                    <a href="{{ route('frontend.project.index_orphan') }}" class="dropdown-item">Relevant and <strong>without supervisor</strong></a>
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('frontend.project.search') }}" class="dropdown-item">Search Projects</a>
                     @can('write projects')
@@ -46,9 +46,9 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuStudent">
                     <a href="{{ route('frontend.person.show_all_students') }}" class="dropdown-item">All</a>
                     @auth
-                    <a href="{{ route('frontend.person.show_students') }}" class="dropdown-item">Relevant to you</a>
-                    <a href="{{ route('frontend.person.show_free_students') }}" class="dropdown-item">Without project</a>
-                    <a href="{{ route('frontend.person.show_busy_students') }}" class="dropdown-item">With project</a>
+                    <a href="{{ route('frontend.person.show_students') }}" class="dropdown-item">Relevant (matching your tags)</a>
+                    <a href="{{ route('frontend.person.show_free_students') }}" class="dropdown-item">Relevant and <strong>without</strong> project</a>
+                    <a href="{{ route('frontend.person.show_busy_students') }}" class="dropdown-item">Relevant and <strong>with</strong> project</a>
                    @endauth
                 </div>
             </li>

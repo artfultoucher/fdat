@@ -31,14 +31,14 @@ class ProjectController extends Controller
    public function index_free()
    {
        $arr= Project::latest()->get()->filter(function ($p){return $p->is_available() && $p->is_visible();})->all();
-       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Unassigned projects matching your subscription tags',
+       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Unassigned Projects',
        'breadcrumb_name' => 'projects_available']);
    }
 
    public function index_taken()
    {
        $arr= Project::latest()->get()->filter(function ($p){return $p->is_taken() && $p->is_visible();})->all();
-       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Undertaken projects matching your subscription tags',
+       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Undertaken Projects',
        'breadcrumb_name' => 'projects_taken']);
    }
 

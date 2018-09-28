@@ -116,7 +116,7 @@ class EngagementController extends Controller
                  $student->save();
              }
             }
-        \Log::info('Students reassinged for project: '.$project_id);
+        \Log::info('Students reassigned for project: '.$project_id);
         return redirect()->route('frontend.project.show', $project_id)->withFlashSuccess('Students successfully reassigned.');
         }
 
