@@ -35,7 +35,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLecturer">
                     <a href="{{ route('frontend.person.show_all_lecturers') }}" class="dropdown-item">All</a>
                     @auth
-                    <a href="{{ route('frontend.person.show_lecturers') }}" class="dropdown-item">Relevant to you</a>
+                    <a href="{{ route('frontend.person.show_lecturers') }}" class="dropdown-item">Relevant (matching your tags)</a>
                     @endauth
                 </div>
             </li>

@@ -17,14 +17,14 @@ class ProjectController extends Controller
    public function index_all()
     {
         $arr = Project::latest()->get()->filter(function ($p) {return $p->is_visible(true);})->all();
-        return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'All projects',
+        return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'All Projects',
         'breadcrumb_name' => 'projects_all']);
     }
 
    public function index()
    {
        $arr = Project::latest()->get()->filter(function ($p) {return $p->is_visible();})->all();
-       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Projects matching your subscription tags',
+       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Projects Matching Your Subscription Tags',
        'breadcrumb_name' => 'projects_relevant']);
    }
 
@@ -45,7 +45,7 @@ class ProjectController extends Controller
    public function index_orphan()
    {
        $arr= Project::latest()->get()->filter(function ($p){return $p->is_orphan() && $p->is_visible();})->all();
-       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Projects without Supervisor',
+       return view('frontend.project_list', ['projects' => $arr, 'page_title' => 'Projects Without Supervisor',
        'breadcrumb_name' => 'projects_orphan']);
    }
 

@@ -64,8 +64,9 @@ class MailController extends Controller
         'intro' => 'Hello all,'.PHP_EOL.'I refer to project ' . route('frontend.project.show', $pid),
         'bc_name' => 'mail_project', 'bc_object' => $p]);
     }
-
+/*
     public function mail_many(Request $request){ // Recipient ids are in request. Compute and show mail view.
+    // this implementation uses the tickbox mail view
         if(Auth::guest())
         {
             abort(403, 'You must be logged in to compose mail.');
@@ -73,9 +74,22 @@ class MailController extends Controller
         $rec = User::find($request->ids)->all(); // we pass an array of primary keys as arg to find
         return view('frontend.mail', ['recipients' => $rec, 'intro' => 'Hello all,', 'bc_name' => 'mail_many', 'bc_object' => null]);
     }
+*/
+
+    public function mail_many(Request $request){ // Recipient ids are in request. Compute and show mail view.
+        if(Auth::guest()) {
+            abort(403, 'You must be logged in to compose mail.');
+        }
+        $lecturers =  User::role('lecturer')->orderBy('last_name')->get()->all();
+        $students =  User::role('student')->orderBy('last_name')->get()->all();
+        $selected = $request->ids;
+        return view('frontend.mail_many', compact('lecturers', 'students', 'selected'));
+
+    }
 
     public function mail_post(Request $request)
     {
+        //dd($request->all());
         if (Auth::guest()) {
             abort(403, 'Haha! Nice try.');
         }
