@@ -26,6 +26,12 @@
             @include('frontend.includes.nav')
             <div class="container">
                 @include('includes.partials.messages')
+                @if (Auth::check() && Auth::user()->subscr_mask == 0)
+                    <div class="alert alert-warning" role="alert">
+                        You have <strong>not subscribed</strong> to any matter tag. All views which are filtered against your subscribed tags <strong>will be blank</strong>.<br>
+                        Subscribe to tags from <a href="{{route('frontend.user.account')}}">My Account</a>->Account Details.
+                    </div>
+                @endif
                 @yield('content')
             </div><!-- container -->
         </div><!-- #app -->

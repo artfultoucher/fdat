@@ -53,13 +53,7 @@ class ProfileController extends Controller
             auth()->logout();
             return redirect()->route('frontend.auth.login')->withFlashInfo(__('strings.frontend.user.email_changed_notice'));
         }
-        if (empty($subscr)) {
-          return redirect()->route('frontend.user.account')->withFlashWarning('You may want to subscribe to at least one matter. Just to let you know.');
-        }
-        else {
-          return redirect()->route('frontend.user.account')->withFlashSuccess(__('strings.frontend.user.profile_updated'));
-        }
-
+        return redirect()->route('frontend.user.account')->withFlashSuccess(__('strings.frontend.user.profile_updated'));
     }
 
     public function intro_update (\Illuminate\Http\Request $request) { // I believe this is secure without further checks
