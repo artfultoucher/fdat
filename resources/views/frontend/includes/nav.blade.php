@@ -74,6 +74,7 @@
                 <div class="dropdown-menu">
                     <a href="{{route('frontend.help', 'about')}}" class="dropdown-item">About</a>
                     <a href="{{route('frontend.help', 'quickstart')}}" class="dropdown-item">Existing users</a>
+                    <a href="{{route('frontend.help', 'orphans')}}" class="dropdown-item">Projects without supervisor</a>
                     <a href="{{route('frontend.matters')}}" class="dropdown-item">Categories</a>
                 </div>
             </li>

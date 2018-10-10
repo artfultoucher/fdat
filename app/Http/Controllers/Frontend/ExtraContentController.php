@@ -23,10 +23,14 @@ class ExtraContentController extends Controller
     public function help($section = 'about') {
         $fs = New \Illuminate\Filesystem\Filesystem();
         switch ($section) {
-            case 'quickstart';
+            case 'quickstart':
                 $file = 'quickstart.md';
                 $title = 'Information for users of the previous project system';
                 break;
+	    case 'orphans':
+		$file = 'orphan.md';
+		$title = 'Projects Without Supervisor';
+		break;
             default:
                 $file = 'about.md';
                 $title = 'About FDAT';
