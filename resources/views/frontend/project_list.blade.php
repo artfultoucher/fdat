@@ -8,15 +8,15 @@
 @section('content')
 <h3>{{$page_title}} <span class="badge badge-pill badge-secondary">{{count($projects)}}</span></h3>
 @include('frontend.includes.only_public_warning')
-<div class="card-columns">
 @forelse ($projects as $project)
+  @if ($loop->first)
+      <div class="card-columns">
+  @endif
   @include('frontend.includes.small_project_card')
-@empty
-  <div class="card bg-info">
-      <div class="card-body text-center">
-        <p class="card-text">No visible projects.</p>
+  @if ($loop->last)
       </div>
-    </div>
+  @endif
+@empty
+  <p><strong>No visible projects.</strong></p>
 @endforelse
-</div>
 @endsection

@@ -33,7 +33,7 @@ class EngagementController extends Controller
       $project = Project::findOrFail($project_id);
       $user = $req->user();
       if ($project->supervisor != $user->id) {
-        return back()->withFlashWarning('You are not the supervisor if this project.');
+        return back()->withFlashWarning('You are not the supervisor of this project.');
       }
       if($project->secondreader != 0) {
           return back()->withFlashWarning('You cannot abandon this project as long as there is still a second reader attached.');
