@@ -119,7 +119,6 @@ $(function () {
               </div>
           @endunless
           {!! $person->project_html() !!}
-      </td>
       </div>
     </div>
 

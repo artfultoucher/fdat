@@ -22,13 +22,17 @@ $(function () {
         @endcan
          </div>
          <div class="card-body">
-             <div class="card-columns">
                  @forelse ($my_projects as $project)
+                     @if ($loop->first)
+                         <div class="card-columns">
+                     @endif
                      @include('frontend.includes.small_project_card')
+                     @if ($loop->last)
+                         </div>
+                     @endif
                  @empty
                      None
                  @endforelse
-             </div>
          </div> <!-- card-body -->
      </div>
 </div>
