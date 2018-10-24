@@ -10,6 +10,9 @@ use App\Deliverable;
 use App\Models\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\DeliverableUpload;
+use App\Notifications\DeliverableFeedback;
+
 
 class DeliverableController extends Controller
 {
@@ -22,7 +25,6 @@ class DeliverableController extends Controller
         if (! $request_obj) {
             return back()->withFlashDanger('There is no open deliverable request for this project. Deadline in the past?');
         }
-
         return view('frontend.deliverable', ['project' => $project, 'document_title' => $request_obj->name]);
     }
 
@@ -53,6 +55,15 @@ class DeliverableController extends Controller
         $path = $request->file('document')->store('deliverables');
         $deliverable->path = $path;
         $deliverable->save();
+        // Notify the supervisor
+        $supervisor = User::findOrFail($project->supervisor);
+        $supervisor->notify(new DeliverableUpload(Auth::user()->full_name));
+        if ($project->secondreader > 0) {
+            // Notify the second reader
+            $sr = User::findOrFail($project->secondreader);
+            $sr->notify(new DeliverableUpload(Auth::user()->full_name));
+        }
+
         if ($update) {
             \Log::info('Replaced existing file: ' . $path);
             return redirect()->route('frontend.project.show', $pid)->withFlashSuccess('Replaced previously uploaded file. Thank you.');
@@ -108,6 +119,13 @@ class DeliverableController extends Controller
             $doc->mark = $request->mark;
         }
         $doc->save();
+        \Log::info('Deliverable feedback for project: ' . $doc->project_id);
+        // Notify the uploader
+        //
+        // TODO skip notification if only a private comment was submitted
+        //
+        $student = User::findOrFail($doc->uploader_id);
+        $student->notify(new DeliverableFeedback(Auth::user()->full_name));
         return redirect()->route('frontend.deliverable.my')->withFlashSuccess('Feedback saved and published.');
     }
 
