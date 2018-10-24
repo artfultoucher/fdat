@@ -31,6 +31,10 @@ class ExtraContentController extends Controller
 		$file = 'orphan.md';
 		$title = 'Projects Without Supervisor';
 		break;
+	    case 'deliverables':
+		$file = 'deliverables.md';
+		$title = 'Electronic Document Submissions';
+		break;
             default:
                 $file = 'about.md';
                 $title = 'About FDAT';
