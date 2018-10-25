@@ -31,6 +31,7 @@
         @endif
         </div>
     </td></tr>
+    <tr><th scope="row">Last upload</th><td>{{$doc->updated_at->diffForHumans()}}</td></tr>
     <tr><th scope="row">Marks</th><td>
         @if ($doc->graded)
             {{$doc->mark}}

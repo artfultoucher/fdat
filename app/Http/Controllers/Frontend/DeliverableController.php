@@ -112,6 +112,7 @@ class DeliverableController extends Controller
         if ($request->mark > 100) {
             return redirect()->route('frontend.deliverable.my')->withFlashDanger('The awarded mark must be less than 100.');
         }
+        $doc->timestamps = false; // the timestamps should refer to the file upload dates
         $doc->comment = $request->comment;
         $doc->private_comment = $request->private_comment;
         if ($doc->is_marker()) { // In case of a malicious second reader who goes through the lenghts to alter a from :-)

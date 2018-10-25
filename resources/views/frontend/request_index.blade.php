@@ -6,6 +6,7 @@
 <div class="card bg-light">
 <div class="card-header h3 fancy">Deliverable Requests</div>
 <div class="card-body">
+<p>Please consult first  <a href="{{route('frontend.help', 'deliverables')}}">this help text</a> if you have any questions.</p>
 @forelse ($requests as $d)
 <div class="h4 fancy">{{$d->name}}
 @if ($d->due_date->isPast())
