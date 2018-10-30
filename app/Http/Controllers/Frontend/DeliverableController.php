@@ -65,11 +65,11 @@ class DeliverableController extends Controller
         }
 
         if ($update) {
-            \Log::info('Replaced existing file: ' . $path);
+            \Log::info(Auth::user()->full_name . ' replaced existing file: ' . $path);
             return redirect()->route('frontend.project.show', $pid)->withFlashSuccess('Replaced previously uploaded file. Thank you.');
             }
         else {
-            \Log::info('Stored new file: ' . $path);
+            \Log::info(Auth::user()->full_name . ' stored new file: ' . $path);
             return redirect()->route('frontend.project.show', $pid)->withFlashSuccess('Deliverable received. Thank you.');
         }
     }
