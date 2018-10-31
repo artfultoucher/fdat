@@ -76,6 +76,9 @@ class DeliverableController extends Controller
 
     public function my_deliverables() {
         // This implmentation assumes that users cannot have student and lecturer roles together
+        if (Auth::guest()) {
+            abort(403,'You must be logged in to access uploaded documents.');
+        }
         $user = Auth::user();
         if ($user->hasRole('student')) {
             $result = Deliverable::where('uploader_id', $user->id)->get()->all();}
@@ -89,7 +92,7 @@ class DeliverableController extends Controller
                     $result[] = $d;
                 }
             }
-        }
+        } // users who are neither students nor lecturers get an error here since $result is undefined. That's ok.
         return view('frontend.my_deliverables', ['docs' => $result]);
     }
 

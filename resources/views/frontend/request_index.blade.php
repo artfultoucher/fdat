@@ -16,13 +16,12 @@
 <table class="table table-bordered">
   <thead class="bg-info text-white">
     <tr>
-      <th scope="col">For projects of type</th>
+      <th scope="col">Project type</th>
       <th scope="col">Hand in by</th>
       <th scope="col">Feedback due</th>
       <th scope="col">Pass mark</th>
       <th scope="col">Marked by</th>
-      <th scope="col">Expected#</th>
-      <th scope="col">Received#</th>
+      <th scope="col">Items received (of {{$d->expected_items}})</th>
     </tr>
   </thead>
   <tbody>
@@ -32,7 +31,6 @@
       <td class="align-middle">{{$d->feedback_date->toFormattedDateString()}}<br>{{$d->feedback_date->diffForHumans()}}</td>
       <td class="align-middle">{{$d->pass_mark}}</td>
       <td class="align-middle">@if ($d->marked_by_supervisor) Supervisor<br> @endif @if ($d->marked_by_secondreader) Second Reader @endif</td>
-      <td class="align-middle">{{$d->expected_items}}</td>
       <td class="align-middle w-25">
         <span class="progress">
             <div class="progress-bar" role="progressbar" style="width: {{$count[$d->id] * 100 / $d->expected_items}}%;">{{$count[$d->id]}}</div>
