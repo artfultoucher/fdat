@@ -17,7 +17,7 @@
   <thead class="bg-info text-white">
     <tr>
       <th scope="col">Project type</th>
-      <th scope="col">Hand in by</th>
+      <th scope="col">Hand in before</th>
       <th scope="col">Feedback due</th>
       <th scope="col">Pass mark</th>
       <th scope="col">Marked by</th>

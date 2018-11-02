@@ -26,6 +26,10 @@
           <input type="checkbox" class="form-control" name="graded" id="graded" value="1">
           </div>
           @endif
+          <div class="form-group form-inline">
+          <label for="graded">Notify student after saving: </label>
+          <input type="checkbox" class="form-control" name="notify" id="notify" value="1" checked>
+          </div>
           <div class="form-group">
             {{ html()->label('Feedback to project student.')->for('comment') }}
             @include('frontend.includes.markdown_label')

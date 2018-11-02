@@ -119,7 +119,10 @@ class DeliverableController extends Controller
         $doc->comment = $request->comment;
         $doc->private_comment = $request->private_comment;
         if ($doc->is_marker()) { // In case of a malicious second reader who goes through the lenghts to alter a from :-)
-            $doc->graded = isset($request->graded) ? true : false;
+            $doc->graded = isset($request->graded);
+            if ($doc->graded && ! isset($request->notify)) {
+                return back()->withFlashDanger('If you give a final mark then you must always notify the student.');
+            }
             $doc->mark = $request->mark;
         }
         $doc->save();
@@ -128,8 +131,10 @@ class DeliverableController extends Controller
         //
         // TODO skip notification if only a private comment was submitted
         //
-        $student = User::findOrFail($doc->uploader_id);
-        $student->notify(new DeliverableFeedback(Auth::user()->full_name));
+        if(isset($request->notify)) {
+            $student = User::findOrFail($doc->uploader_id);
+            $student->notify(new DeliverableFeedback(Auth::user()->full_name));
+            }
         return redirect()->route('frontend.deliverable.my')->withFlashSuccess('Feedback saved and published.');
     }
 

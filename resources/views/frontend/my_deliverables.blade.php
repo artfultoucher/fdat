@@ -42,7 +42,7 @@
             <i>Not assessed yet.</i>
         @endif
     </td></tr>
-    <tr><th scope="row">Feeedback</th><td>
+    <tr><th scope="row">Feedback</th><td>
         @if ($doc->comment)
             @markdown($doc->comment)
         @else
@@ -50,7 +50,7 @@
         @endif
     </td></tr>
     @if ($doc->is_examiner())
-        <tr><th scope="row">Private Feeedback</th><td>
+        <tr><th scope="row">Private Feedback</th><td>
             @if ($doc->private_comment)
                 @markdown($doc->private_comment)
             @else
