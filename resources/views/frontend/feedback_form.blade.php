@@ -22,12 +22,13 @@
           <input type="number" class="form-control" value="{{$doc->mark}}" name="mark" id="mark" min="0" max="100" style="width: 5em;">
           </div><!--form-group-->
           <div class="form-group form-inline">
-          <label for="graded">Make this feedback and assessment final: </label>
+          <label for="graded">Make this feedback and assessment final.
+         Numerical marks are only shown to the student when final. Final marks and comments cannot be changed. </label>
           <input type="checkbox" class="form-control" name="graded" id="graded" value="1">
           </div>
           @endif
           <div class="form-group form-inline">
-          <label for="graded">Notify student after saving: </label>
+          <label for="graded">Notify student after saving. E.g. untick to preview comments or if you only modified private comments.</label>
           <input type="checkbox" class="form-control" name="notify" id="notify" value="1" checked>
           </div>
           <div class="form-group">
