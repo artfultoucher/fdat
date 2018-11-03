@@ -6,9 +6,9 @@
 
 <div class="card bg-light">
 <div class="card-header h3 fancy">My Deliverables</div>
-<div class="card-body">
+<div class="card-body bg-secondary">
 @forelse ($docs as $doc)
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped bg-light">
   <tbody>
     <tr><th class="w-25" scope="row">Uploader</th><td><a href="{{route('frontend.person.show', $doc->uploader_id)}}">{{$doc->uploader_name()}}</a></td></tr>
     <tr><th scope="row">For project</th><td><a href="{{route('frontend.project.show',$doc->project_id)}}">{{$doc->project_title()}}</a></td></tr>
