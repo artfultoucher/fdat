@@ -14,7 +14,7 @@
     <tr><th scope="row">For project</th><td><a href="{{route('frontend.project.show',$doc->project_id)}}">{{$doc->project_title()}}</a></td></tr>
     <tr><th scope="row">Request</th><td><a href="{{route('frontend.deliverable.all_requests')}}">{{$doc->request_name()}}</a></td></tr>
     <tr><th scope="row">Document</th><td>
-        <div class="form-inline">
+        <span class="form-inline">
         <form method="post" action="{{route('frontend.deliverable.download')}}">
             @csrf
             <input type="hidden" name="doc_id" value="{{$doc->id}}">
@@ -28,10 +28,9 @@
             <input type="hidden" name="path" value="{{$doc->path}}">
             <button class="btn btn-sm btn-danger mx-2" type="submit">Delete</button>
         </form>
-        @endif
-        </div>
+    @endif Last upload {{$doc->updated_at->diffForHumans()}}
+       </span>
     </td></tr>
-    <tr><th scope="row">Last upload</th><td>{{$doc->updated_at->diffForHumans()}}</td></tr>
     <tr><th scope="row">Marks</th><td>
         @if ($doc->graded)
             {{$doc->mark}}
@@ -47,7 +46,7 @@
             <div class="card">
                 <div class="card-header">
                     <a class="card-link" data-toggle="collapse" href="#comment{{$loop->iteration}}">
-                        Show feedback for student
+                        Show feedback to student
                     </a>
                 </div>
                 <div id="comment{{$loop->iteration}}" class="collapse">
