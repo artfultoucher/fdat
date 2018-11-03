@@ -44,7 +44,18 @@
     </td></tr>
     <tr><th scope="row">Feedback</th><td>
         @if ($doc->comment)
-            @markdown($doc->comment)
+            <div class="card">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#comment{{$loop->iteration}}">
+                        Show feedback for student
+                    </a>
+                </div>
+                <div id="comment{{$loop->iteration}}" class="collapse">
+                    <div class="card-body">
+                        @markdown($doc->comment)
+                    </div>
+                </div>
+            </div>
         @else
             <i>No comments yet.</i>
         @endif
@@ -52,16 +63,26 @@
     @if ($doc->is_examiner())
         <tr><th scope="row">Private Feedback</th><td>
             @if ($doc->private_comment)
-                @markdown($doc->private_comment)
+                <div class="card">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#private{{$loop->iteration}}">
+                            Show feedback for examiners
+                        </a>
+                    </div>
+                    <div id="private{{$loop->iteration}}" class="collapse">
+                        <div class="card-body">
+                            @markdown($doc->private_comment)
+                        </div>
+                    </div>
+                </div>
             @else
-                <i>Only examiners can see this.</i>
+                <i>No private feedback attached</i>
             @endif
         </td></tr>
     @endif
 
   </tbody>
 </table>
-
 @empty
     @role('student')
     You have not uploaded any documents.
