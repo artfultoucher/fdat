@@ -6,11 +6,11 @@
 
 <div class="card bg-light">
 <div class="card-header h3 fancy">My Deliverables</div>
-<div class="card-body bg-secondary">
+<div class="card-body">
 @forelse ($docs as $doc)
-<table class="table table-bordered table-striped bg-light">
+<table class="table table-bordered table-striped" style="box-shadow: 5px 10px 8px #777777;">
   <tbody>
-    <tr><th class="w-25" scope="row">Uploader</th><td><a href="{{route('frontend.person.show', $doc->uploader_id)}}">{{$doc->uploader_name()}}</a></td></tr>
+    <tr><th class="w-25" scope="row">Uploader</th><th><a href="{{route('frontend.person.show', $doc->uploader_id)}}">{{$doc->uploader_name()}}</a></th></tr>
     <tr><th scope="row">For project</th><td><a href="{{route('frontend.project.show',$doc->project_id)}}">{{$doc->project_title()}}</a></td></tr>
     <tr><th scope="row">Request</th><td><a href="{{route('frontend.deliverable.all_requests')}}">{{$doc->request_name()}}</a></td></tr>
     <tr><th scope="row">Document</th><td>
