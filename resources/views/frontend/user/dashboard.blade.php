@@ -17,8 +17,11 @@ $(function () {
      @include('frontend.includes.public_user_info', ['person' => $logged_in_user])
      <div class="card bg-light">
          <div class="card-header"><span class="h5 fancy" id="pop" data-toggle="popover">My projects</span>
+        @hasanyrole('lecturer|student')
+            <a href="{{route('frontend.deliverable.my')}}" class="btn btn-secondary float-right fancy ml-2"><i class="fas fa-people-carry"></i> My deliverables</a>
+        @endhasanyrole
         @can('write projects')
-        <a href="{{route('frontend.project.create')}}" class="btn btn-info float-right fancy"><i class="fas fa-plus-circle"></i> New Project</a>
+        <a href="{{route('frontend.project.create')}}" class="btn btn-info float-right fancy"><i class="fas fa-plus-circle"></i> New project</a>
         @endcan
          </div>
          <div class="card-body">

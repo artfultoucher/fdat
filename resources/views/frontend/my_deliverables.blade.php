@@ -5,10 +5,10 @@
 @section('content')
 
 <div class="card bg-light">
-<div class="card-header h3 fancy">My Deliverables</div>
+<div class="card-header h4 fancy"><i class="fas fa-people-carry"></i> My Deliverables <span class="badge badge-pill badge-secondary">{{count($docs)}}</span></div>
 <div class="card-body">
 @forelse ($docs as $doc)
-<table class="table table-bordered table-striped" style="box-shadow: 5px 10px 8px #777777;">
+<table class="table table-bordered table-striped @unless($loop->last) mb-5 @endunless" style="box-shadow: 5px 10px 8px #777777;">
   <tbody>
     <tr><th class="w-25" scope="row">Uploader</th><th><a href="{{route('frontend.person.show', $doc->uploader_id)}}">{{$doc->uploader_name()}}</a></th></tr>
     <tr><th scope="row">For project</th><td><a href="{{route('frontend.project.show',$doc->project_id)}}">{{$doc->project_title()}}</a></td></tr>
@@ -38,7 +38,7 @@
             @if ($doc->is_examiner())
                 <a href="{{route('frontend.deliverable.feedback_form', $doc->id)}}" class="btn btn-sm btn-success mx-2">Assess or comment</a>
             @endif
-            <i>Not assessed yet.</i>
+            <i>Not assessed yet</i>
         @endif
     </td></tr>
     <tr><th scope="row">Feedback</th><td>
@@ -56,7 +56,7 @@
                 </div>
             </div>
         @else
-            <i>No comments yet.</i>
+            <i>No comments yet</i>
         @endif
     </td></tr>
     @if ($doc->is_examiner())
