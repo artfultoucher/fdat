@@ -4,11 +4,9 @@
 
 @section('content')
 
-<div class="card bg-light">
-<div class="card-header h4 fancy"><i class="fas fa-people-carry"></i> My Deliverables <span class="badge badge-pill badge-secondary">{{count($docs)}}</span></div>
-<div class="card-body">
+<h3 class="mb-3"><i class="fas fa-people-carry"></i> My Deliverables <span class="badge badge-pill badge-secondary">{{count($docs)}}</span></h3>
 @forelse ($docs as $doc)
-<table class="table table-bordered table-striped @unless($loop->last) mb-5 @endunless" style="box-shadow: 5px 10px 8px #777777;">
+<table class="table table-bordered table-striped bg-light @unless($loop->last) mb-5 @endunless" style="box-shadow: 5px 10px 8px #777777;">
   <tbody>
     <tr><th class="w-25" scope="row">Uploader</th><th><a href="{{route('frontend.person.show', $doc->uploader_id)}}">{{$doc->uploader_name()}}</a></th></tr>
     <tr><th scope="row">For project</th><td><a href="{{route('frontend.project.show',$doc->project_id)}}">{{$doc->project_title()}}</a></td></tr>
@@ -90,7 +88,5 @@
     Your project students have not uploaded any documents yet.
     @endrole
 @endforelse
-</div>
-</div>
 
 @endsection
