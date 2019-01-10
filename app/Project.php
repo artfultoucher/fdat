@@ -82,10 +82,14 @@ class Project extends Model
       if (Auth::guest()) {
         return $this->visibility == 2;
       }
+      /*
+      // commented out upon MvD's request
+      // If commented out then own but unsubscribed projects are only shown in the dashboard]
       if ($this->is_owner()){
         // return true;
         return $this->visibility > 0; // private projects hidden everywhere except in dashboard
       }
+      */
       return ($this->visibility > 0) && Auth::user()->hasPermissionTo('view projects') && ($ignore_subscriptions || Auth::user()->has_subscribed($this->type));
     }
 
